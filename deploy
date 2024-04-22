@@ -1,0 +1,138 @@
+#!/usr/bin/env bash
+
+update=false
+pushlock=false
+reevaluate=false
+showtrace=false
+
+# Parse command-line arguments
+while [ "$1" != "" ]; do
+    case $1 in
+        --update ) update=true ;;
+        --pushlock ) pushlock=true ;;
+        --force-evaluate ) reevaluate=true ;;
+        --show-trace ) showtrace=true ;;
+        * )        ;;
+    esac
+    shift
+done
+
+if [ "$reevaluate" = true ]; then
+    echo " " >> ~/.nixcfg/flake.nix
+fi
+
+
+id_path="$HOME/.ssh/id_ed25519"
+id_fingerprint_expected="SHA256:8FJJ4mc4QLeLnh5f0nhgmbSmZixi+tRzKuLbO1wopmU"
+
+# check identity exists, if no then copy
+if [ ! -f "$id_path" ]; then
+    # function to copy and decrypt id
+elif [ $(get_id_fingerprint $id_path) != id_fingerprint_expected ]; then
+    
+fi
+
+# if yes, check it's the right one, if no then backup and copy
+
+if [[ "$(uname)" == "Linux" ]]; then
+    echo "Running on Linux"
+    # Linux-specific commands here
+
+    # Push flake.lock if requested
+    # useful to revert to a previous lock file
+    echo "*** Pushing flake.lock."
+    sudo cp ~/.nixcfg/flake.lock /etc/nixos/flake.lock
+
+    sudo rsync -ahi --delete --recursive --exclude ".stfolder" --exclude '*.lock' --exclude '.git' --exclude 'bootstrap.sh' --exclude '.gitignore' --exclude 'sync' --exclude 'dump.sh'  ~/.nixcfg/ /etc/nixos/
+  
+    # Update flakes if requested
+    if [ "$update" = true ]; then
+        echo "Updating flakes..."
+        pushd /etc/nixos
+        sudo nix flake update
+        popd
+    fi
+
+    if [ "$showtrace" = true ]; then
+        sudo nixos-rebuild switch --show-trace
+    else
+        sudo nixos-rebuild switch
+    fi
+
+    echo "*** Pulling flake.lock."
+    sudo cp /etc/nixos/flake.lock ~/.nixcfg/
+    sudo chown -R "$USER":users ~/.nixcfg/flake.lock
+    sudo chmod -R 664 ~/.nixcfg/flake.lock
+elif [[ "$(uname)" == "Darwin" ]]; then
+
+    echo "Running on macOS"
+
+    echo "*** Pushing flake.lock."
+    sudo cp ~/.nixcfg/flake.lock ~/.config/nix/flake.lock
+
+    sudo rsync -ahi --delete --recursive --exclude ".stfolder" --exclude '*.lock' --exclude '.git' --exclude 'bootstrap.sh' --exclude '.gitignore' --exclude 'sync' --exclude 'dump.sh'  ~/.nixcfg/ ~/.config/nix
+
+    if [ "$update" = true ]; then
+        echo "Updating flakes..."
+        nix flake update
+    fi
+
+    if [ "$showtrace" = true ]; then
+        darwin-rebuild switch --flake ~/.config/nix --show-trace
+    else
+        darwin-rebuild switch --flake ~/.config/nix
+    fi
+
+    echo "*** Pulling flake.lock."
+    cp ~/.config/nix/flake.lock ~/.nixcfg/flake.lock
+fi
+
+# reload .zshrc to immediately reflect any shell changes
+source ~/.zshrc
+unset __HM_SESS_VARS_SOURCED
+source ~/.zshenv
+
+# Get the fingerprint of an id at a specified path
+# 
+# Params
+#   $1 the path to the id (e.g. ~/.ssh/id_ed25519)
+# Returns
+#   Echoes the SHA256 fingerprint of the id
+# Side Effects
+#   None
+# Example
+#  get_id_fingerprint "$HOME/.ssh/id_ed25519"
+function get_id_fingerprint {
+    # Define the awk command with proper escaping for use within nix-shell below
+    local awk_cmd='awk "{print \$2}"'
+    echo $(nix-shell -p openssh --run "ssh-keygen -lf $1 2>/dev/null | $awk_cmd") 
+}
+
+# Installs an ID with the following procedure
+#   - backs up any existing ID
+#   - downloads an age-encrypted private key from a specified URL
+#   - decrypts it with a connected Yubikey
+#   - installs it to the current user's .ssh folder
+#   - generates the associated public key and installs that to the user's .ssh folder
+#   - sets correct permissions (based on https://linux.die.net/man/1/ssh)
+# Params
+#   $1 the URL of the age-encrypted private key to download
+#   $2 array of age identities to use for decryption
+function install_id {
+    # download the id with curl
+}
+
+# Gets serial numbers of currently connected Yubikeys
+# 
+# Params
+#   NONE
+# Returns
+#   Echoes a comma delimited list of connected Yubikey serial numbers
+# Side Effects
+#   NONE
+# Example
+#   > get_yubikey_serials
+#   123456,654321
+function get_yubikey_serials {
+    echo $(nix-shell -p yubikey-manager uutils-coreutils-noprefix --run "ykman list -s | paste -sd, -")
+}

@@ -1,0 +1,115 @@
+* {
+    border: none;
+    border-radius: 0;
+    font-family: 'CaskaydiaCove Nerd Font', monospace;
+    font-size: 14px;
+    min-height: 0;
+}
+window#waybar {
+    background-color: #354F00;
+    border-bottom: 2px solid #D4EE9F;
+    /* border-top: 2px dashed #a678d3; */
+    padding-top: 5px;
+    color: #D4EE9F; 
+    transition-property: background-color;
+    transition-duration: .5s;
+}
+
+window#waybar.hidden {
+    opacity: 0.2;
+}
+
+/*
+window#waybar.empty {
+    background-color: transparent;
+}
+window#waybar.solo {
+    background-color: #FFFFFF;
+}
+*/
+
+#workspaces button {
+    padding-left: 10px;
+    padding-right: 10px;
+    /*padding-top: 5px;
+    padding-bottom: 5px;*/
+
+    background-color: transparent;
+    color: inherit;
+    font-weight: 600;
+    /* border-top: 4px solid transparent; */
+    /* border-bottom: 3px solid transparent; */
+    border-left: 2px dashed #D4EE9F;
+
+}
+
+#workspaces button:first-child {
+    border-left: 0;
+}
+
+/* https://github.com/Alexays/Waybar/wiki/FAQ#the-workspace-buttons-have-a-strange-hover-effect */
+/* #workspaces button:hover {
+    background: rgba(0, 0, 0, 0.2);
+    box-shadow: inherit;
+    text-shadow: inherit;
+} */
+
+/* #workspaces button.focused {
+    background: rgba(0, 0, 0, 0.2);
+
+    border-top: 3px solid #9730fd;
+    border-bottom: 3px solid #9730fd;
+    border-left: 2px dashed #9730fd;
+    border-right: 2px dashed #9730fd;
+
+    color: #9730fd;
+}
+
+#workspaces button.focused + button {
+    border-left: none;
+}
+
+#workspaces button.focused:first-child {
+    border-left: none;
+}
+
+#workspaces button.focused:last-child {
+    border-right: none;
+} */
+
+
+#workspaces button.urgent {
+    background-color: #AA3939;
+}
+
+#idle_inhibitor, #pulseaudio, #network, #cpu, #memory, #temperature, #clock, #custom {
+    padding-left: 8px;
+    padding-right: 8px;
+    /*
+    padding-top: 5px;
+    padding-bottom: 5px;
+    */
+
+    background-color: transparent;
+    color: inherit;
+    font-weight: 600;
+    /* border-top: 4px solid transparent; */
+    /* border-bottom: 3px solid transparent; */
+    border-left: 2px dashed #D4EE9F;
+}
+
+#tray {
+    padding-left: 8px;
+    padding-right:8px;
+    min-width: 40px;
+    border-left: 2px dashed #D4EE9F;
+    font-size: 20px;
+}
+
+#window {
+    min-width: 500px;
+}
+
+#clock {
+    font-size: 14px;
+}
