@@ -32,10 +32,10 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    # concierge = {
-    #   url = "path:./apps/concierge";
-    #   inputs.nixpkgs.follows = "nixpkgs";
-    # };
+    concierge = {
+      url = "github:aarongpower/nix-concierge";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = { self, nixpkgs, home-manager, fenix, keymapp, cider220, nix-darwin, agenix, ... }:
