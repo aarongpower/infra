@@ -38,7 +38,7 @@
     };
   };
 
-  outputs = { self, nixpkgs, home-manager, fenix, keymapp, cider220, nix-darwin, agenix, ... }:
+  outputs = { self, nixpkgs, home-manager, fenix, keymapp, cider220, nix-darwin, agenix, concierge,... }:
   let
     overlays = [ 
       fenix.overlays.default
@@ -64,7 +64,7 @@
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
             home-manager.users.aaronp = import ./home/nixos.nix;
-            home-manager.extraSpecialArgs = { inherit cider220 agenix fenix; };
+            home-manager.extraSpecialArgs = { inherit cider220 agenix fenix concierge; };
           }
         ];
         # specialArgs = { inherit home-manager; };
@@ -78,7 +78,7 @@
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
             home-manager.users.aaronpower = import ./home/astra.nix;
-            home-manager.extraSpecialArgs = { inherit agenix fenix; };
+            home-manager.extraSpecialArgs = { inherit agenix fenix concierge; };
           }
         ];
         specialArgs = { inherit self; };

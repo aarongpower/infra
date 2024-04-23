@@ -1,6 +1,6 @@
 # home.nix
 
-{ pkgs, lib, config, homeage, agenix, fenix, ... }:
+{ pkgs, lib, config, homeage, agenix, fenix, concierge, ... }:
 
 {
   # Home Manager needs a bit of information about you and the paths it should
@@ -18,7 +18,7 @@
   # The home.packages option allows you to install Nix packages into your
   # environment.
   home.packages = let
-    commonPackages = import ./common-pkgs.nix {inherit pkgs fenix; };
+    commonPackages = import ./common-pkgs.nix {inherit pkgs fenix concierge; };
     localPackages = with pkgs; [
       raycast
       karabiner-elements

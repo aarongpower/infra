@@ -1,4 +1,4 @@
-{ pkgs, fenix, ... }:
+{ pkgs, fenix, concierge, ... }:
 with pkgs; [
   # Development Tools
   poetry
@@ -41,4 +41,5 @@ with pkgs; [
   # blender - doesn't support aarch64-darwin yet, installed directly to nixos host only
   age-plugin-yubikey
   zip
+  concierge.packages.${pkgs.system}.default
 ]

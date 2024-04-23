@@ -61,8 +61,7 @@
     enableCompletion = true;
     shellAliases = {
       ll = "eza -l";
-      buildsys = "source ~/.nixcfg/sync";
-      bs = "buildsys";
+      bs = "concierge";
       cat = "bat";
       dumpconf = "~/.nixcfg/dumpconf.sh";
       clipme = "wl-clip";

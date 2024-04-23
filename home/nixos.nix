@@ -1,4 +1,4 @@
-{ pkgs, lib, config, cider220, agenix, fenix, ... }:
+{ pkgs, lib, config, cider220, agenix, fenix, concierge, ... }:
 
 let
   edgeWrapped = pkgs.stdenv.mkDerivation {
@@ -20,7 +20,7 @@ in
 
   home.stateVersion = "23.11";
   home.packages = let
-    commonPackages = import ./common-pkgs.nix { inherit pkgs fenix; };
+    commonPackages = import ./common-pkgs.nix { inherit pkgs fenix concierge; };
     localPackages = with pkgs; [
       # Development Tools
       cider220
