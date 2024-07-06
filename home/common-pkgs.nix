@@ -12,7 +12,7 @@ with pkgs; [
   # Command-line Tools
   bat
 
-  zellij
+  # zellij
   syncthing
   fzf-zsh
 
@@ -24,7 +24,7 @@ with pkgs; [
   oh-my-zsh
   wget
   htop
-  ncdu
+  # ncdu
   nmap
   helix
   fenix.packages.${pkgs.system}.complete.toolchain
@@ -34,7 +34,8 @@ with pkgs; [
   tree
   ollama
   libgen-cli
-  magic-wormhole
+  # magic-wormhole # using magic-wormhole-rs - this package fails build
+  magic-wormhole-rs
   rage
   unrar
   drawio
@@ -42,4 +43,10 @@ with pkgs; [
   age-plugin-yubikey
   zip
   concierge.packages.${pkgs.system}.default
+  # ansible
+  ripgrep
+  # rpi-imager
+  # poppler_utils
+  # darktable
+  # zoxide
 ]

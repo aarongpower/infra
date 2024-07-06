@@ -18,16 +18,16 @@
       efiSupport = true;
       enable = true;
       # set $FS_UUID to the UUID of the EFI partition
-      extraEntries = ''
-        menuentry "Windows" {
-          insmod part_gpt
-          insmod ntfs
-          insmod search_fs_uuid
-          insmod chain
-          search --fs-uuid --set=root 3e35cd16-f80e-4ebd-a11e-a61efa1f2697
-          chainloader /EFI/Microsoft/Boot/bootmgfw.efi
-        }
-      '';
+      # extraEntries = ''
+      #   menuentry "Windows" {
+      #     insmod part_gpt
+      #     insmod ntfs
+      #     insmod search_fs_uuid
+      #     insmod chain
+      #     search --fs-uuid --set=root 3e35cd16-f80e-4ebd-a11e-a61efa1f2697
+      #     chainloader /EFI/Microsoft/Boot/bootmgfw.efi
+      #   }
+      # '';
     };
   };
 }

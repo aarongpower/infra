@@ -40,6 +40,7 @@ in
 
       # Web Browsers
       firefox
+      brave
       # microsoft-edge
       # Wrapped Microsoft Edge
       # enables the use of the Wayland backend
@@ -99,6 +100,9 @@ in
       (pkgs.writeShellScriptBin "work" ''
         exec /mnt/bigboy/vm/work/launch
       '')
+      ledger-live-desktop
+      ganttproject-bin
+      # anydesk
   ];
   in localPackages ++ commonPackages;
 
@@ -139,10 +143,14 @@ in
   };
 
   # Swayidle config
+  # xdg.configFile."swayidle/config".text = ''
+  #   timeout 300 'swaylock -f'
+  #   timeout 360 'hyprctl dispatch dpms off' resume 'hyprctl dispatch dpms on'
+  #   before-sleep 'swaylock -f'
+  # '';
+
   xdg.configFile."swayidle/config".text = ''
-    timeout 300 'swaylock -f'
     timeout 360 'hyprctl dispatch dpms off' resume 'hyprctl dispatch dpms on'
-    before-sleep 'swaylock -f'
   '';
 
   # Swaylock config

@@ -2,9 +2,9 @@
 
 {
   # dedupe nix store
-  nix.extraOptions = ''
-    auto-optimise-store = true
-  '';
+  # nix.extraOptions = ''
+  #   auto-optimise-store = true
+  # '';
 
   nixpkgs.config.allowUnfree = true;
   # List packages installed in system profile. To search by name, run:

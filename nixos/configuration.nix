@@ -59,8 +59,74 @@
   #   KERNEL=="tun", GROUP="netdev", MODE="0600"
   # '';
 
+  # services.samba = {
+  #   enable = true;
+  #   shares = {
+  #     media = {
+  #       path = "/mnt/bigboy/media";
+  #       browseable = "yes";
+  #       "read only" = "no";
+  #       "guest ok" = "yes";
+  #       "create mask" = "0644";
+  #       "directory mask" = "0755";
+  #     };
+  #   };
+  # };
+
+  # services.samba = {
+  #   package = pkgs.samba4Full;
+  #   # ^^ `samba4Full` is compiled with avahi, ldap, AD etc support (compared to the default package, `samba`
+  #   # Required for samba to register mDNS records for auto discovery 
+  #   # See https://github.com/NixOS/nixpkgs/blob/592047fc9e4f7b74a4dc85d1b9f5243dfe4899e3/pkgs/top-level/all-packages.nix#L27268
+  #   enable = true;
+  #   openFirewall = true;
+  #   shares.media = {
+  #     path = "/mnt/bigboy/media";
+  #     writable = "true";
+  #     comment = "Media library";
+  #     "read only" = "no";
+  #     "guest ok" = "yes";
+  #     "create mask" = "0644";
+  #     "directory mask" = "0755";
+  #   };
+  #   extraConfig = ''
+  #     workgroup = WORKGROUP
+  #     server string = smbnix
+  #     netbios name = smbnix
+  #     security = user 
+  #     #use sendfile = yes
+  #     #max protocol = smb2
+  #     # note: localhost is the ipv6 localhost ::1
+  #     hosts allow = 192.168.3. 127.0.0.1 localhost
+  #     hosts deny = 0.0.0.0/0
+  #     guest account = nobody
+  #     map to guest = bad user
+  #   '';
+  #   # extraConfig = ''
+  #   #   server smb encrypt = required
+  #   #   # ^^ Note: Breaks `smbclient -L <ip/host> -U%` by default, might require the client to set `client min protocol`?
+  #   #   server min protocol = SMB3_00
+  #   # '';
+  # };
+  services.avahi = {
+    publish.enable = true;
+    publish.userServices = true;
+    # ^^ Needed to allow samba to automatically register mDNS records (without the need for an `extraServiceFile`
+    nssmdns4 = true;
+    # ^^ Not one hundred percent sure if this is needed- if it aint broke, don't fix it
+    enable = true;
+    openFirewall = true;
+  };
+  # services.samba-wsdd = {
+  # # This enables autodiscovery on windows since SMB1 (and thus netbios) support was discontinued
+  #   enable = true;
+  #   openFirewall = true;
+  # };
+
+
   services.udev.extraRules = ''
     KERNEL=="tun", GROUP="netdev", MODE="0660"
+    SUBSYSTEM=="hidraw", GROUP="plugdev", MODE="0660"
   '';
   users.groups.netdev = {};
   # Specify the capabilities for the QEMU binary
@@ -137,6 +203,7 @@
     hyprland
     zsh
     bash
+    nu
   '';
 
   # Enable the KDE Plasma Desktop Environment.
@@ -190,11 +257,11 @@
   services.printing.enable = true;
 
   # Enable automatic discovery of network printers
-  services.avahi = {
-    enable = true;
-    nssmdns4 = true;
-    openFirewall = true;
-  };
+  # services.avahi = {
+  #   enable = true;
+  #   nssmdns4 = true;
+  #   openFirewall = true;
+  # };
 
   # enable smart cart interface to access yubikey with age-plugin-yubikey
   services.pcscd.enable = true;
@@ -257,12 +324,30 @@
     SDL
     SDL2
     quickemu
+    guix
+    ngrok
+    ripgrep
   ];
 
   # Enable thunar file manager
   # programs.dolphin.enable = true;
   # programs.xfconf.enable = true;
 
+  services.teamviewer.enable = true;
+
+  # enable jenkins
+  services.jenkins = {
+    enable = true;
+    port = 1234;
+  };
+
+  services.nifi = {
+    enable = true;
+    # listenPort = 667;
+    # initUser = "aaron";
+    # initPasswordFile = "";
+  };
+  
   # Enable flatpak
   services.flatpak.enable = true;
 
@@ -312,6 +397,7 @@
   nixpkgs.config.permittedInsecurePackages = [
     "electron-25.9.0" # TODO: Remove this in the future, required so I can install Obsidian
     # "electron-19.1.9" # TODO: Remove this in the future, required so I can install Etcher
+    # "python3.11-apache-airflow-2.7.3"
   ];
 
   # Enable SSH

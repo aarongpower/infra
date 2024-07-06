@@ -20,11 +20,31 @@
   xdg.configFile."helix/config.toml".source = ./config/helix/config.toml;
   xdg.configFile."helix/languages.toml".source = ./config/helix/languages.toml;
 
+  # Default to nushell
+  home.sessionVariables.SHELL = "${pkgs.nushell}/bin/nu";
+
+  programs.nushell = {
+    enable = true;
+    configFile.source = ./config/nushell/config.nu;
+    envFile.source = ./config/nushell/env.nu;
+    shellAliases = {
+        bs = "concierge";
+        ll = "ls -al";
+        cat = "bat";
+        # z = "zoxide";
+      };
+  };
+  programs.carapace.enable = true;
+  programs.carapace.enableNushellIntegration = true;
+
+  programs.fish.enable = true;
+  programs.zoxide.enable = true;
+
   programs.starship.enable = true;
   programs.starship.settings = {
     add_newline = true;
     command_timeout = 2000;
-    format = "$time\n$all";
+    format = "$all";
     shlvl = {
       disabled = false;
       symbol = "↕️ ";
@@ -33,17 +53,23 @@
     shell = {
       disabled = false;
       format = "$indicator";
-      fish_indicator = "[FISH](bright-white) ";
-      bash_indicator = "[BASH](bright-white) ";
-      zsh_indicator = "";
+      fish_indicator = "[fish](bright-white)";
+      bash_indicator = "[bash](bright-white)";
+      zsh_indicator = "[zsh](bright-white)";
+      nu_indicator = "[nu](bright-white)";
+    };
+    character = {
+      success_symbol = "[ >](green bold)";
+      error_symbol = "[ ✖️>](red bold)";
     };
     username = {
       style_user = "bright-white bold";
       style_root = "bright-red bold";
     };
+    right_format = "$time";
     time = {
       disabled = false;
-      format = "🕙[ $time ](blue) ";
+      format = "[ $time ](#474747) ";
       time_format = "%Y-%m-%dT%H:%M:%S";
     };
   };
@@ -52,6 +78,11 @@
     enable = true;
     userName = "Aaron Power";
     userEmail = "aarongpower@gmail.com";
+    extraConfig = {
+      init = {
+        defaultBranch = "main";
+      };
+    };
   };
 
   programs.fzf.enable = true;
@@ -92,11 +123,14 @@
     nix-direnv.enable = true;
   };
 
+  programs.zellij.enable = true;
+
   programs.alacritty = {
     enable = true;
     settings = {
       shell = {
-        program = "${pkgs.zellij}/bin/zellij";
+        program = "${pkgs.nushell}/bin/nu";
+        args = [ "-c" "${pkgs.zellij}/bin/zellij" ];
       };
       font = {
         size = 10;

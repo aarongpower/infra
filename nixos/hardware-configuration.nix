@@ -56,7 +56,7 @@
   # Enable OpenGL
   hardware.opengl = {
     enable = true;
-    driSupport = true;
+    # driSupport = true;
     driSupport32Bit = true;
   };
 
@@ -97,9 +97,9 @@
   # Temporary fix for flickering and frame sync issues with Nvidia drivers on Wayland
   # https://wiki.hyprland.org/hyprland-wiki/pages/Nvidia/#fixing-random-flickering-nuclear-method
   # https://chat.openai.com/share/a71a0d60-fb0e-4be7-8443-8b443f9ee73c
-  boot.extraModprobeConfig = ''
-    options nvidia NVreg_RegistryDwords="PowerMizerEnable=0x1; PerfLevelSrc=0x2222; PowerMizerLevel=0x3; PowerMizerDefault=0x3; PowerMizerDefaultAC=0x3"
-  '';
+  # boot.extraModprobeConfig = ''
+  #   options nvidia NVreg_RegistryDwords="PowerMizerEnable=0x1; PerfLevelSrc=0x2222; PowerMizerLevel=0x3; PowerMizerDefault=0x3; PowerMizerDefaultAC=0x3"
+  # '';
 
   # Setting up IOMMU
   # This is required for PCI passthrough
@@ -117,7 +117,7 @@
     # "vfio-pci.ids=8086:9bc5,10de:13c2,10de:0fbb"  # assign intel integrated and nvidia GTX970 for passthrough
     "vfio-pci.ids=10de:13c2,10de:0fbb,10de:2206,10de:1aef" # assigning all nvidia cards to passthrough, will use intel integrated for linux desktop
     # "vfio-pci.ids=10de:13c2,10de:0fbb"
-
+    "isolcpus=8,9,10,11,12,13,14,15"
   ];
   # boot.blacklistedKernelModules = [ "i915" ];  # Blacklist Intel GPU driver
   # boot.blacklistedKernelModules = [ "i915" ];  # Blacklist Intel GPU driver so it can be assigned to vfio

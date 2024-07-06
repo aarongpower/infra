@@ -8,3 +8,14 @@ auto-format = true
 file-types = [ "nix" ]
 language-servers = [ "rnix-lsp" ]
 formatter = { command = "nixpkgs-fmt", args = [] }
+
+[[language]]
+name = "python"
+language-servers = ["pylsp"]
+roots = ["pyproject.toml", "setup.py", "Poetry.lock", ".git"]
+auto-format = true
+formatter = {command = 'black', args = ["--quiet", "-"]}
+
+[language-server.pylsp.config.pylsp]
+plugins.pyls_mypy.enabled = true
+plugins.pyls_mypy.live_mode = true
