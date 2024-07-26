@@ -103,6 +103,8 @@ in
       ledger-live-desktop
       ganttproject-bin
       # anydesk
+      ncdu
+      element-desktop
   ];
   in localPackages ++ commonPackages;
 
