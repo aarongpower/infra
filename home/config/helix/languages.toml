@@ -14,8 +14,10 @@ name = "python"
 language-servers = ["pylsp"]
 roots = ["pyproject.toml", "setup.py", "Poetry.lock", ".git"]
 auto-format = true
-formatter = {command = 'black', args = ["--quiet", "-"]}
+# formatter = {command = 'ruff', args = ["format"]}
 
 [language-server.pylsp.config.pylsp]
 plugins.pyls_mypy.enabled = true
 plugins.pyls_mypy.live_mode = true
+plugins.black.enabled = true
+plugins.ruff.enabled = true
