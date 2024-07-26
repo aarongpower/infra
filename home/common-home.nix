@@ -20,6 +20,9 @@
   xdg.configFile."helix/config.toml".source = ./config/helix/config.toml;
   xdg.configFile."helix/languages.toml".source = ./config/helix/languages.toml;
 
+  # direnv configuration
+  xdg.configFile."direnv/direnvrc".source = ./config/direnv/direnvrc;
+
   # Default to nushell
   home.sessionVariables.SHELL = "${pkgs.nushell}/bin/nu";
 
