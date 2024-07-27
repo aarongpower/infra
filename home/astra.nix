@@ -23,6 +23,7 @@
       raycast
       karabiner-elements
       moonlight-qt
+      docker
     ];
   in localPackages ++ commonPackages;
 
