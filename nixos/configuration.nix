@@ -267,7 +267,7 @@
   services.pcscd.enable = true;
 
   # Enable sound with pipewire.
-  sound.enable = true;
+  # sound.enable = true;
   hardware.pulseaudio.package = pkgs.pulseaudioFull;
   hardware.pulseaudio.enable = false;
   security.rtkit.enable = true;
