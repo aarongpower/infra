@@ -108,6 +108,9 @@
   #   #   server min protocol = SMB3_00
   #   # '';
   # };
+
+  services.n8n.enable = true;
+  
   services.avahi = {
     publish.enable = true;
     publish.userServices = true;
