@@ -24,6 +24,8 @@
       karabiner-elements
       moonlight-qt
       docker
+      colima
+      alt-tab-macos
     ];
   in localPackages ++ commonPackages;
 
