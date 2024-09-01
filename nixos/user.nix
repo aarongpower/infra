@@ -8,6 +8,7 @@
     gid = 1001;
   };
   users.groups.vfio = {}; # vfio group
+  users.groups.netdev = {};
 
   users.users.aaronp = {
     isNormalUser = true;

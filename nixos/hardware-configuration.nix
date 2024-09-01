@@ -47,18 +47,28 @@
   # (the default) this is the recommended approach. When using systemd-networkd it's
   # still possible to use this option, but it's recommended to use it in conjunction
   # with explicit per-interface declarations with `networking.interfaces.<interface>.useDHCP`.
-  networking.useDHCP = lib.mkDefault true;
+  # networking.useDHCP = lib.mkDefault true;
   # networking.interfaces.enp3s0.useDHCP = lib.mkDefault true;
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
-  hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 
-  # Enable OpenGL
-  hardware.opengl = {
-    enable = true;
-    # driSupport = true;
-    driSupport32Bit = true;
+  hardware = {
+    cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
+    opengl = {
+      enable = true;
+      # driSupport = true;
+      driSupport32Bit = true;
+    };
+    pulseaudio = {
+      enable = true;
+      package = pkgs.pulseaudioFull;
+    };
   };
+
+  # hardware.graphics = {
+  #   enable = true;
+  #   enable32Bit = true;
+  # };
 
   # # Load nvidia driver for Xorg and Wayland
   # services.xserver.videoDrivers = ["i915"];

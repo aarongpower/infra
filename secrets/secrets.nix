@@ -7,4 +7,5 @@ let
 in
 {
   "openai-key.age".publicKeys = [ aaronp ];
+  "cloudflare-tunnel".publicKeys = [ nixos ];
 }

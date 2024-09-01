@@ -1,4 +1,4 @@
-{ pkgs, lib, config, cider220, agenix, fenix, concierge, ... }:
+{ pkgs, inputs, lib, config, cider220, agenix, fenix, concierge, nixpkgs-pinned-looking-glass-b6, ... }:
 
 let
   edgeWrapped = pkgs.stdenv.mkDerivation {
@@ -20,7 +20,7 @@ in
 
   home.stateVersion = "23.11";
   home.packages = let
-    commonPackages = import ./common-pkgs.nix { inherit pkgs fenix concierge; };
+    commonPackages = import ./common-pkgs.nix { inherit pkgs inputs fenix concierge; };
     localPackages = with pkgs; [
       # Development Tools
       cider220
@@ -34,6 +34,7 @@ in
       onedrive
       onedrivegui
       wl-clipboard
+      # agenix
 
       # Media
       vlc
@@ -48,6 +49,8 @@ in
 
       # Email Clients
       thunderbird
+      nom
+      cloudflared
 
       lshw
       nix-index
@@ -72,6 +75,7 @@ in
       spice-gtk
       tesseract
       wlr-randr
+      # (nixpkgs-pinned-looking-glass-b6.legacyPackages.x86_64-linux.looking-glass-client)
       looking-glass-client
       usbutils
       usbredir
@@ -143,6 +147,13 @@ in
       group-by=category
     '';
   };
+
+  programs.ssh.matchBlocks = [
+    {
+      host = "aaron-desktop.rumahindo.net";
+      proxyCommand = "${pkgs.cloudflared}/bin/cloudflared access ssh --hostname %h";
+    }
+  ];
 
   # Swayidle config
   # xdg.configFile."swayidle/config".text = ''

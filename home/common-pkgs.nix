@@ -1,7 +1,8 @@
-{ pkgs, fenix, concierge, ... }:
+{ pkgs, inputs, fenix, concierge, ... }:
 with pkgs; [
   # Development Tools
   poetry
+  inputs.compose2nix.packages.x86_64-linux.default
   # Fonts
   nerdfonts
 
