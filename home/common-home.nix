@@ -28,13 +28,21 @@
 
   programs.ssh = {
     enable = true;
-    extraConfig = ''
-      Host github.com
-        HostName github.com
-        User git
-        identityFile ~/.ssh/id_ed25519
-        IdentitiesOnly yes
-    '';
+    matchBlocks = {
+      "github.com" = {
+        hostname = "github.com";
+        user = "git";
+        identityFile = "~/.ssh/id_ed25519";
+        identitiesOnly = true;
+      };
+    };
+    # extraConfig = ''
+    #   Host github.com
+    #     HostName github.com
+    #     User git
+    #     identityFile ~/.ssh/id_ed25519
+    #     IdentitiesOnly yes
+    # '';
   };
 
   programs.nushell = {

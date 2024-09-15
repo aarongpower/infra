@@ -5,10 +5,10 @@
 { config, pkgs, lib, flakeRoot, ... }:
 
 let
-  importWithExtras = filePath: import filePath { inherit config pkgs lib modulesPath flakeRoot; };
+  importWithExtras = filePath: import filePath { inherit config pkgs lib flakeRoot; };
 in
 {
-  imports = map importWithExtras [
+  imports = [
     ./hardware-configuration.nix
     ./boot.nix
     ./user.nix

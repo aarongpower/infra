@@ -147,12 +147,12 @@ in
     '';
   };
 
-  programs.ssh.matchBlocks = [
-    {
-      host = "aaron-desktop.rumahindo.net";
-      proxyCommand = "${pkgs.cloudflared}/bin/cloudflared access ssh --hostname %h";
-    }
-  ];
+  # programs.ssh.matchBlocks = [
+  #   {
+  #     host = "aaron-desktop.rumahindo.net";
+  #     proxyCommand = "${pkgs.cloudflared}/bin/cloudflared access ssh --hostname %h";
+  #   }
+  # ];
 
   # Swayidle config
   # xdg.configFile."swayidle/config".text = ''
