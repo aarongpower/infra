@@ -62,31 +62,31 @@
       webhookUrl = "https://n8n.rumahindo.net/";
     };
 
-    cloudflared = {
-      enable = true;
-      tunnels = {
-        "4dfe26fb-27ae-40c7-a941-11f50f3ed8c3" = {
-          credentialsFile = config.age.secrets.cloudflare-tunnel-key.path;
-          ingress = {
-            "sonarr.rumahindo.net" = "http://localhost:8989";
-            "radarr.rumahindo.net" = "http://localhost:7878";
-            "sabnzbd.rumahindo.net" = "http://localhost:8080";
-            "n8n.rumahindo.net" = "http://localhost:5678";
-            "hass.rumahindo.net" = "http://192.168.3.100:8123";
-            "plex.rumahindo.net" = "http://localhost:32400";
-            "unifi.rumahindo.net" = "https://192.168.2.2";
-            "bazarr.rumahindo.net" = "http://localhost:6767";
-            "ombi.rumahindo.net" = "http://localhost:5000";
-            "overseerr.rumahindo.net" = "http://localhost:5055";
-            "whisparr.rumahindo.net" = "http://localhost:6969";
-            "prowlarr.rumahindo.net" = "http://localhost:9696";
-            "odoo.rumahindo.net" = "http://localhost:8069";
-          };
-          originRequest.noTLSVerify = true;
-          default = "http_status:404";
-        };
-      };
-    };
+    # cloudflared = {
+    #   enable = true;
+    #   tunnels = {
+    #     "4dfe26fb-27ae-40c7-a941-11f50f3ed8c3" = {
+    #       credentialsFile = config.age.secrets.cloudflare-tunnel-key.path;
+    #       ingress = {
+    #         "sonarr.rumahindo.net" = "http://localhost:8989";
+    #         "radarr.rumahindo.net" = "http://localhost:7878";
+    #         "sabnzbd.rumahindo.net" = "http://localhost:8080";
+    #         "n8n.rumahindo.net" = "http://localhost:5678";
+    #         "hass.rumahindo.net" = "http://192.168.3.100:8123";
+    #         "plex.rumahindo.net" = "http://localhost:32400";
+    #         "unifi.rumahindo.net" = "https://192.168.2.2";
+    #         "bazarr.rumahindo.net" = "http://localhost:6767";
+    #         "ombi.rumahindo.net" = "http://localhost:5000";
+    #         "overseerr.rumahindo.net" = "http://localhost:5055";
+    #         "whisparr.rumahindo.net" = "http://localhost:6969";
+    #         "prowlarr.rumahindo.net" = "http://localhost:9696";
+    #         "odoo.rumahindo.net" = "http://localhost:8069";
+    #       };
+    #       originRequest.noTLSVerify = true;
+    #       default = "http_status:404";
+    #     };
+    #   };
+    # };
 
     deluge = {
       enable = true;
