@@ -48,7 +48,7 @@ nix profile install "github:aarongpower/nix-concierge"
 echo "=== Cloning Configuration ==="
 if [ ! -d "/root/.config/nix" ]; then
   mkdir -p /root/.config
-  git clone https://github.com/yourusername/your-flake-repo.git /root/.config/nix
+  git clone https://github.com/aarongpower/nix-config.git /root/.config/nix
 else
   echo "Configuration already cloned."
 fi
