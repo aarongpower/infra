@@ -26,6 +26,17 @@
   # Default to nushell
   home.sessionVariables.SHELL = "${pkgs.nushell}/bin/nu";
 
+  programs.ssh = {
+    enable = true;
+    extraConfig = ''
+      Host github.com
+        HostName github.com
+        User git
+        identityFile ~/.ssh/id_ed25519
+        IdentitiesOnly yes
+    '';
+  };
+
   programs.nushell = {
     enable = true;
     configFile.source = ./config/nushell/config.nu;
