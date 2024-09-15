@@ -87,6 +87,7 @@
             home-manager.extraSpecialArgs = { inherit inputs agenix fenix compose2nix flakeRoot; };
           }
         ];
+        specialArgs = { inherit inputs flakeRoot; };
       }; 
     };
 
