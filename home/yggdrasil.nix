@@ -15,6 +15,7 @@
       syncthing
       nil
       ncdu
+      helix
   ];
   in localPackages;
 
