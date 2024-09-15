@@ -1,9 +1,9 @@
-{ ... }:
+{ pkgs, ... }:
 
 {
   security = {
     # Allow aaron to run work vm without entering sudo password
-    security.sudo.extraConfig = ''
+    sudo.extraConfig = ''
       aaronp ALL=(ALL) NOPASSWD: /run/current-system/sw/bin/quickemu --vm ./windows-11.conf *
     '';
 

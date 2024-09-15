@@ -2,19 +2,25 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, lib, ... }:
+{ config, pkgs, lib, flakeRoot, ... }:
 
+let
+  importWithExtras = filePath: import filePath { inherit config pkgs lib modulesPath flakeRoot; };
+in
 {
-  imports = [
+  imports = map importWithExtras [
     ./hardware-configuration.nix
     ./boot.nix
     ./user.nix
     ./docker/overseer/docker-compose.nix
     ./docker/whisparr/docker-compose.nix
+    # ./docker/odoo/odoo.nix
     ./services.nix
     ./programs.nix
     ./age.nix
     ./environment.nix
+    ./networking.nix
+    ./security.nix
     # ../home/nixos.nix
   ];
   

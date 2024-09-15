@@ -1,13 +1,13 @@
 { pkgs, windows-vm, ... }:
 
 {
-  users.groups.bigboyntfs = {
-    gid = 1000;
-  };
+  # users.groups.bigboyntfs = {
+  #   gid = 1000;
+  # };
   users.groups.media = {
     gid = 1001;
   };
-  users.groups.vfio = {}; # vfio group
+  # users.groups.vfio = {}; # vfio group
   users.groups.netdev = {};
 
   users.users.aaronp = {

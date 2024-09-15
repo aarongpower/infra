@@ -14,3 +14,4 @@ services:
       - /mnt/bigboy/docker/whisparr/config:/config
       - /mnt/bigboy/docker/whisparr/data:/data
       - /mnt/bigboy/media/naughty:/mnt/naughty
+# TAGGED: 2024-09-04T21:09:11.628902626+07:00

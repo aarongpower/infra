@@ -1,8 +1,18 @@
 { config, pkgs, lib, ... }:
 
 {
+  # nixpkgs.overlays = [
+  #   (self: super: {
+  #     python3Packages = super.python3Packages // {
+  #       aiohttp = super.python3Packages.aiohttp.overrideAttrs (oldAttrs: {
+  #         doCheck = false;
+  #       });
+  #     };
+  #   })
+  # ];
+
   services = {
-    keymapp.enable = true;
+    # keymapp.enable = true;
 
     openssh = {
       enable = true;
@@ -43,9 +53,9 @@
       enable = true;
     };
     
-    tailscale = {
-      enable = true;
-    };
+    # tailscale = {
+    #   enable = true;
+    # };
     
     n8n = {
       enable = true;
@@ -77,31 +87,31 @@
       };
     };
 
-    deluge = {
-      enable = true;
-      web.enable = true;
-    };
+    # deluge = {
+    #   enable = true;
+    #   web.enable = true;
+    # };
 
-    transmission = {
-      enable = true;
-    };
+    # transmission = {
+    #   enable = true;
+    # };
 
-    # automatic mounting of USB drives
-    udisks2 = {
-      enable = true;
-      mountOnMedia = true;
-    };
+    # # automatic mounting of USB drives
+    # udisks2 = {
+    #   enable = true;
+    #   mountOnMedia = true;
+    # };
 
-    # avahi is for printer discovery on the network
-    avahi = {
-      publish.enable = true;
-      publish.userServices = true;
-      # ^^ Needed to allow samba to automatically register mDNS records (without the need for an `extraServiceFile`
-      nssmdns4 = true;
-      # ^^ Not one hundred percent sure if this is needed- if it aint broke, don't fix it
-      enable = true;
-      openFirewall = true;
-    };
+    # # avahi is for printer discovery on the network
+    # avahi = {
+    #   publish.enable = true;
+    #   publish.userServices = true;
+    #   # ^^ Needed to allow samba to automatically register mDNS records (without the need for an `extraServiceFile`
+    #   nssmdns4 = true;
+    #   # ^^ Not one hundred percent sure if this is needed- if it aint broke, don't fix it
+    #   enable = true;
+    #   openFirewall = true;
+    # };
 
     jenkins = {
       enable = true;
@@ -115,34 +125,34 @@
       # initPasswordFile = "";
     };
 
-    teamviewer = {
-      enable = true;
-    };
+    # teamviewer = {
+    #   enable = true;
+    # };
 
     flatpak = {
       enable = true;
     };
 
-    greetd = {
-      enable = true;
-      settings = rec {
-        initial_session = {
-          command = "${pkgs.hyprland}/bin/Hyprland";
-          user = "aaronp";
-        };
-        default_session = initial_session;
-      };
-    };
+    # greetd = {
+    #   enable = true;
+    #   settings = rec {
+    #     initial_session = {
+    #       command = "${pkgs.hyprland}/bin/Hyprland";
+    #       user = "aaronp";
+    #     };
+    #     default_session = initial_session;
+    #   };
+    # };
 
     # enable smart cart interface to access yubikey with age-plugin-yubikey
-    pcscd = {
-      enable = true;
-    };
+    # pcscd = {
+    #   enable = true;
+    # };
 
     # enable CUPS to print documents
-    printing = {
-      enable = true;
-    };
+    # printing = {
+    #   enable = true;
+    # };
 
     # pipewire = {
     #   enable = true;

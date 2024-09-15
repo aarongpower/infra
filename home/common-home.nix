@@ -34,8 +34,13 @@
         bs = "concierge";
         ll = "ls -al";
         cat = "bat";
+        cd = "z";
         # z = "zoxide";
-      };
+     };
+    extraEnv = ''
+      $env.EDITOR = "hx";
+      $env.OPENAI_API_KEY = (^bash -c "echo $(${pkgs.coreutils}/bin/cat ${config.age.secrets.openai_api_key.path})");
+    '';
   };
   programs.carapace.enable = true;
   programs.carapace.enableNushellIntegration = true;
@@ -133,7 +138,7 @@
     settings = {
       shell = {
         program = "${pkgs.nushell}/bin/nu";
-        args = [ "-c" "${pkgs.zellij}/bin/zellij" ];
+        args = [ "-c" "${pkgs.zellij}/bin/zellij attach rusty-rustacean" ];
       };
       font = {
         size = 10;

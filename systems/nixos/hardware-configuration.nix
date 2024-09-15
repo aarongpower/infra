@@ -59,10 +59,10 @@
       # driSupport = true;
       driSupport32Bit = true;
     };
-    pulseaudio = {
-      enable = true;
-      package = pkgs.pulseaudioFull;
-    };
+    # pulseaudio = {
+    #   enable = true;
+    #   package = pkgs.pulseaudioFull;
+    # };
   };
 
   # hardware.graphics = {

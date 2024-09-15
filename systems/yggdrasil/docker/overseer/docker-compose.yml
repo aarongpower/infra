@@ -1,0 +1,18 @@
+---
+version: '3'
+
+services:
+  overseerr:
+    image: sctx/overseerr:latest
+    network_mode: host
+    container_name: overseerr
+    environment:
+      - LOG_LEVEL=debug
+      - TZ=Asia/Jakarta
+      - PORT=5055 #optional
+    ports:
+      - 5055:5055
+    volumes:
+      - /mnt/bigboy/docker/overseer-data/config:/app/config
+    restart: unless-stopped
+# TAGGED: 2024-09-04T21:09:11.628902626+07:00

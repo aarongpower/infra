@@ -1,4 +1,4 @@
-{ pkgs, inputs, lib, config, cider220, agenix, fenix, concierge, nixpkgs-pinned-looking-glass-b6, ... }:
+{ pkgs, inputs, lib, config, cider220, agenix, fenix, ... }:
 
 let
   edgeWrapped = pkgs.stdenv.mkDerivation {
@@ -20,7 +20,7 @@ in
 
   home.stateVersion = "23.11";
   home.packages = let
-    commonPackages = import ./common-pkgs.nix { inherit pkgs inputs fenix concierge; };
+    commonPackages = import ./common-pkgs.nix { inherit pkgs inputs fenix; };
     localPackages = with pkgs; [
       # Development Tools
       cider220
@@ -57,7 +57,6 @@ in
       syncthing
       unetbootin
       pavucontrol
-      hyprpaper
       mako
       waybar
       syncthingtray

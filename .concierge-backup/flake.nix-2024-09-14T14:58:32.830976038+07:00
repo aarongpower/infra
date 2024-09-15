@@ -65,7 +65,7 @@
       nixos = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         modules = sharedModules ++ linuxModules ++ [
-          ./systems/nixos/configuration.nix
+          (import ./systems/nixos/configuration.nix { inherit flakeRoot; })
           keymapp.nixosModules.keymapp-udev
           home-manager.nixosModules.home-manager {
             home-manager.useGlobalPkgs = true;
@@ -74,7 +74,7 @@
             home-manager.extraSpecialArgs = { inherit inputs cider220 agenix fenix compose2nix flakeRoot; };
           }
         ];
-        specialArgs = { inherit inputs flakeRoot; };
+        # specialArgs = { inherit home-manager; };
       };
       yggdrasil = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
@@ -105,4 +105,4 @@
     };
   };
 }
-# TAGGED: 2024-09-14T14:58:32.830950571+07:00
+# TAGGED: 2024-08-29T15:27:36.775343783+07:00
