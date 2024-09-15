@@ -36,7 +36,7 @@
         identitiesOnly = true;
       };
       "yggdrasil" = {
-        hostname = "192.168.3.10";
+        hostname = "192.168.3.20";
         user = "aaronp";
         identityFile = "~/.ssh/id_ed25519";
         identitiesOnly = true;
