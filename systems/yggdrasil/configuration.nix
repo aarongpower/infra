@@ -9,12 +9,12 @@
     ./hardware-configuration.nix
     ./boot.nix
     ./user.nix
-    ./docker/overseer/docker-compose.nix
-    ./docker/whisparr/docker-compose.nix
+    # ./docker/overseer/docker-compose.nix
+    # ./docker/whisparr/docker-compose.nix
     # ./docker/odoo/odoo.nix
-    ./services.nix
-    ./programs.nix
-    ./age.nix
+    # ./services.nix
+    # ./programs.nix
+    # ./age.nix
     ./environment.nix
     ./networking.nix
     ./security.nix

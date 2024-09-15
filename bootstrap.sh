@@ -53,9 +53,13 @@ else
   echo "Configuration already cloned."
 fi
 
+# copy in generated hardware configuration
+echo "=== Copying current hardware-configuration.nix into repo"
+cp /etc/nixos/hardware-configuration.nix /root/.config/nix/systems/${hostname}
+
 # Verify that the flake contains the hostname configuration
 echo "=== Verifying Flake Configuration ==="
-if ! grep -q "${HOSTNAME}" /root/.config/nix/flake.nix; then
+if ! grep -q "${HOSTNAME}" "/root/.config/nix/systems/${HOSTNAME}/networking.nix"; then
   echo "Error: Hostname '${HOSTNAME}' not found in flake configuration."
   echo "Please ensure you've added the configuration for '${HOSTNAME}' and try again."
   exit 1
@@ -64,7 +68,7 @@ fi
 # Run 'concierge' to deploy the configuration
 echo "=== Deploying Configuration Using 'concierge' ==="
 cd /root/.config/nix
-concierge deploy
+concierge
 
 echo "=== Bootstrap Complete ==="
 echo "Please reboot the system."
