@@ -12,7 +12,7 @@
     # ./docker/overseer/docker-compose.nix
     # ./docker/whisparr/docker-compose.nix
     # ./docker/odoo/odoo.nix
-    # ./services.nix
+     ./services.nix
     # ./programs.nix
     # ./age.nix
     ./environment.nix
@@ -89,8 +89,8 @@
   system.stateVersion = "23.11"; # Did you read the comment?
  
   # configure tailscale as an exit node
-  boot.kernel.sysctl = {
-    "net.ipv4.ip_forward" = 1;
-    "net.ipv6.conf.all.forwarding" = 1;
-  };
+  #boot.kernel.sysctl = {
+  #  "net.ipv4.ip_forward" = 1;
+  #  "net.ipv6.conf.all.forwarding" = 1;
+  #};
 }

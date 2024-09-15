@@ -1,4 +1,4 @@
-{ ... }:
+{ lib, ... }:
 
 {
   networking = {
@@ -6,7 +6,7 @@
     networkmanager.enable = true;
   
     hostName = "yggdrasil"; # Define your hostname.
-    useDHCP = true; # Disable DHCP for all interfaces by default
+    useDHCP = lib.mkForce true; # Disable DHCP for all interfaces by default
     interfaces = {
       # br0 = {
       #   useDHCP = true; # Enable DHCP specifically for br0

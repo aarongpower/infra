@@ -16,7 +16,7 @@
       nil
       ncdu
   ];
-  in localPackages ++ commonPackages;
+  in localPackages;
 
   # programs.ssh.matchBlocks = [
   #   {
@@ -34,10 +34,10 @@
 
   # Required to get virtualisation working
   # As per https://nixos.wiki/wiki/Virt-manager
-  dconf.settings = {
-    "org/virt-manager/virt-manager/connections" = {
-      autoconnect = ["qemu:///system"];
-      uris = ["qemu:///system"];
-    };
-  };
+#  dconf.settings = {
+#    "org/virt-manager/virt-manager/connections" = {
+#      autoconnect = ["qemu:///system"];
+#      uris = ["qemu:///system"];
+#    };
+#  };
 }
