@@ -20,10 +20,10 @@
       settings.KbdInteractiveAuthentication = false;
     };
 
-    plex = {
-      enable = true;
-      openFirewall = true;
-    };
+    # plex = {
+    #   enable = true;
+    #   openFirewall = true;
+    # };
 
     sabnzbd = {
       enable = true;

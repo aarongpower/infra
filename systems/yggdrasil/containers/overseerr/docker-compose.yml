@@ -1,6 +1,4 @@
 ---
-version: '3'
-
 services:
   overseerr:
     image: sctx/overseerr:latest
@@ -13,6 +11,6 @@ services:
     ports:
       - 5055:5055
     volumes:
-      - /tank/containers/overseer/config:/app/config
+      - /tank/containers/overseerr/config:/app/config
     restart: unless-stopped
 # TAGGED: 2024-09-04T21:09:11.628902626+07:00

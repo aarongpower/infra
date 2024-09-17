@@ -40,14 +40,14 @@
       group = "media";
     };
 
-   # prowlarr = {
-   #    enable = true;
-   #  };
+    prowlarr = {
+      enable = true;
+    };
 
-   #  bazarr = {
-   #    enable = true;
-   #    group = "media";
-   #  };
+    bazarr = {
+      enable = true;
+      group = "media";
+    };
 
    #  influxdb2 = {
    #    enable = true;
@@ -75,11 +75,11 @@
             "hass.rumahindo.net" = "http://192.168.3.100:8123";
             "plex.rumahindo.net" = "http://localhost:32400";
             "unifi.rumahindo.net" = "https://192.168.2.2";
-            # "bazarr.rumahindo.net" = "http://localhost:6767";
+            "bazarr.rumahindo.net" = "http://localhost:6767";
             # "ombi.rumahindo.net" = "http://localhost:5000";
-            # "overseerr.rumahindo.net" = "http://localhost:5055";
+            "overseerr.rumahindo.net" = "http://localhost:5055";
             # "whisparr.rumahindo.net" = "http://localhost:6969";
-            # "prowlarr.rumahindo.net" = "http://localhost:9696";
+            "prowlarr.rumahindo.net" = "http://localhost:9696";
           };
           originRequest.noTLSVerify = true;
           default = "http_status:404";

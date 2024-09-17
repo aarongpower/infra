@@ -16,6 +16,8 @@
       nil
       ncdu
       helix
+      inputs.compose2nix.packages.${pkgs.system}.default
+      bat
   ];
   in localPackages;
 

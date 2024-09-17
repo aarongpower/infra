@@ -12,7 +12,7 @@ in
     ./hardware-configuration.nix
     ./boot.nix
     ./user.nix
-    # ./docker/overseer/docker-compose.nix
+    ./containers/overseerr/docker-compose.nix
     # ./docker/whisparr/docker-compose.nix
     # ./docker/odoo/odoo.nix
      ./services.nix
@@ -22,6 +22,7 @@ in
     ./networking.nix
     ./security.nix
     # ../home/nixos.nix
+    ./storage.nix
   ];
   
   systemd.services.NetworkManager-wait-online.enable = lib.mkForce false;
