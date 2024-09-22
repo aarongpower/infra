@@ -1,1 +1,0 @@
-compose2nix --env_files=/run/agenix/odoo-env --include_env_files=true -project odoo

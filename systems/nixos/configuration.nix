@@ -12,8 +12,8 @@ in
     ./hardware-configuration.nix
     ./boot.nix
     ./user.nix
-    ./docker/overseer/docker-compose.nix
-    ./docker/whisparr/docker-compose.nix
+    # ./docker/overseer/docker-compose.nix
+    # ./docker/whisparr/docker-compose.nix
     # ./docker/odoo/odoo.nix
     ./services.nix
     ./programs.nix

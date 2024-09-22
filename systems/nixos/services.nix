@@ -25,42 +25,42 @@
     #   openFirewall = true;
     # };
 
-    sabnzbd = {
-      enable = true;
-      group = "media";
-    };
+    # sabnzbd = {
+    #   enable = true;
+    #   group = "media";
+    # };
 
-    sonarr = {
-      enable = true;
-      group = "media";
-    };
+    # sonarr = {
+    #   enable = true;
+    #   group = "media";
+    # };
 
-    radarr = {
-      enable = true;
-      group = "media";
-    };
+    # radarr = {
+    #   enable = true;
+    #   group = "media";
+    # };
 
-    prowlarr = {
-      enable = true;
-    };
+    # prowlarr = {
+    #   enable = true;
+    # };
 
-    bazarr = {
-      enable = true;
-      group = "media";
-    };
+    # bazarr = {
+    #   enable = true;
+    #   group = "media";
+    # };
 
     influxdb2 = {
       enable = true;
     };
     
-    tailscale = {
-      enable = true;
-    };
+    # tailscale = {
+    #   enable = true;
+    # };
     
-    n8n = {
-      enable = true;
-      webhookUrl = "https://n8n.rumahindo.net/";
-    };
+    # n8n = {
+    #   enable = true;
+    #   webhookUrl = "https://n8n.rumahindo.net/";
+    # };
 
     # cloudflared = {
     #   enable = true;
@@ -88,14 +88,14 @@
     #   };
     # };
 
-    deluge = {
-      enable = true;
-      web.enable = true;
-    };
+    # deluge = {
+    #   enable = true;
+    #   web.enable = true;
+    # };
 
-    transmission = {
-      enable = true;
-    };
+    # transmission = {
+    #   enable = true;
+    # };
 
     # automatic mounting of USB drives
     udisks2 = {
@@ -114,21 +114,21 @@
       openFirewall = true;
     };
 
-    jenkins = {
-      enable = true;
-      port = 1234;
-    };
+    # jenkins = {
+    #   enable = true;
+    #   port = 1234;
+    # };
     
-    nifi = {
-      enable = true;
-      # listenPort = 667;
-      # initUser = "aaron";
-      # initPasswordFile = "";
-    };
+    # nifi = {
+    #   enable = true;
+    #   # listenPort = 667;
+    #   # initUser = "aaron";
+    #   # initPasswordFile = "";
+    # };
 
-    teamviewer = {
-      enable = true;
-    };
+    # teamviewer = {
+    #   enable = true;
+    # };
 
     flatpak = {
       enable = true;
