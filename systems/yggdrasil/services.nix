@@ -57,10 +57,21 @@
     #   enable = true;
     # };
     
-   #  n8n = {
-   #    enable = true;
-   #    webhookUrl = "https://n8n.rumahindo.net/";
-   #  };
+    n8n = {
+      enable = true;
+      webhookUrl = "https://n8n.rumahindo.net/";
+    };
+
+    grocy = {
+      enable = true;
+      hostName = "grocy.rumahindo.net";
+      nginx.enableSSL = false;
+    };
+
+    node-red = {
+      enable = true;
+      withNpmAndGcc = true;
+    };
 
    cloudflared = {
       enable = true;
@@ -71,20 +82,35 @@
             "sonarr.rumahindo.net" = "http://localhost:8989";
             "radarr.rumahindo.net" = "http://localhost:7878";
             "sabnzbd.rumahindo.net" = "http://localhost:8080";
-            # "n8n.rumahindo.net" = "http://localhost:5678";
+            "n8n.rumahindo.net" = "http://localhost:5678";
             "hass.rumahindo.net" = "http://192.168.3.100:8123";
             "plex.rumahindo.net" = "http://localhost:32400";
             "unifi.rumahindo.net" = "https://192.168.2.2";
             "bazarr.rumahindo.net" = "http://localhost:6767";
             # "ombi.rumahindo.net" = "http://localhost:5000";
             "overseerr.rumahindo.net" = "http://localhost:5055";
-            # "whisparr.rumahindo.net" = "http://localhost:6969";
             "prowlarr.rumahindo.net" = "http://localhost:9696";
+            "actual.runahindo.net" = "http://localhost:5006";
+            "scrypted.rumahindo.net" = "https://localhost:10443";
+            "babybuddy.rumahindo.net" = "http://localhost:11606";
+            "yggdrasil.rumahindo.net" = "http://localhost:16900";
+            "gramps.rumahindo.net" = "http://localhost:8888";
+            "grocy.rumahindo.net" = "http://localhost:80";
+            "nodered.rumahindo.net" = "http://localhost:1880";
           };
           originRequest.noTLSVerify = true;
           default = "http_status:404";
         };
       };
+    };
+
+    ttyd = {
+      enable = true;
+      port = 16900;
+      writeable = true;
+      interface = "127.0.0.1";
+      # username = "aaronp";
+      
     };
 
     # deluge = {

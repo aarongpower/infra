@@ -18,6 +18,7 @@
       helix
       inputs.compose2nix.packages.${pkgs.system}.default
       bat
+      htop
   ];
   in localPackages;
 

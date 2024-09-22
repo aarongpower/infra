@@ -45,7 +45,11 @@
 
   outputs = { self, nixpkgs, home-manager, fenix, keymapp, cider220, nix-darwin, agenix, compose2nix, ... } @ inputs:
   let
-    flakeRoot = ./.;
+    usefulValues = {
+      flakeRoot = ./.;
+      timezone = "Asia/Jakarta";
+    };
+    # flakeRoot = ./.;
     overlays = [ 
       fenix.overlays.default
     ];
@@ -71,10 +75,10 @@
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
             home-manager.users.aaronp = import ./home/nixos.nix;
-            home-manager.extraSpecialArgs = { inherit inputs cider220 agenix fenix compose2nix flakeRoot; };
+            home-manager.extraSpecialArgs = { inherit inputs cider220 agenix fenix compose2nix usefulValues; };
           }
         ];
-        specialArgs = { inherit inputs flakeRoot; };
+        specialArgs = { inherit inputs usefulValues; };
       };
       yggdrasil = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
@@ -84,10 +88,10 @@
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
             home-manager.users.aaronp = import ./home/yggdrasil.nix;
-            home-manager.extraSpecialArgs = { inherit inputs agenix fenix compose2nix flakeRoot; };
+            home-manager.extraSpecialArgs = { inherit inputs agenix fenix compose2nix usefulValues; };
           }
         ];
-        specialArgs = { inherit inputs flakeRoot; };
+        specialArgs = { inherit inputs usefulValues; };
       }; 
     };
 

@@ -1,4 +1,4 @@
-{ flakeRoot, ... }:
+{ usefulValues, ... }:
 
 {
   age = {
@@ -7,7 +7,7 @@
     ];
 
     secrets.cloudflare-tunnel-key = {
-      file = "${flakeRoot}/secrets/cloudflare-tunnel-key.age";
+      file = "${usefulValues.flakeRoot}/secrets/cloudflare-tunnel-key.age";
       owner = "cloudflared";
       group = "cloudflared";
     };
