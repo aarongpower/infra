@@ -4,6 +4,11 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.05";
 
+    lix-module = {
+      url = "https://git.lix.systems/lix-project/nixos-module/archive/2.91.0.tar.gz";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     agenix = {
       url = "github:ryantm/agenix";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -24,7 +29,7 @@
     };
     
     keymapp = {
-      url = "path:./nixos/keymapp";
+      url = "path:./systems/nixos/keymapp";
     };
     
     nix-darwin = {
@@ -71,6 +76,7 @@
         modules = sharedModules ++ linuxModules ++ [
           ./systems/nixos/configuration.nix
           keymapp.nixosModules.keymapp-udev
+          inputs.lix-module.nixosModules.default
           home-manager.nixosModules.home-manager {
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
