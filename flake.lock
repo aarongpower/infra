@@ -63,7 +63,7 @@
     "compose2nix_2": {
       "inputs": {
         "nixpkgs": [
-          "con",
+          "concierge",
           "nixpkgs"
         ],
         "onchg": "onchg_2"
@@ -82,7 +82,7 @@
         "type": "github"
       }
     },
-    "con": {
+    "concierge": {
       "inputs": {
         "compose2nix": "compose2nix_2",
         "fenix": "fenix",
@@ -92,11 +92,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1725458272,
-        "narHash": "sha256-tyn3SX2zLJk91sDxiK5cU+C8QPrhwh3XAooPKDN8o+c=",
+        "lastModified": 1727678026,
+        "narHash": "sha256-UQ53fpde7k38aX7WTEMQzYUWynM+e7j0mfzobhvmvPE=",
         "owner": "aarongpower",
         "repo": "nix-concierge",
-        "rev": "3425bc4229063d7f9c0e2d373d16f7c2019f0824",
+        "rev": "9ff7297c80ff0474d9ed5f6bac48333ba0c09f54",
         "type": "github"
       },
       "original": {
@@ -130,7 +130,7 @@
     "fenix": {
       "inputs": {
         "nixpkgs": [
-          "con",
+          "concierge",
           "nixpkgs"
         ],
         "rust-analyzer-src": "rust-analyzer-src"
@@ -340,7 +340,7 @@
       "inputs": {
         "flake-utils": "flake-utils_3",
         "nixpkgs": [
-          "con",
+          "concierge",
           "compose2nix",
           "onchg",
           "nixpkgs"
@@ -434,7 +434,7 @@
       "inputs": {
         "nix-pre-commit": "nix-pre-commit_2",
         "nixpkgs": [
-          "con",
+          "concierge",
           "compose2nix",
           "nixpkgs"
         ]
@@ -458,7 +458,7 @@
         "agenix": "agenix",
         "cider220": "cider220",
         "compose2nix": "compose2nix",
-        "con": "con",
+        "concierge": "concierge",
         "fenix": "fenix_2",
         "home-manager": "home-manager_2",
         "keymapp": "keymapp",

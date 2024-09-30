@@ -17,6 +17,7 @@
       ncdu
       helix
       inputs.compose2nix.packages.${pkgs.system}.default
+      inputs.concierge.packages.${pkgs.system}.default
       bat
       htop
   ];
