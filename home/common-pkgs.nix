@@ -43,7 +43,7 @@ with pkgs; [
   # blender - doesn't support aarch64-darwin yet, installed directly to nixos host only
   age-plugin-yubikey
   zip
-  inputs.con.packages.${pkgs.system}.default
+  inputs.concierge.packages.${pkgs.system}.default
   # ansible
   ripgrep
   # rpi-imager

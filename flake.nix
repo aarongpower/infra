@@ -32,7 +32,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    con = {
+    concierge = {
       url = "github:aarongpower/nix-concierge";
       inputs.nixpkgs.follows = "nixpkgs";
     };
