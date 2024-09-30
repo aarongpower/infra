@@ -1,4 +1,4 @@
-{ pkgs, inputs, lib, config, cider220, agenix, fenix, ... }:
+{ pkgs, inputs, lib, config, cider220, agenix, fenix, usefulValues, ... }:
 
 let
   edgeWrapped = pkgs.stdenv.mkDerivation {
@@ -11,6 +11,17 @@ let
       ln -s ${pkgs.microsoft-edge}/bin/microsoft-edge $out/bin/microsoft-edge
       wrapProgram $out/bin/microsoft-edge --add-flags "--enable-features=UseOzonePlatform --ozone-platform=wayland"
     '';
+  };
+
+  wallpaperImage = builtins.path { path = "${usefulValues.flakeRoot}/systems/nixos/images/fluid.png"; };
+
+  hyprpaperConfig = pkgs.writeTextFile {
+    name = "hyprpaper.conf";
+    text = ''
+      preload = ${wallpaperImage}
+      wallpaper = DP-1,${wallpaperImage}
+      wallpaper = DP-2,${wallpaperImage}
+     '';
   };
 in
 {
@@ -108,6 +119,7 @@ in
       # anydesk
       ncdu
       element-desktop
+      hyprshot
   ];
   in localPackages ++ commonPackages;
 
@@ -178,7 +190,7 @@ in
   '';
 
   # Hyprpaper config
-  xdg.configFile."hypr/hyprpaper.conf".source = ../nixos/hypr/hyprpaper.conf;
+  xdg.configFile."hypr/hyprpaper.conf".source = hyprpaperConfig;
 
   # Waybar config
   xdg.configFile."waybar/style.css".source = ../nixos/waybar/style.css;

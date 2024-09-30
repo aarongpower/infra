@@ -20,3 +20,4 @@ services:
       # '/data' is the path Actual will look for its files in by default, so leave that as-is.
       - /tank/containers/actual/data:/data
     restart: unless-stopped
+# TAGGED: 2024-09-30T13:40:13.801524109+07:00

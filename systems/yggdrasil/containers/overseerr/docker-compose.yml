@@ -13,4 +13,4 @@ services:
     volumes:
       - /tank/containers/overseerr/config:/app/config
     restart: unless-stopped
-# TAGGED: 2024-09-04T21:09:11.628902626+07:00
+# TAGGED: 2024-09-30T13:40:13.801524109+07:00

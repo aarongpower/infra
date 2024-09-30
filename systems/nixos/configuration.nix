@@ -23,6 +23,8 @@ in
     ./security.nix
     # ../home/nixos.nix
   ];
+
+  virtualisation.spiceUSBRedirection.enable = true;
   
   systemd.services.NetworkManager-wait-online.enable = lib.mkForce false;
 
