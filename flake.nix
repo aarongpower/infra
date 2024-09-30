@@ -60,6 +60,7 @@
     ];
     sharedModules = [
       ({ pkgs, ... }: { nixpkgs.overlays = overlays; })
+      inputs.lix-module.nixosModules.default
     ];
     linuxModules = [
       agenix.nixosModules.default
@@ -76,7 +77,6 @@
         modules = sharedModules ++ linuxModules ++ [
           ./systems/nixos/configuration.nix
           keymapp.nixosModules.keymapp-udev
-          inputs.lix-module.nixosModules.default
           home-manager.nixosModules.home-manager {
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
