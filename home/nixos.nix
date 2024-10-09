@@ -125,7 +125,7 @@ in
 
   wayland.windowManager.hyprland = {
     enable = true;
-    extraConfig = (builtins.readFile ../nixos/hypr/hyprland.conf);
+    extraConfig = (builtins.readFile "${usefulValues.flakeRoot}/systems/nixos/hypr/hyprland.conf");
   };
 
   services.mako = {
@@ -193,8 +193,8 @@ in
   xdg.configFile."hypr/hyprpaper.conf".source = hyprpaperConfig;
 
   # Waybar config
-  xdg.configFile."waybar/style.css".source = ../nixos/waybar/style.css;
-  xdg.configFile."waybar/config".source = ../nixos/waybar/waybar.conf;
+  xdg.configFile."waybar/style.css".source = "${usefulValues.flakeRoot}/systems/nixos/waybar/style.css";
+  xdg.configFile."waybar/config".source = "${usefulValues.flakeRoot}/systems/nixos/waybar/waybar.conf";
 
   # Required to get virtualisation working
   # As per https://nixos.wiki/wiki/Virt-manager

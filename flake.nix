@@ -46,15 +46,12 @@
       url = "github:aksiksi/compose2nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
-    flake-parts.url = "github:hercules-ci/flake-parts";
   };
 
   outputs = {
     self,
     nixpkgs,
     home-manager,
-    flake-parts,
     fenix,
     keymapp,
     cider220,
