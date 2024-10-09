@@ -92,11 +92,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1727678026,
-        "narHash": "sha256-UQ53fpde7k38aX7WTEMQzYUWynM+e7j0mfzobhvmvPE=",
+        "lastModified": 1728460475,
+        "narHash": "sha256-6MmmVU4gWUg68lakhpIEwCE+Ivy5LwLFjp5od4YOL7Q=",
         "owner": "aarongpower",
         "repo": "nix-concierge",
-        "rev": "9ff7297c80ff0474d9ed5f6bac48333ba0c09f54",
+        "rev": "f3a302c3f674fda262681ad3513fcf394df0a9e3",
         "type": "github"
       },
       "original": {
