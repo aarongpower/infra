@@ -76,7 +76,7 @@
       agenix.nixosModules.default
     ];
     darwinModules = [
-      ./astra/configuration.nix
+      ./systems/astra/configuration.nix
       # Other Darwin specific modules
     ];
   in {
