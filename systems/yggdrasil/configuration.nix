@@ -12,15 +12,7 @@ in
     ./hardware-configuration.nix
     ./boot.nix
     ./user.nix
-    ./containers/containers.nix
-    ./containers/overseerr/docker-compose.nix
-    # ./containers/actual/docker-compose.nix
-    # ./containers/openbudgeteer/docker-compose.nix
-    ./containers/scrypted/docker-compose.nix
-    ./containers/babybuddy/docker-compose.nix
-    # ./docker/whisparr/docker-compose.nix
-    # ./docker/odoo/odoo.nix
-     ./services.nix
+    ./services.nix
     # ./programs.nix
     (importWithExtras ./age.nix)
     ./environment.nix
@@ -96,10 +88,4 @@ in
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "23.11"; # Did you read the comment?
- 
-  # configure tailscale as an exit node
-  #boot.kernel.sysctl = {
-  #  "net.ipv4.ip_forward" = 1;
-  #  "net.ipv6.conf.all.forwarding" = 1;
-  #};
 }
