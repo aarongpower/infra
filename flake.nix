@@ -144,7 +144,7 @@
     };
 
     packages.x86_64-linux.generate-containers = {containersDir}:
-      import ./derivations/generate-containers/generate-containers.nix {
+      import ./derivations/generate-containers/default.nix {
         pkgs = nixpkgs.legacyPackages.x86_64-linux;
         compose2nix = compose2nix;
         inherit containersDir;
