@@ -20,6 +20,7 @@
       inputs.concierge.packages.${pkgs.system}.default
       bat
       htop
+      tree
   ];
   in localPackages;
 
