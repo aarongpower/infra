@@ -3,6 +3,7 @@
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.05";
+    nixos-wsl.url = "github:nix-community/NixOS-WSL/main";
 
     lix-module = {
       url = "https://git.lix.systems/lix-project/nixos-module/archive/2.91.0.tar.gz";
@@ -51,6 +52,7 @@
   outputs = {
     self,
     nixpkgs,
+    nixos-wsl,
     home-manager,
     fenix,
     keymapp,
@@ -121,6 +123,21 @@
               home-manager.extraSpecialArgs = {inherit inputs agenix fenix compose2nix usefulValues;};
             }
           ];
+        specialArgs = {inherit inputs usefulValues;};
+      };
+      vulcan-nixos = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        modules = linuxModules ++ [
+          nixos-wsl.nixosModules.default
+          ./systems/vulcan-nixos/configuration.nix
+          home-manager.nixosModules.home-manager
+          {
+            home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
+            home-manager.users.aaronp = import ./home/vulcan-nixos.nix;
+            home-manager.extraSpecialArgs = {inherit inputs agenix fenix compose2nix usefulValues;};
+          }
+        ];
         specialArgs = {inherit inputs usefulValues;};
       };
     };
