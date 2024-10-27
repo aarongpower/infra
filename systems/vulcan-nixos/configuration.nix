@@ -11,6 +11,7 @@ in
     ./programs.nix
     ./security.nix
     ./user.nix
+    ./services.nix
   ];
 
   # nix.package = pkgs.nixFlakes;

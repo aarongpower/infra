@@ -16,4 +16,8 @@
       ];
     };
   };
+
+  # users.users.syncthing = {
+  #   extraGroups = [ "users" ];
+  # };
 }

@@ -21,6 +21,7 @@
       bat
       htop
       tree
+      firefox
   ];
   in localPackages;
 
