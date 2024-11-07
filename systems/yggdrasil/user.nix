@@ -10,6 +10,10 @@
   # users.groups.vfio = {}; # vfio group
   users.groups.netdev = {};
 
+  users.users.nobody = {
+    extraGroups = [ "media" ];
+  };
+
   users.users.aaronp = {
     isNormalUser = true;
     shell = "${pkgs.nushell}/bin/nu";

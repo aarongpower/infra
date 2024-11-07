@@ -24,6 +24,15 @@ in
   
   systemd.services.NetworkManager-wait-online.enable = lib.mkForce false;
 
+  # Symlink added because there seems to be a bug in the syncthing service
+  # definition that causes problems when changing the dataDir
+  # When data dir is changed it seems to be trying to put the syncthing 
+  # database in the nix store
+  # But I want to store this in the tank, so I will just symlink it
+  systemd.tmpfiles.rules = [
+    "L /var/lib/syncthing - - - - /tank/syncthing"
+  ];
+
   nix = {
     extraOptions = ''
       auto-optimise-store = true

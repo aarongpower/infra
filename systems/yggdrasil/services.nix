@@ -97,6 +97,8 @@
             "gramps.rumahindo.net" = "http://localhost:8888";
             "grocy.rumahindo.net" = "http://localhost:80";
             "nodered.rumahindo.net" = "http://localhost:1880";
+            "suggestarr.rumahindo.net" = "http://localhost:5000";
+            "syncthing.rumahindo.net" = "http://localhost:8384";
           };
           originRequest.noTLSVerify = true;
           default = "http_status:404";
@@ -111,6 +113,115 @@
       interface = "127.0.0.1";
       # username = "aaronp";
       
+    };
+
+    # Note that in yggdrasil/environment.nix there is a symlink that points
+    # /var/lib/syncthing to /tank/syncthing
+    # I want to keep the sync folders and config in the tank
+    # but there seems to be a bug whereby if I change the dataDir, it tries to 
+    # put the syncthing database in the nix store
+    syncthing = {
+      enable = true;
+      # dataDir = /tank/syncthing;
+      # configDir = /var/lib/syncthing/.config/syncthing;
+      settings = {
+        devices = {
+          "astra" = { id = "UZIC2YY-JKLMMEQ-CXJU4PW-QV2CWY3-GPD25DH-AS5GZ4Y-QWVUMO7-GWUUJAN"; };
+          "vulcan" = { id = "XSHVAS4-XDTLBVW-AM7GCF4-NCLP67Y-FZW6XVF-YU46MRJ-ACQFPPP-AJLFKQ6"; };
+          "vulcan-nixos" = { id = "34UHDDE-NOBJ6S3-Q6DUHNR-WVNBAOK-W66AY4Y-C7YLVQM-O567LFR-4EAKNAT"; };
+        };
+        gui = {
+          insecureSkipHostcheck = true; # required to allow cloudflared tunnel
+        };
+      };
+    };
+
+
+    samba = {
+      enable = true;
+      securityType = "user";
+      extraConfig = ''
+          workgroup = WORKGROUP
+          server role = standalone server
+          dns proxy = no
+          vfs objects = catia fruit streams_xattr
+
+          pam password change = yes
+          map to guest = bad user
+          usershare allow guests = yes
+          create mask = 0664
+          force create mode = 0664
+          directory mask = 0775
+          force directory mode = 0775
+          follow symlinks = yes
+          load printers = no
+          printing = bsd
+          printcap name = /dev/null
+          disable spoolss = yes
+          strict locking = no
+          aio read size = 0
+          aio write size = 0
+          vfs objects = acl_xattr catia fruit streams_xattr
+          inherit permissions = yes
+
+          # Security
+          client ipc max protocol = SMB3
+          client ipc min protocol = SMB2_10
+          client max protocol = SMB3
+          client min protocol = SMB2_10
+          server max protocol = SMB3
+          server min protocol = SMB2_10
+
+          # Time Machine
+          fruit:delete_empty_adfiles = yes
+          fruit:time machine = yes
+          fruit:veto_appledouble = no
+          fruit:wipe_intentionally_left_blank_rfork = yes
+          fruit:posix_rename = yes
+          fruit:metadata = stream
+        '';
+
+      shares = {
+        # "Time Capsule" = {
+        #   path = "/pool/samba/timemachine";
+        #   browseable = "yes";
+        #   "read only" = "no";
+        #   "inherit acls" = "yes";
+
+        #   # Authenticate ?
+        #   # "valid users" = "melias122";
+
+        #   # Or allow guests
+        #   "guest ok" = "yes";
+        #   "force user" = "nobody";
+        #   "force group" = "nogroup";
+        # };
+        media = {
+          path = "/tank/media";
+          browseable = "yes";
+          "read only" = "no";
+
+          # This is public, everybody can access.
+          "guest ok" = "yes";
+          "force user" = "nobody";
+          "force group" = "media";
+
+          "veto files" = "/.apdisk/.DS_Store/.TemporaryItems/.Trashes/desktop.ini/ehthumbs.db/Network Trash Folder/Temporary Items/Thumbs.db/";
+          "delete veto files" = "yes";
+        };
+        # melias122 = {
+        #   path = "/pool/samba/melias122";
+        #   browseable = "yes";
+        #   "read only" = "no";
+
+        #   # Make this private
+        #   "guest ok" = "no";
+        #   "valid users" = "melias122";
+
+        #   "veto files" = "/.apdisk/.DS_Store/.TemporaryItems/.Trashes/desktop.ini/ehthumbs.db/Network Trash Folder/Temporary Items/Thumbs.db/";
+        #   "delete veto files" = "yes";
+        # };
+      };
     };
 
     # deluge = {
