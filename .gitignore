@@ -1,3 +1,4 @@
 .stfolder
 systems/nixos/cider/*.AppImage
 systems/nixos/flatpak
+systems/*/containers/priv_*
