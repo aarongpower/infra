@@ -62,11 +62,11 @@
       webhookUrl = "https://n8n.rumahindo.net/";
     };
 
-    grocy = {
-      enable = true;
-      hostName = "grocy.rumahindo.net";
-      nginx.enableSSL = false;
-    };
+    # grocy = {
+    #   enable = true;
+    #   hostName = "grocy.rumahindo.net";
+    #   nginx.enableSSL = false;
+    # };
 
     node-red = {
       enable = true;
@@ -95,10 +95,12 @@
             "babybuddy.rumahindo.net" = "http://localhost:11606";
             "yggdrasil.rumahindo.net" = "http://localhost:16900";
             "gramps.rumahindo.net" = "http://localhost:8888";
-            "grocy.rumahindo.net" = "http://localhost:80";
+            # "grocy.rumahindo.net" = "http://localhost:80";
             "nodered.rumahindo.net" = "http://localhost:1880";
             "suggestarr.rumahindo.net" = "http://localhost:5000";
             "syncthing.rumahindo.net" = "http://localhost:8384";
+            "ospos.rumahindo.net" = "http://localhost:80";
+            "whisparr.rumahindo.net" = "http://localhost:6969";
           };
           originRequest.noTLSVerify = true;
           default = "http_status:404";
@@ -208,6 +210,60 @@
 
           "veto files" = "/.apdisk/.DS_Store/.TemporaryItems/.Trashes/desktop.ini/ehthumbs.db/Network Trash Folder/Temporary Items/Thumbs.db/";
           "delete veto files" = "yes";
+        };
+
+        downloads = {
+          path = "/tank/downloads";
+          browseable = "yes";
+          "valid users" = "aaronp";
+          "read only" = "no";
+          writeable = "yes";
+          "create mask" = "0664";
+          "directory mask" = "0775";
+          "force user" = "aaronp";
+          "force group" = "media";
+
+          # make it private
+          "guest ok" = "no";
+
+          "veto files" = "/.apdisk/.DS_Store/.TemporaryItems/.Trashes/desktop.ini/ehthumbs.db/Network Trash Folder/Temporary Items/Thumbs.db/";
+          "delete veto files" = "yes";
+
+          # honor FACLs
+          "vfs objects" = "acl_xattr";
+        };
+        # melias122 = {
+        #   path = "/pool/samba/melias122";
+        #   browseable = "yes";
+        #   "read only" = "no";
+
+        #   # Make this private
+        #   "guest ok" = "no";
+        #   "valid users" = "melias122";
+
+        #   "veto files" = "/.apdisk/.DS_Store/.TemporaryItems/.Trashes/desktop.ini/ehthumbs.db/Network Trash Folder/Temporary Items/Thumbs.db/";
+        #   "delete veto files" = "yes";
+        # };
+
+        other = {
+          path = "/tank/other";
+          browseable = "yes";
+          "valid users" = "aaronp";
+          "read only" = "no";
+          writeable = "yes";
+          "create mask" = "0664";
+          "directory mask" = "0775";
+          "force user" = "aaronp";
+          "force group" = "media";
+
+          # make it private
+          "guest ok" = "no";
+
+          "veto files" = "/.apdisk/.DS_Store/.TemporaryItems/.Trashes/desktop.ini/ehthumbs.db/Network Trash Folder/Temporary Items/Thumbs.db/";
+          "delete veto files" = "yes";
+
+          # honor FACLs
+          "vfs objects" = "acl_xattr";
         };
         # melias122 = {
         #   path = "/pool/samba/melias122";
