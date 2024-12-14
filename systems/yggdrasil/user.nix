@@ -9,6 +9,9 @@
   };
   # users.groups.vfio = {}; # vfio group
   users.groups.netdev = {};
+  users.groups.media = {
+    members = [ "sonarr" "radarr" "plex" "sabnzdb"];
+  };
 
   users.users.nobody = {
     extraGroups = [ "media" ];
