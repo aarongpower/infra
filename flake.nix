@@ -110,6 +110,8 @@
             ./systems/yggdrasil/configuration.nix
             ({...}: let
               generatedContainers = self.packages.x86_64-linux.generate-containers {containersDir = ./systems/yggdrasil/containers;};
+              # Debug statement to print the output path
+              # _ = builtins.trace "generatedContainers output path: ${generatedContainers}" null;
             in {
               imports = [
                 (import "${generatedContainers}/containers.nix")
@@ -160,12 +162,22 @@
       };
     };
 
-    packages.x86_64-linux.generate-containers = {containersDir}:
-      import ./derivations/generate-containers/default.nix {
-        pkgs = nixpkgs.legacyPackages.x86_64-linux;
-        compose2nix = compose2nix;
-        inherit containersDir;
-      };
+    # packages.x86_64-linux.generate-containers = {containersDir}:
+    #   import ./derivations/generate-containers/default.nix {
+    #     pkgs = nixpkgs.legacyPackages.x86_64-linux;
+    #     compose2nix = compose2nix;
+    #     inherit containersDir;
+    #   };
+    # Wrap the generate-containers package with builtins.trace
+      packages.x86_64-linux.generate-containers = { containersDir }:
+        let
+          result = import ./derivations/generate-containers/default.nix {
+            pkgs = nixpkgs.legacyPackages.x86_64-linux;
+            compose2nix = compose2nix;
+            inherit containersDir;
+          };
+        in
+          builtins.trace "generate-containers output path: ${result}" result;
   };
 }
 # TAGGED: 2024-09-15T06:48:20.372342378+00:00
