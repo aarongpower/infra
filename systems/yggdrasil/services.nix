@@ -2,6 +2,16 @@
 
 {
   services = {
+    timesyncd = {
+      enable = true;
+      servers = [
+        "0.id.pool.ntp.org"
+        "1.id.pool.ntp.org"
+        "2.id.pool.ntp.org"
+        "3.id.pool.ntp.org"
+      ];
+    };
+    
 
     proxmox-ve = {
       enable = true;
