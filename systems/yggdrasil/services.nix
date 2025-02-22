@@ -1,18 +1,7 @@
-{ config, pkgs, lib, ... }:
+{ config, pkgs, lib, inputs, ... }:
 
 {
-  # nixpkgs.overlays = [
-  #   (self: super: {
-  #     python3Packages = super.python3Packages // {
-  #       aiohttp = super.python3Packages.aiohttp.overrideAttrs (oldAttrs: {
-  #         doCheck = false;
-  #       });
-  #     };
-  #   })
-  # ];
-
   services = {
-    # keymapp.enable = true;
 
     proxmox-ve = {
       enable = true;
