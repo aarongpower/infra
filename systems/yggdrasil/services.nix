@@ -88,7 +88,7 @@
             "radarr.rumahindo.net" = "http://localhost:7878";
             "sabnzbd.rumahindo.net" = "http://localhost:8080";
             "n8n.rumahindo.net" = "http://localhost:5678";
-            "hass.rumahindo.net" = "http://192.168.3.100:8123";
+            "hass.rumahindo.net" = "http://192.168.3.21:8123";
             "plex.rumahindo.net" = "http://localhost:32400";
             "unifi.rumahindo.net" = "https://192.168.2.2";
             "bazarr.rumahindo.net" = "http://localhost:6767";
