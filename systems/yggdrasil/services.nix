@@ -14,6 +14,11 @@
   services = {
     # keymapp.enable = true;
 
+    proxmox-ve = {
+      enable = true;
+      ipAddress = "192.168.3.20";
+    };
+
     openssh = {
       enable = true;
       settings.PasswordAuthentication = false;

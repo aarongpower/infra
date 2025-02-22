@@ -47,6 +47,8 @@
       url = "github:aksiksi/compose2nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    proxmox-nixos.url = "github:SaumonNet/proxmox-nixos";
   };
 
   outputs = {
@@ -108,6 +110,7 @@
           ++ linuxModules
           ++ [
             ./systems/yggdrasil/configuration.nix
+            inputs.proxmox-nixos.nixosModules.proxmox-ve
             ({...}: let
               generatedContainers = self.packages.x86_64-linux.generate-containers {containersDir = ./systems/yggdrasil/containers;};
               # Debug statement to print the output path
@@ -123,6 +126,9 @@
               home-manager.useUserPackages = true;
               home-manager.users.aaronp = import ./home/yggdrasil.nix;
               home-manager.extraSpecialArgs = {inherit inputs agenix fenix compose2nix usefulValues;};
+            }
+            {
+              nixpkgs.overlays = (overlays ++ [ inputs.proxmox-nixos.overlays.x86_64-linux ]);
             }
           ];
         specialArgs = {inherit inputs usefulValues;};
