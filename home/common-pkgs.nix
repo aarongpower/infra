@@ -51,4 +51,5 @@ with pkgs; [
   # darktable
   # zoxide
   chatgpt-cli
+  neofetch
 ]

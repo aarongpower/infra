@@ -21,6 +21,7 @@
       bat
       htop
       tree
+      neofetch
   ];
   in localPackages;
 
