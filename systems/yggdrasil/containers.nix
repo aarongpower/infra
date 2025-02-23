@@ -140,4 +140,32 @@
       system.stateVersion = "24.11";
     };
   };
+  containers.vaultwarden = {
+    autoStart = true;
+    privateNetwork = true;
+    hostBridge = "br0";
+    localAddress = "192.168.3.25/24";
+    config = { config, pkgs, ... }: {
+      services.vaultwarden = {
+        enable = true;
+        config = {
+          ROCKET_ADDRESS = "192.168.3.25";
+          ROCKET_PORT = 80;
+        };
+      };
+      networking.firewall = {
+        enable = true;
+        allowedTCPPorts = [ 80 ];
+      };
+      networking.useDHCP = false;
+      networking.interfaces.eth0.ipv4.addresses = [{
+        address = "192.168.3.25";
+        prefixLength = 24;
+      }];
+      networking.defaultGateway = "192.168.3.1";  # adjust as needed
+      networking.nameservers = [ "9.9.9.9" ];  # adjust as needed
+      system.stateVersion = "24.11";
+    };
+  };
+
 }
