@@ -137,6 +137,18 @@
           "vulcan" = { id = "XSHVAS4-XDTLBVW-AM7GCF4-NCLP67Y-FZW6XVF-YU46MRJ-ACQFPPP-AJLFKQ6"; };
           "vulcan-nixos" = { id = "34UHDDE-NOBJ6S3-Q6DUHNR-WVNBAOK-W66AY4Y-C7YLVQM-O567LFR-4EAKNAT"; };
         };
+        folders = {
+          "/var/lib/syncthing/dev" = {
+            label = "dev";
+            id = "cv3rm-nqhlu";
+            devices = [ "astra" "vulcan" ];
+          };
+          "/var/lib/syncthing/aaron_sync" = {
+            label = "aaron_sync";
+            id = "default";
+            devices = [ "astra" "vulcan" ];
+          };
+        };
         gui = {
           insecureSkipHostcheck = true; # required to allow cloudflared tunnel
         };
