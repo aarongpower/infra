@@ -20,6 +20,7 @@ in
     ./security.nix
     # ../home/nixos.nix
     ./storage.nix
+    ./containers.nix
   ];
   
   systemd.services.NetworkManager-wait-online.enable = lib.mkForce false;
