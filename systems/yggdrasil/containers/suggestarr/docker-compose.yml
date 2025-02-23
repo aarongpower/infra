@@ -8,3 +8,4 @@ services:
     #   - "5000:5000"
     volumes:
       - /tank/containers/suggestarr/config_files:/app/config/config_files
+# TAGGED: 2025-02-22T18:06:10.078065711+07:00
