@@ -25,9 +25,9 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    cider220 = {
-      url = "path:./nixos/cider";
-    };
+    # cider220 = {
+    #   url = "path:./nixos/cider";
+    # };
 
     keymapp = {
       url = "path:./systems/nixos/keymapp";
@@ -58,7 +58,7 @@
     home-manager,
     fenix,
     keymapp,
-    cider220,
+    # cider220,
     nix-darwin,
     agenix,
     compose2nix,
@@ -85,24 +85,24 @@
     ];
   in {
     nixosConfigurations = {
-      nixos = nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
-        modules =
-          sharedModules
-          ++ linuxModules
-          ++ [
-            ./systems/nixos/configuration.nix
-            keymapp.nixosModules.keymapp-udev
-            home-manager.nixosModules.home-manager
-            {
-              home-manager.useGlobalPkgs = true;
-              home-manager.useUserPackages = true;
-              home-manager.users.aaronp = import ./home/nixos.nix;
-              home-manager.extraSpecialArgs = {inherit inputs cider220 agenix fenix compose2nix usefulValues;};
-            }
-          ];
-        specialArgs = {inherit inputs usefulValues;};
-      };
+      # nixos = nixpkgs.lib.nixosSystem {
+      #   system = "x86_64-linux";
+      #   modules =
+      #     sharedModules
+      #     ++ linuxModules
+      #     ++ [
+      #       ./systems/nixos/configuration.nix
+      #       keymapp.nixosModules.keymapp-udev
+      #       home-manager.nixosModules.home-manager
+      #       {
+      #         home-manager.useGlobalPkgs = true;
+      #         home-manager.useUserPackages = true;
+      #         home-manager.users.aaronp = import ./home/nixos.nix;
+      #         home-manager.extraSpecialArgs = {inherit inputs cider220 agenix fenix compose2nix usefulValues;};
+      #       }
+      #     ];
+      #   specialArgs = {inherit inputs usefulValues;};
+      # };
       yggdrasil = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         modules =
