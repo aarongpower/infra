@@ -7,7 +7,7 @@
   
     hostName = "yggdrasil"; # Define your hostname.
     useDHCP = lib.mkForce true; # Disable DHCP for all interfaces by default
-    bridges.br0.interfaces = [ "enp5s0" ];
+    bridges.br0.interfaces = [ "enp6s0" ];
     interfaces.br0.ipv4.addresses = [
       {
         address = "192.168.3.20";
