@@ -108,6 +108,7 @@
     hostBridge = "br0";
     localAddress = "192.168.3.24/24";
     config = { config, pkgs, ... }: {
+      environment.systemPackages = with pkgs; [ dig ];
       services.nsd = {
         enable = true;
         zones."rumahindo.lan".data = ''
@@ -124,6 +125,7 @@
 
           yggdrasil IN A 192.168.3.20
           '';
+        interfaces = [ "192.168.3.24" "127.0.0.1" ];
       };
       networking.firewall = {
         enable = true;
