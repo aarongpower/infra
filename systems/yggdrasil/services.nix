@@ -106,6 +106,7 @@
             "ospos.rumahindo.net" = "http://localhost:80";
             "whisparr.rumahindo.net" = "http://localhost:6969";
             "vaultwarden.rumahindo.net" = "http://192.168.3.25";
+            "chat.rumahindo.net" = "http://192.168.3.26:8080";
           };
           originRequest.noTLSVerify = true;
           default = "http_status:404";

@@ -1,5 +1,9 @@
-{ config, pkgs, lib, ... }:
+{ config, pkgs, lib, inputs, ... }:
 
+let
+  system = "x86_64-linux";
+  unstable = import inputs.nixpkgs-unstable { inherit system; };
+in
 {
   containers.blocky = {
     autoStart = true;
@@ -166,6 +170,49 @@
       }];
       networking.defaultGateway = "192.168.3.1";  # adjust as needed
       networking.nameservers = [ "9.9.9.9" ];  # adjust as needed
+      system.stateVersion = "24.11";
+    };
+  };
+
+  containers.openwebui = {
+    autoStart = true;
+    privateNetwork = true;
+    hostBridge = "br0";
+    localAddress = "192.168.3.26/24";
+    bindMounts = {
+      "/tmp/outlet" = {
+        hostPath = "/tmp/owi-outlet";
+        isReadOnly = false;
+      };
+      "/var/lib/private/open-webui" = {
+        hostPath = "/tank/containers/open-webui/state";
+        isReadOnly = false;
+      };
+    };
+    config = { config, pkgs, ... }: {
+      services.open-webui = {
+        package = unstable.open-webui;
+        enable = true;
+        openFirewall = true;
+        # port = 80;
+        host = "192.168.3.26";
+        # stateDir = "/open-webui/state";
+        environment = {
+          WEBUI_AUTH_TRUSTED_EMAIL_HEADER = "Cf-Access-Authenticated-User-Email";
+        };
+      };
+      
+      networking.firewall = {
+        enable = true;
+        # allowedTCPPorts = [ 80 443 ];
+      };
+      networking.useDHCP = false;
+      networking.interfaces.eth0.ipv4.addresses = [{
+        address = "192.168.3.26";
+        prefixLength = 24;
+      }];
+      networking.defaultGateway = "192.168.3.1";  # adjust as needed
+      networking.nameservers = [ "192.168.3.22" ];  # adjust as needed
       system.stateVersion = "24.11";
     };
   };

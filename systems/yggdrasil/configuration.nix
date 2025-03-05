@@ -2,10 +2,12 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, lib, usefulValues, ... }:
+{ config, pkgs, lib, usefulValues, inputs, ... }:
 
 let
   importWithExtras = filePath: import filePath { inherit config pkgs lib usefulValues; };
+  importWithInputs = filePath: import filePath { inherit config pkgs lib inputs; };
+
 in
 {
   imports = [
@@ -20,7 +22,7 @@ in
     ./security.nix
     # ../home/nixos.nix
     ./storage.nix
-    ./containers.nix
+    (importWithInputs ./containers.nix)
   ];
   
   systemd.services.NetworkManager-wait-online.enable = lib.mkForce false;
