@@ -15,7 +15,7 @@
       }
     ];
     defaultGateway = "192.168.3.1";
-    nameservers = [ "1.1.1.1" ];
+    nameservers = [ "192.168.3.22" "1.1.1.1" ];
     
     firewall.enable = false;
 

@@ -82,7 +82,7 @@ in
       # "python3.11-apache-airflow-2.7.3"
     ];
   };
- 
+
   # Enable virtualisation
   virtualisation.libvirtd.enable = true;
   # Some programs need SUID wrappers, can be configured further or are

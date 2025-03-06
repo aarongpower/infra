@@ -54,6 +54,13 @@ in
           bootstrapDns = [
             "tcp-tls:9.9.9.9"
           ];
+          conditional = {
+            fallbackUpstream = false;
+            mapping = {
+              "rumahindo.lan" = "192.168.3.24";
+              # "." = "192.168.3.24";
+            };
+          };
         };
       };
       networking.firewall = {
