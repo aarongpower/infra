@@ -135,9 +135,16 @@ in
           )
               IN NS ns1.rumahindo.lan
 
-          ns1 IN A 192.168.3.23
+          ns1 IN A 192.168.3.22
 
           yggdrasil IN A 192.168.3.20
+          hass IN A 192.168.3.21
+          blocky IN A 192.168.3.22
+          blocky-test IN A 192.168.3.23
+          nsd IN A 192.168.3.24
+          vaultwarden IN A 192.138.3.25
+          chat IN A 192.168.3.26
+          media IN A 192.168.3.27
           '';
         interfaces = [ "192.168.3.24" "127.0.0.1" ];
       };
