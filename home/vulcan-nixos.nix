@@ -22,6 +22,7 @@
       htop
       tree
       firefox
+      dig
   ];
   in localPackages;
 
