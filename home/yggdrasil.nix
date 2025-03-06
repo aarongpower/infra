@@ -22,6 +22,7 @@
       htop
       tree
       neofetch
+      dig
   ];
   in localPackages;
 
