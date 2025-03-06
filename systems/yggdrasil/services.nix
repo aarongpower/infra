@@ -24,10 +24,10 @@
       settings.KbdInteractiveAuthentication = false;
     };
 
-    plex = {
-      enable = true;
-      openFirewall = true;
-    };
+    # plex = {
+    #   enable = true;
+    #   openFirewall = true;
+    # };
 
     sabnzbd = {
       enable = true;
@@ -88,7 +88,7 @@
             "sabnzbd.rumahindo.net" = "http://localhost:8080";
             "n8n.rumahindo.net" = "http://localhost:5678";
             "hass.rumahindo.net" = "http://192.168.3.21:8123";
-            "plex.rumahindo.net" = "http://localhost:32400";
+            "plex.rumahindo.net" = "http://192.168.3.27:32400";
             "unifi.rumahindo.net" = "https://192.168.2.2";
             "bazarr.rumahindo.net" = "http://localhost:6767";
             # "ombi.rumahindo.net" = "http://localhost:5000";
@@ -107,6 +107,7 @@
             "whisparr.rumahindo.net" = "http://localhost:6969";
             "vaultwarden.rumahindo.net" = "http://192.168.3.25";
             "chat.rumahindo.net" = "http://192.168.3.26:8080";
+            "jellyfin.rumahindo.net" = "http://192.168.3.27:8096";
           };
           originRequest.noTLSVerify = true;
           default = "http_status:404";

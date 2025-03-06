@@ -2,7 +2,10 @@
 
 let
   system = "x86_64-linux";
-  unstable = import inputs.nixpkgs-unstable { inherit system; };
+  unstable = import inputs.nixpkgs-unstable { 
+    inherit system;
+    config.allowUnfree = true;
+  };
 in
 {
   containers.blocky = {
@@ -213,6 +216,52 @@ in
       }];
       networking.defaultGateway = "192.168.3.1";  # adjust as needed
       networking.nameservers = [ "192.168.3.22" ];  # adjust as needed
+      system.stateVersion = "24.11";
+    };
+  };
+
+  containers.media = {
+    autoStart = true;
+    privateNetwork = true;
+    hostBridge = "br0";
+    localAddress = "192.168.3.27/24";
+    bindMounts = {
+      "/var/lib/jellyfin" = {
+        hostPath = "/tank/containers/media/jellyfin";
+        isReadOnly = false;
+      };
+      "/var/lib/plex" = {
+        hostPath = "/tank/containers/media/plex";
+        isReadOnly = false;
+      };
+      "/media" = {
+        hostPath = "/tank/media";
+        isReadOnly = false;
+      };
+    };
+    config = { config, pkgs, ... }: {
+      services.jellyfin = {
+        package = unstable.jellyfin;
+        enable = true;
+        openFirewall = true;
+      };
+      services.plex = {
+        package = unstable.plex;
+        enable = true;
+        openFirewall = true;
+        user = "root";
+        group = "root";
+      };
+      networking.firewall = {
+        enable = true;
+      };
+      networking.useDHCP = false;
+      networking.interfaces.eth0.ipv4.addresses = [{
+        address = "192.168.3.27";
+        prefixLength = 24;
+      }];
+      networking.defaultGateway = "192.168.3.1";
+      networking.nameservers = [ "192.168.3.22" ];
       system.stateVersion = "24.11";
     };
   };
