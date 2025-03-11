@@ -191,7 +191,7 @@ in
     };
   };
 
-  containers.openwebui = {
+  containers.ai = {
     autoStart = true;
     privateNetwork = true;
     hostBridge = "br0";
@@ -218,7 +218,6 @@ in
           WEBUI_AUTH_TRUSTED_EMAIL_HEADER = "Cf-Access-Authenticated-User-Email";
         };
       };
-      
       networking.firewall = {
         enable = true;
         # allowedTCPPorts = [ 80 443 ];
