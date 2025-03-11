@@ -23,55 +23,11 @@
       settings.PasswordAuthentication = false;
       settings.KbdInteractiveAuthentication = false;
     };
-
-    # plex = {
-    #   enable = true;
-    #   openFirewall = true;
-    # };
-
-    sabnzbd = {
-      enable = true;
-      group = "media";
-    };
-
-    sonarr = {
-      enable = true;
-      group = "media";
-    };
-
-    radarr = {
-      enable = true;
-      group = "media";
-    };
-
-    prowlarr = {
-      enable = true;
-    };
-
-    bazarr = {
-      enable = true;
-      group = "media";
-    };
-
-   #  influxdb2 = {
-   #    enable = true;
-   #  };
-    
-    # tailscale = {
-    #   enable = true;
-    # };
-    
+   
     n8n = {
       enable = true;
       webhookUrl = "https://n8n.rumahindo.net/";
     };
-
-    # grocy = {
-    #   enable = true;
-    #   hostName = "grocy.rumahindo.net";
-    #   nginx.enableSSL = false;
-    # };
-
     node-red = {
       enable = true;
       withNpmAndGcc = true;
@@ -83,27 +39,22 @@
         "4dfe26fb-27ae-40c7-a941-11f50f3ed8c3" = {
           credentialsFile = config.age.secrets.cloudflare-tunnel-key.path;
           ingress = {
-            "sonarr.rumahindo.net" = "http://localhost:8989";
-            "radarr.rumahindo.net" = "http://localhost:7878";
-            "sabnzbd.rumahindo.net" = "http://localhost:8080";
+            "sonarr.rumahindo.net" = "http://192.168.3.27:8989";
+            "radarr.rumahindo.net" = "http://192.168.3.27:7878";
+            "sabnzbd.rumahindo.net" = "http://192.168.3.27:8080";
             "n8n.rumahindo.net" = "http://localhost:5678";
             "hass.rumahindo.net" = "http://192.168.3.21:8123";
             "plex.rumahindo.net" = "http://192.168.3.27:32400";
             "unifi.rumahindo.net" = "https://192.168.2.2";
-            "bazarr.rumahindo.net" = "http://localhost:6767";
-            # "ombi.rumahindo.net" = "http://localhost:5000";
+            "bazarr.rumahindo.net" = "http://192.168.3.27:6767";
             "overseerr.rumahindo.net" = "http://localhost:5055";
-            "prowlarr.rumahindo.net" = "http://localhost:9696";
-            "actual.runahindo.net" = "http://localhost:5006";
+            "prowlarr.rumahindo.net" = "http://192.168.3.27:9696";
             "scrypted.rumahindo.net" = "https://localhost:10443";
             "babybuddy.rumahindo.net" = "http://localhost:11606";
             "yggdrasil.rumahindo.net" = "http://localhost:16900";
-            "gramps.rumahindo.net" = "http://localhost:8888";
-            # "grocy.rumahindo.net" = "http://localhost:80";
             "nodered.rumahindo.net" = "http://localhost:1880";
             "suggestarr.rumahindo.net" = "http://localhost:5000";
             "syncthing.rumahindo.net" = "http://localhost:8384";
-            "ospos.rumahindo.net" = "http://localhost:80";
             "whisparr.rumahindo.net" = "http://localhost:6969";
             "vaultwarden.rumahindo.net" = "http://192.168.3.25";
             "chat.rumahindo.net" = "http://192.168.3.26:8080";

@@ -247,8 +247,32 @@ in
         hostPath = "/tank/containers/media/plex";
         isReadOnly = false;
       };
+      "/var/lib/radarr" = {
+        hostPath = "/tank/containers/media/radarr";
+        isReadOnly = false;
+      };
+      "/var/lib/sonarr" = {
+        hostPath = "/tank/containers/media/sonarr";
+        isReadOnly = false;
+      };
+      "/var/lib/sabnzbd" = {
+        hostPath = "/tank/containers/media/sabnzbd";
+        isReadOnly = false;
+      };
+      "/var/lib/private/prowlarr" = {
+        hostPath = "/tank/containers/media/prowlarr";
+        isReadOnly = false;
+      };
+      "/var/lib/bazarr" = {
+        hostPath = "/tank/containers/media/bazarr";
+        isReadOnly = false;
+      };
       "/media" = {
         hostPath = "/tank/media";
+        isReadOnly = false;
+      };
+      "/downloads" = {
+        hostPath = "/tank/downloads";
         isReadOnly = false;
       };
     };
@@ -260,6 +284,39 @@ in
       };
       services.plex = {
         package = unstable.plex;
+        enable = true;
+        openFirewall = true;
+        user = "root";
+        group = "root";
+      };
+      services.radarr = {
+        package = unstable.radarr;
+        enable = true;
+        openFirewall = true;
+        user = "root";
+        group = "root";
+      };
+      services.sonarr = {
+        package = unstable.sonarr;
+        enable = true;
+        openFirewall = true;
+        user = "root";
+        group = "root";
+      };
+      services.sabnzbd = {
+        package = unstable.sabnzbd;
+        enable = true;
+        openFirewall = true;
+        user = "root";
+        group = "root";
+      };
+      services.prowlarr = {
+        package = unstable.prowlarr;
+        enable = true;
+        openFirewall = true;
+      };
+      services.bazarr = {
+        # package = unstable.bazarr;
         enable = true;
         openFirewall = true;
         user = "root";
