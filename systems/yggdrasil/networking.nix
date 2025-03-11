@@ -14,6 +14,15 @@
         prefixLength = 24;
       }
     ];
+
+    vlans = {
+      vlan5 = {
+        id = 5;
+        interface = "br0";
+      };
+    };
+
+    
     defaultGateway = "192.168.3.1";
     nameservers = [ "192.168.3.22" "1.1.1.1" ];
     
