@@ -21,7 +21,7 @@
     isNormalUser = true;
     shell = "${pkgs.nushell}/bin/nu";
     description = "Aaron Power";
-    extraGroups = [ "networkmanager" "wheel" "bigboyntfs" "input" "libvirtd" "qemu-libvirtd" "vfio" "plugdev" "libvirt" "kvm" "netdev"];
+    extraGroups = [ "networkmanager" "wheel" "input" "libvirtd" "qemu-libvirtd" "vfio" "plugdev" "libvirt" "kvm" "netdev" ];
     packages = with pkgs; [
 
     ];
