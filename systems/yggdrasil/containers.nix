@@ -197,10 +197,10 @@ in
     hostBridge = "br0";
     localAddress = "192.168.3.26/24";
     bindMounts = {
-      "/tmp/outlet" = {
-        hostPath = "/tmp/owi-outlet";
-        isReadOnly = false;
-      };
+      # "/tmp/outlet" = {
+      #   hostPath = "/tmp/owi-outlet";
+      #   isReadOnly = false;
+      # };
       "/var/lib/private/open-webui" = {
         hostPath = "/tank/containers/open-webui/state";
         isReadOnly = false;

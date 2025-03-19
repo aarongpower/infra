@@ -151,7 +151,7 @@
           };
         in
           builtins.trace "generate-containers output path: ${result}" result;
-  };
+   };
 }
 # TAGGED: 2024-09-15T06:48:20.372342378+00:00
 
