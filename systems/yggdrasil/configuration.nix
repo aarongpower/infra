@@ -23,6 +23,7 @@ in
     # ../home/nixos.nix
     ./storage.nix
     (importWithInputs ./containers.nix)
+    ./k8s.nix
   ];
   
   systemd.services.NetworkManager-wait-online.enable = lib.mkForce false;
