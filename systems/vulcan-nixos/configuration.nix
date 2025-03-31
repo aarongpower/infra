@@ -12,6 +12,7 @@ in
     ./security.nix
     ./user.nix
     ./services.nix
+    "${usefulValues.flakeRoot}/ssh/knownHosts.nix"
   ];
 
   # nix.package = pkgs.nixFlakes;
