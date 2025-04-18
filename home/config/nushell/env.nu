@@ -125,3 +125,5 @@ $env.TRANSIENT_PROMPT_COMMAND = {|| $"\n(create_history_prompt) > " }
 
 # # To load from a custom file you can use:
 # # source ($nu.default-config-dir | path join 'custom.nu')
+
+$env.KUBECONFIG = $"($env.HOME)/.kube/config"

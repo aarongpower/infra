@@ -23,8 +23,16 @@
       tree
       neofetch
       dig
+      kompose
+      ansible
+      terraform
+      sops
+      rage
+      inputs.alejandra.packages.${pkgs.system}.default
   ];
   in localPackages;
+
+  # programs._1password.enable = true;
 
     # programs.ssh.matchBlocks = [
   #   {

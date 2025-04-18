@@ -1,6 +1,8 @@
-{ pkgs, ... }:
-
 {
+  pkgs,
+  inputs,
+  ...
+}: {
   environment = {
     etc = {
       # Required to allow qemu to connect VMs to brigde interface
@@ -21,32 +23,7 @@
     };
 
     systemPackages = with pkgs; [
-      # haskellPackages.ghc
-      # haskellPackages.cabal-install
-      # haskellPackages.haskell-language-server
-      # mako
-      # dbus
-      # bemenu
-      # wdisplays
-      # xdg-utils
-      # xdg-desktop-portal-hyprland
-      # swaylock-effects
-      # swayidle
-      # pulseaudioFull
-      # tailscale
-      # polkit_gnome
-      # fenix.packages.x86_64-linux.complete.toolchain
-      # woeusb-ng
-      # agenix.packages.x86_64-linux.default
-      # wineWowPackages.stable
-      # wineWowPackages.waylandFull
-      # winetricks
-      # SDL
-      # SDL2
-      # quickemu
-      # guix
-      # ngrok
-      # ripgrep
+      nixVersions.stable
     ];
   };
 }

@@ -78,8 +78,6 @@
      };
     extraEnv = ''
       $env.EDITOR = "hx";
-      $env.OPENAI_API_KEY = (^bash -c "echo $(${pkgs.coreutils}/bin/cat ${config.age.secrets.openai_api_key.path})");
-      $env.KUBECONFIG = "/etc/kubernetes/cluster-admin.kubeconfig";
     '';
   };
   programs.carapace.enable = true;

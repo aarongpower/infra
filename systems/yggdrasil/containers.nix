@@ -1,25 +1,37 @@
-{ config, pkgs, lib, inputs, ... }:
-
-let
+{
+  config,
+  pkgs,
+  lib,
+  inputs,
+  ...
+}: let
   system = "x86_64-linux";
-  unstable = import inputs.nixpkgs-unstable { 
+  unstable = import inputs.nixpkgs-unstable {
     inherit system;
     config.allowUnfree = true;
   };
-in
-{
+in {
+  imports = [
+    ./nixos-containers/ansible.nix
+    # ./nixos-containers/dnsmasq.nix
+    # ./nixos-containers/librenms.nix
+  ];
   containers.blocky = {
     autoStart = true;
     privateNetwork = true;
     hostBridge = "br0";
     localAddress = "192.168.3.22/24";
-    config = { config, pkgs, ... }: {
+    config = {
+      config,
+      pkgs,
+      ...
+    }: {
       services.blocky = {
         enable = true;
         settings = {
           ports.dns = 53;
           upstreams = {
-            groups.default = [ 
+            groups.default = [
               "tcp-tls:9.9.9.9"
               "tcp-tls:149.112.112.112"
               "tcp-tls:1.1.1.1"
@@ -28,7 +40,7 @@ in
           };
           blocking = {
             blackLists = {
-              general = [ 
+              general = [
                 "https://raw.githubusercontent.com/hagezi/dns-blocklists/main/wildcard/multi.txt"
                 "https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts"
               ];
@@ -65,16 +77,18 @@ in
       };
       networking.firewall = {
         enable = true;
-        allowedTCPPorts = [ 53 ];
-        allowedUDPPorts = [ 53 ];
+        allowedTCPPorts = [53];
+        allowedUDPPorts = [53];
       };
       networking.useDHCP = false;
-      networking.interfaces.eth0.ipv4.addresses = [{
-        address = "192.168.3.22";
-        prefixLength = 24;
-      }];
-      networking.defaultGateway = "192.168.3.1";  # adjust as needed
-      networking.nameservers = [ "9.9.9.9" ];  # adjust as needed
+      networking.interfaces.eth0.ipv4.addresses = [
+        {
+          address = "192.168.3.22";
+          prefixLength = 24;
+        }
+      ];
+      networking.defaultGateway = "192.168.3.1"; # adjust as needed
+      networking.nameservers = ["9.9.9.9"]; # adjust as needed
       system.stateVersion = "24.11";
     };
   };
@@ -83,13 +97,17 @@ in
     privateNetwork = true;
     hostBridge = "br0";
     localAddress = "192.168.3.23/24";
-    config = { config, pkgs, ... }: {
+    config = {
+      config,
+      pkgs,
+      ...
+    }: {
       services.blocky = {
         enable = true;
         settings = {
           ports.dns = 53;
           upstreams = {
-            groups.default = [ 
+            groups.default = [
               "tcp-tls:9.9.9.9"
               "tcp-tls:149.112.112.112"
               "tcp-tls:1.1.1.1"
@@ -97,22 +115,24 @@ in
             ];
           };
           blocking.blackLists = {
-            general = [ "https://raw.githubusercontent.com/hagezi/dns-blocklists/main/wildcard/multi.txt" ];
+            general = ["https://raw.githubusercontent.com/hagezi/dns-blocklists/main/wildcard/multi.txt"];
           };
         };
       };
       networking.firewall = {
         enable = true;
-        allowedTCPPorts = [ 53 ];
-        allowedUDPPorts = [ 53 ];
+        allowedTCPPorts = [53];
+        allowedUDPPorts = [53];
       };
       networking.useDHCP = false;
-      networking.interfaces.eth0.ipv4.addresses = [{
-        address = "192.168.3.23";
-        prefixLength = 24;
-      }];
-      networking.defaultGateway = "192.168.3.1";  # adjust as needed
-      networking.nameservers = [ "192.168.3.1" ];  # adjust as needed
+      networking.interfaces.eth0.ipv4.addresses = [
+        {
+          address = "192.168.3.23";
+          prefixLength = 24;
+        }
+      ];
+      networking.defaultGateway = "192.168.3.1"; # adjust as needed
+      networking.nameservers = ["192.168.3.1"]; # adjust as needed
       system.stateVersion = "24.11";
     };
   };
@@ -121,8 +141,12 @@ in
     privateNetwork = true;
     hostBridge = "br0";
     localAddress = "192.168.3.24/24";
-    config = { config, pkgs, ... }: {
-      environment.systemPackages = with pkgs; [ dig ];
+    config = {
+      config,
+      pkgs,
+      ...
+    }: {
+      environment.systemPackages = with pkgs; [dig];
       services.nsd = {
         enable = true;
         zones."rumahindo.lan".data = ''
@@ -145,21 +169,25 @@ in
           vaultwarden IN A 192.138.3.25
           chat IN A 192.168.3.26
           media IN A 192.168.3.27
-          '';
-        interfaces = [ "192.168.3.24" "127.0.0.1" ];
+
+          1.tauceti IN A 10.69.84.10
+        '';
+        interfaces = ["192.168.3.24" "127.0.0.1"];
       };
       networking.firewall = {
         enable = true;
-        allowedTCPPorts = [ 53 ];
-        allowedUDPPorts = [ 53 ];
+        allowedTCPPorts = [53];
+        allowedUDPPorts = [53];
       };
       networking.useDHCP = false;
-      networking.interfaces.eth0.ipv4.addresses = [{
-        address = "192.168.3.24";
-        prefixLength = 24;
-      }];
-      networking.defaultGateway = "192.168.3.1";  # adjust as needed
-      networking.nameservers = [ "9.9.9.9" ];  # adjust as needed
+      networking.interfaces.eth0.ipv4.addresses = [
+        {
+          address = "192.168.3.24";
+          prefixLength = 24;
+        }
+      ];
+      networking.defaultGateway = "192.168.3.1"; # adjust as needed
+      networking.nameservers = ["9.9.9.9"]; # adjust as needed
       system.stateVersion = "24.11";
     };
   };
@@ -168,7 +196,11 @@ in
     privateNetwork = true;
     hostBridge = "br0";
     localAddress = "192.168.3.25/24";
-    config = { config, pkgs, ... }: {
+    config = {
+      config,
+      pkgs,
+      ...
+    }: {
       services.vaultwarden = {
         enable = true;
         config = {
@@ -178,15 +210,17 @@ in
       };
       networking.firewall = {
         enable = true;
-        allowedTCPPorts = [ 80 ];
+        allowedTCPPorts = [80];
       };
       networking.useDHCP = false;
-      networking.interfaces.eth0.ipv4.addresses = [{
-        address = "192.168.3.25";
-        prefixLength = 24;
-      }];
-      networking.defaultGateway = "192.168.3.1";  # adjust as needed
-      networking.nameservers = [ "9.9.9.9" ];  # adjust as needed
+      networking.interfaces.eth0.ipv4.addresses = [
+        {
+          address = "192.168.3.25";
+          prefixLength = 24;
+        }
+      ];
+      networking.defaultGateway = "192.168.3.1"; # adjust as needed
+      networking.nameservers = ["9.9.9.9"]; # adjust as needed
       system.stateVersion = "24.11";
     };
   };
@@ -206,7 +240,11 @@ in
         isReadOnly = false;
       };
     };
-    config = { config, pkgs, ... }: {
+    config = {
+      config,
+      pkgs,
+      ...
+    }: {
       services.open-webui = {
         package = unstable.open-webui;
         enable = true;
@@ -223,12 +261,14 @@ in
         # allowedTCPPorts = [ 80 443 ];
       };
       networking.useDHCP = false;
-      networking.interfaces.eth0.ipv4.addresses = [{
-        address = "192.168.3.26";
-        prefixLength = 24;
-      }];
-      networking.defaultGateway = "192.168.3.1";  # adjust as needed
-      networking.nameservers = [ "192.168.3.22" ];  # adjust as needed
+      networking.interfaces.eth0.ipv4.addresses = [
+        {
+          address = "192.168.3.26";
+          prefixLength = 24;
+        }
+      ];
+      networking.defaultGateway = "192.168.3.1"; # adjust as needed
+      networking.nameservers = ["192.168.3.22"]; # adjust as needed
       system.stateVersion = "24.11";
     };
   };
@@ -276,7 +316,11 @@ in
         isReadOnly = false;
       };
     };
-    config = { config, pkgs, ... }: {
+    config = {
+      config,
+      pkgs,
+      ...
+    }: {
       services.jellyfin = {
         package = unstable.jellyfin;
         enable = true;
@@ -326,14 +370,163 @@ in
         enable = true;
       };
       networking.useDHCP = false;
-      networking.interfaces.eth0.ipv4.addresses = [{
-        address = "192.168.3.27";
-        prefixLength = 24;
-      }];
+      networking.interfaces.eth0.ipv4.addresses = [
+        {
+          address = "192.168.3.27";
+          prefixLength = 24;
+        }
+      ];
       networking.defaultGateway = "192.168.3.1";
-      networking.nameservers = [ "192.168.3.22" ];
+      networking.nameservers = ["192.168.3.22"];
       system.stateVersion = "24.11";
     };
   };
 
+  containers.minikube = {
+    autoStart = true;
+    privateNetwork = true;
+    hostBridge = "br0";
+    localAddress = "192.168.3.28/24";
+    bindMounts = {};
+    config = {
+      config,
+      pkgs,
+      ...
+    }: {
+      virtualisation.containers.enable = true;
+      environment.systemPackages = with pkgs; [minikube podman conntrack-tools];
+      networking.firewall = {
+        enable = true;
+        # allowedTCPPorts = [ 80 443 ];
+      };
+      networking.useDHCP = false;
+      networking.interfaces.eth0.ipv4.addresses = [
+        {
+          address = "192.168.3.28";
+          prefixLength = 24;
+        }
+      ];
+      networking.defaultGateway = "192.168.3.1"; # adjust as needed
+      networking.nameservers = ["192.168.3.22"]; # adjust as needed
+      system.stateVersion = "24.11";
+    };
+  };
+
+  containers.uptime-kuma = {
+    autoStart = true;
+    privateNetwork = true;
+    hostBridge = "br0";
+    localAddress = "192.168.3.29/24";
+    bindMounts = {};
+    config = {
+      config,
+      pkgs,
+      ...
+    }: {
+      environment.systemPackages = with pkgs; [];
+      services.uptime-kuma = {
+        enable = true;
+        package = unstable.uptime-kuma;
+        settings = {
+          PORT = "8080";
+          HOST = "192.168.3.29";
+        };
+      };
+      networking.firewall = {
+        enable = true;
+        allowedTCPPorts = [8080];
+      };
+      networking.useDHCP = false;
+      networking.interfaces.eth0.ipv4.addresses = [
+        {
+          address = "192.168.3.29";
+          prefixLength = 24;
+        }
+      ];
+      networking.defaultGateway = "192.168.3.1"; # adjust as needed
+      networking.nameservers = ["192.168.3.22"]; # adjust as needed
+      system.stateVersion = "24.11";
+    };
+  };
+
+  containers.zerotier-gateway = {
+    autoStart = true;
+    privateNetwork = true;
+    hostBridge = "br0";
+    localAddress = "192.168.3.10/24";
+    enableTun = true; # this is required so that zerotierone can use the tun interface
+
+    config = {
+      config,
+      pkgs,
+      ...
+    }: {
+      networking.firewall.allowedUDPPorts = [9993];
+      # networking.enableIPv4Forwarding = true;
+      # environment.systemPackages = [ pkgs.zerotierone ];
+
+      services.zerotierone = {
+        enable = true;
+        # package = unstable.zerotierone;
+        joinNetworks = ["d3ecf5726d5c1c83"];
+      };
+      networking.useDHCP = false;
+      networking.interfaces.eth0.ipv4.addresses = [
+        {
+          address = "192.168.3.10";
+          prefixLength = 24;
+        }
+      ];
+      boot.kernel.sysctl."net.ipv4.ip_forward" = 1; # enable forwarding so packets may return
+      networking.defaultGateway = "192.168.3.1";
+      networking.nameservers = ["192.168.3.22"];
+      system.stateVersion = "24.11";
+      nixpkgs.config.allowUnfree = true;
+    };
+  };
+  containers.gitea = {
+    autoStart = true;
+    privateNetwork = true;
+    hostBridge = "br0";
+    localAddress = "192.168.3.31/24";
+    bindMounts = {
+      "/var/lib/gitea" = {
+        hostPath = "/tank/gitea";
+        isReadOnly = false;
+      };
+    };
+
+    config = {
+      config,
+      pkgs,
+      ...
+    }: {
+      services.gitea = {
+        enable = true;
+        package = unstable.gitea;
+        # user = "root";
+        settings = {
+          server = {
+            # HTTP_PORT = 80;
+            DOMAIN = "gitea.sol.rumahindo.net";
+          };
+        };
+      };
+      networking.firewall = {
+        enable = true;
+        allowedTCPPorts = [3000];
+      };
+      networking.useDHCP = false;
+      networking.interfaces.eth0.ipv4.addresses = [
+        {
+          address = "192.168.3.31";
+          prefixLength = 24;
+        }
+      ];
+      networking.defaultGateway = "192.168.3.1";
+      networking.nameservers = ["192.168.3.22"];
+      system.stateVersion = "24.11";
+      nixpkgs.config.allowUnfree = true;
+    };
+  };
 }

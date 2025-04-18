@@ -1,29 +1,25 @@
-{ pkgs, windows-vm, ... }:
-
 {
-  # users.groups.bigboyntfs = {
-  #   gid = 1000;
-  # };
-  users.groups.media = {
-    gid = 1001;
-  };
+  pkgs,
+  windows-vm,
+  ...
+}: {
   # users.groups.vfio = {}; # vfio group
   users.groups.netdev = {};
   users.groups.media = {
-    members = [ "sonarr" "radarr" "plex" "sabnzdb"];
+    members = ["sonarr" "radarr" "plex" "sabnzdb"];
+    gid = 1001;
   };
 
   users.users.nobody = {
-    extraGroups = [ "media" ];
+    extraGroups = ["media"];
   };
 
   users.users.aaronp = {
     isNormalUser = true;
     shell = "${pkgs.nushell}/bin/nu";
     description = "Aaron Power";
-    extraGroups = [ "networkmanager" "wheel" "input" "libvirtd" "qemu-libvirtd" "vfio" "plugdev" "libvirt" "kvm" "netdev" ];
+    extraGroups = ["networkmanager" "wheel" "input" "libvirtd" "qemu-libvirtd" "vfio" "plugdev" "libvirt" "kvm" "netdev"];
     packages = with pkgs; [
-
     ];
     openssh = {
       authorizedKeys.keys = [

@@ -20,6 +20,14 @@
         id = 5;
         interface = "br0";
       };
+      tauceti = {
+        id = 84;
+        interface = "br0";
+      };
+      amritsar = {
+        id = 65;
+        interface = "br0";
+      };
     };
 
     
