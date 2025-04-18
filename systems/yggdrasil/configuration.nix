@@ -120,4 +120,11 @@ in {
     "fs.inotify.max_user_watches" = 1048576;
     "fs.inotify.max_queued_events" = 65536;
   };
+
+  # Weekly garbage collection
+  # Delete generations older than 30 days
+  nix.gc = {
+    automatic = true; # turn on auto-GC
+    options = ["--delete-older-than" "30d"]; # e.g. drop things older than 30 days
+  };
 }

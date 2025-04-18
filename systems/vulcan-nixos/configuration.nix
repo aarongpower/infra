@@ -1,9 +1,12 @@
-{ config, pkgs, lib, usefulValues, ... }:
-
-let
-  importWithExtras = filePath: import filePath { inherit config pkgs lib usefulValues; };
-in
 {
+  config,
+  pkgs,
+  lib,
+  usefulValues,
+  ...
+}: let
+  importWithExtras = filePath: import filePath {inherit config pkgs lib usefulValues;};
+in {
   imports = [
     (importWithExtras ./age.nix)
     ./environment.nix
@@ -26,7 +29,6 @@ in
 
   nixpkgs.config.allowUnfree = true;
 
-
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
   # on your system were taken. It's perfectly fine and recommended to leave
@@ -44,5 +46,11 @@ in
     zellij
     wormhole-rs
   ];
-}
 
+  # Weekly garbage collection
+  # Delete generations older than 30 days
+  nix.gc = {
+    automatic = true; # turn on auto-GC
+    options = ["--delete-older-than" "30d"]; # e.g. drop things older than 30 days
+  };
+}
