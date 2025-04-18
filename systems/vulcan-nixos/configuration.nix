@@ -55,6 +55,6 @@ in {
     options = "--delete-older-than 30d";
   };
 
-  # optimise the store every time we build
-  nix.settings.auto-optimise-store = true;
+  # optimise the store periodically
+  nix.optimise.automatic = true;
 }
