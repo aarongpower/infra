@@ -11,5 +11,4 @@ with pkgs; [
   nerdfonts
   obsidian
   syncthing
-  vscode
 ]

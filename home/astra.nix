@@ -33,6 +33,7 @@
       docker
       colima
       alt-tab-macosgi
+      vscode
     ];
   in
     localPackages ++ commonCliPackages ++ commonGuiPackages;
