@@ -51,6 +51,6 @@ in {
   # Delete generations older than 30 days
   nix.gc = {
     automatic = true; # turn on auto-GC
-    options = ["--delete-older-than" "30d"]; # e.g. drop things older than 30 days
+    options = "--delete-older-than 30d"; # drop things older than 30 days
   };
 }
