@@ -25,7 +25,7 @@
   # environment.
   home.packages = let
     commonCliPackages = import ./common-pkgs-cli.nix {inherit pkgs inputs fenix;};
-    commonGuiPackages = import ./common-pkgs-cli.nix {inherit pkgs inputs fenix;};
+    commonGuiPackages = import ./common-pkgs-gui.nix {inherit pkgs inputs fenix;};
     localPackages = with pkgs; [
       raycast
       karabiner-elements

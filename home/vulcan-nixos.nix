@@ -14,11 +14,10 @@
 
   # nixpkgs.config.allowUnfree = true;
 
-
   home.stateVersion = "23.11";
   home.packages = let
     commonCliPackages = import ./common-pkgs-cli.nix {inherit pkgs inputs fenix;};
-    commonGuiPackages = import ./common-pkgs-cli.nix {inherit pkgs inputs fenix;};
+    commonGuiPackages = import ./common-pkgs-gui.nix {inherit pkgs inputs fenix;};
     localPackages = with pkgs; [
     ];
   in
