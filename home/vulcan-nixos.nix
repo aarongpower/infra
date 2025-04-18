@@ -5,6 +5,9 @@
     ./common-home.nix
   ];
 
+  # nixpkgs.config.allowUnfree = true;
+
+
   home.stateVersion = "23.11";
   home.packages = let
     commonPackages = import ./common-pkgs.nix { inherit pkgs inputs fenix; };
@@ -23,6 +26,10 @@
       tree
       firefox
       dig
+      wget
+      ansible
+      sshpass
+      terraform
   ];
   in localPackages;
 
