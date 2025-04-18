@@ -1,6 +1,13 @@
-{ pkgs, inputs, lib, config, cider220, agenix, fenix, ... }:
-
 {
+  pkgs,
+  inputs,
+  lib,
+  config,
+  cider220,
+  agenix,
+  fenix,
+  ...
+}: {
   imports = [
     ./common-home.nix
   ];
@@ -10,7 +17,7 @@
 
   home.stateVersion = "23.11";
   home.packages = let
-    commonPackages = import ./common-pkgs.nix { inherit pkgs inputs fenix; };
+    commonPackages = import ./common-pkgs.nix {inherit pkgs inputs fenix;};
     localPackages = with pkgs; [
       # cloudflared
       lshw
@@ -26,6 +33,7 @@
       tree
       firefox
       dig
+      _1password
       wget
       ansible
       sshpass
@@ -49,10 +57,10 @@
 
   # Required to get virtualisation working
   # As per https://nixos.wiki/wiki/Virt-manager
-#  dconf.settings = {
-#    "org/virt-manager/virt-manager/connections" = {
-#      autoconnect = ["qemu:///system"];
-#      uris = ["qemu:///system"];
-#    };
-#  };
+  #  dconf.settings = {
+  #    "org/virt-manager/virt-manager/connections" = {
+  #      autoconnect = ["qemu:///system"];
+  #      uris = ["qemu:///system"];
+  #    };
+  #  };
 }

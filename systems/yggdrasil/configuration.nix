@@ -1,36 +1,48 @@
 # Edit this configuration file to define what should be installed on
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
-
-{ config, pkgs, lib, usefulValues, inputs, ... }:
-
-let
-  importWithExtras = filePath: import filePath { inherit config pkgs lib usefulValues; };
-  importWithInputs = filePath: import filePath { inherit config pkgs lib inputs; };
-
-in
 {
+  config,
+  pkgs,
+  lib,
+  usefulValues,
+  inputs,
+  ...
+}: let
+  importWithExtras = filePath: import filePath {inherit config pkgs lib usefulValues;};
+  importWithInputs = filePath: import filePath {inherit config pkgs lib inputs;};
+in {
   imports = [
     ./hardware-configuration.nix
     ./boot.nix
     ./user.nix
-    ./services.nix
     # ./programs.nix
     (importWithExtras ./age.nix)
-    ./environment.nix
+    (importWithInputs ./environment.nix)
     ./networking.nix
     ./security.nix
     # ../home/nixos.nix
     ./storage.nix
+
+    # nixos containers
     (importWithInputs ./containers.nix)
-    ./k8s.nix
+    ./nixos-containers/dnsmasq.nix
+
+    # Services
+    ./services.nix
+    ./services/cloudflare.nix
+    ./services/samba.nix
+    # ./services/k3s.nix
+
+    "${usefulValues.flakeRoot}/ssh/knownHosts.nix"
+    # ./sops.nix
   ];
-  
+
   systemd.services.NetworkManager-wait-online.enable = lib.mkForce false;
 
   # Symlink added because there seems to be a bug in the syncthing service
   # definition that causes problems when changing the dataDir
-  # When data dir is changed it seems to be trying to put the syncthing 
+  # When data dir is changed it seems to be trying to put the syncthing
   # database in the nix store
   # But I want to store this in the tank, so I will just symlink it
   systemd.tmpfiles.rules = [
@@ -43,7 +55,7 @@ in
     '';
 
     settings = {
-      experimental-features = [ "nix-command" "flakes" ]; # enable flakes
+      experimental-features = ["nix-command" "flakes"]; # enable flakes
       substituters = [
         "https://cache.nixos.org/"
       ];
@@ -101,4 +113,11 @@ in
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "23.11"; # Did you read the comment?
+
+  # in your configuration.nix
+  boot.kernel.sysctl = {
+    "fs.inotify.max_user_instances" = 1024;
+    "fs.inotify.max_user_watches" = 1048576;
+    "fs.inotify.max_queued_events" = 65536;
+  };
 }

@@ -52,4 +52,5 @@ with pkgs; [
   # zoxide
   chatgpt-cli
   neofetch
+  kompose
 ]

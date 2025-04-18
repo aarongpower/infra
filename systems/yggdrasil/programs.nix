@@ -1,6 +1,7 @@
 { config, pkgs, lib, ... }:
 
 {
-  programs = {
+  programs = 
+    nix-ld.enable = true;
   };
 }
