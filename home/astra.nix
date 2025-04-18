@@ -24,17 +24,18 @@
   # The home.packages option allows you to install Nix packages into your
   # environment.
   home.packages = let
-    commonPackages = import ./common-pkgs.nix {inherit pkgs fenix inputs;};
+    commonCliPackages = import ./common-pkgs-cli.nix {inherit pkgs inputs fenix;};
+    commonGuiPackages = import ./common-pkgs-cli.nix {inherit pkgs inputs fenix;};
     localPackages = with pkgs; [
       raycast
       karabiner-elements
       moonlight-qt
       docker
       colima
-      alt-tab-macos
+      alt-tab-macosgi
     ];
   in
-    localPackages ++ commonPackages;
+    localPackages ++ commonCliPackages ++ commonGuiPackages;
 
   # import common program configurations
   imports = [

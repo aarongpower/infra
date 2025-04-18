@@ -14,32 +14,11 @@
 
   home.stateVersion = "23.11";
   home.packages = let
-    commonPackages = import ./common-pkgs.nix {inherit pkgs inputs fenix;};
+    commonCliPackages = import ./common-pkgs-cli.nix {inherit pkgs inputs fenix;};
     localPackages = with pkgs; [
-      cloudflared
-      lshw
-      nix-index
-      syncthing
-      nil
-      ncdu
-      helix
-      inputs.compose2nix.packages.${pkgs.system}.default
-      inputs.concierge.packages.${pkgs.system}.default
-      bat
-      htop
-      tree
-      neofetch
-      dig
-      kompose
-      ansible
-      terraform
-      sops
-      rage
-      inputs.alejandra.packages.${pkgs.system}.default
-      _1password
     ];
   in
-    localPackages;
+    localPackages ++ commonCliPackages;
 
   # programs._1password.enable = true;
 

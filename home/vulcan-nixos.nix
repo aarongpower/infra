@@ -14,26 +14,12 @@
 
   home.stateVersion = "23.11";
   home.packages = let
-    commonPackages = import ./common-pkgs.nix {inherit pkgs inputs fenix;};
+    commonCliPackages = import ./common-pkgs-cli.nix {inherit pkgs inputs fenix;};
+    commonGuiPackages = import ./common-pkgs-cli.nix {inherit pkgs inputs fenix;};
     localPackages = with pkgs; [
-      # cloudflared
-      lshw
-      nix-index
-      # syncthing
-      nil
-      ncdu
-      helix
-      # inputs.compose2nix.packages.${pkgs.system}.default
-      inputs.concierge.packages.${pkgs.system}.default
-      bat
-      htop
-      tree
-      firefox
-      dig
-      _1password
     ];
   in
-    localPackages;
+    localPackages ++ commonCliPackages ++ commonGuiPackages;
 
   # programs.ssh.matchBlocks = [
   #   {
