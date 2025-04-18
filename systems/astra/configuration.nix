@@ -1,6 +1,9 @@
-{ pkgs, self, agenix, ... }: 
-
 {
+  pkgs,
+  self,
+  agenix,
+  ...
+}: {
   # dedupe nix store
   # nix.extraOptions = ''
   #   auto-optimise-store = true
@@ -8,7 +11,7 @@
 
   imports = [
     "${usefulValues.flakeRoot}/ssh/knownHosts.nix"
-  ]
+  ];
 
   nixpkgs.config.allowUnfree = true;
   # List packages installed in system profile. To search by name, run:
@@ -26,7 +29,7 @@
   nix.settings.experimental-features = "nix-command flakes";
 
   # Create /etc/zshrc that loads the nix-darwin environment.
-  programs.zsh.enable = true;  # default shell on catalina
+  programs.zsh.enable = true; # default shell on catalina
 
   # programs.starship.enable = true;
 
@@ -92,4 +95,11 @@
 
   # system timezone
   time.timeZone = "Asia/Jakarta";
+
+  # Weekly garbage collection
+  # Delete generations older than 30 days
+  nix.gc = {
+    automatic = true; # turn on auto-GC
+    options = "--delete-older-than 30d"; # drop things older than 30 days
+  };
 }
