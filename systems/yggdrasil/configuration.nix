@@ -124,7 +124,11 @@ in {
   # Weekly garbage collection
   # Delete generations older than 30 days
   nix.gc = {
-    automatic = true; # turn on auto-GC
-    options = "--delete-older-than 30d"; # drop things older than 30 days
+    automatic = true;
+    dates = "weekly";
+    options = "--delete-older-than 30d";
   };
+
+  # optimise the store every time we build
+  nix.settings.auto-optimise-store = true;
 }
