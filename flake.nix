@@ -6,7 +6,7 @@
 
     nixos-wsl.url = "github:nix-community/NixOS-WSL/main";
 
-    nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
+    nixpkgs-unstable.url = "github:NixOS/nixpkgs/b024ced1aac25639f8ca8fdfc2f8c4fbd66c48ef";
 
     # on yggdrasil, using this virsion lix will build but final symlink is still stock nix
     # can't figure out why, so just using latest version
@@ -117,7 +117,6 @@
     nixosConfigurations = {
       yggdrasil = let
         system = "x86_64-linux";
-        unstablePkgs = inputs.nixpkgs-unstable.legacyPackages.${system};
       in
         nixpkgs.lib.nixosSystem {
           modules =
@@ -140,7 +139,7 @@
                 home-manager.useGlobalPkgs = true;
                 home-manager.useUserPackages = true;
                 home-manager.users.aaronp = import ./home/yggdrasil.nix;
-                home-manager.extraSpecialArgs = {inherit inputs agenix fenix compose2nix usefulValues unstablePkgs;};
+                home-manager.extraSpecialArgs = {inherit inputs agenix fenix compose2nix usefulValues;};
               }
               ({lib, ...}: {
                 nixpkgs.overlays = lib.mkAfter [

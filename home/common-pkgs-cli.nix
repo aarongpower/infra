@@ -2,7 +2,6 @@
   pkgs,
   inputs,
   fenix,
-  unstablePkgs,
   ...
 }:
 with pkgs; [
@@ -11,6 +10,7 @@ with pkgs; [
   inputs.compose2nix.packages.${pkgs.system}.default
   inputs.concierge.packages.${pkgs.system}.default
   inputs.fenix.packages.${pkgs.system}.complete.toolchain
+  inputs.nixpkgs-unstable.legacyPackages.${pkgs.system}.codex
 
   # from pkgs
   _1password-cli
@@ -18,7 +18,6 @@ with pkgs; [
   ansible
   bat
   chatgpt-cli
-  unstablePkgs.codex
   dig
   fzf-zsh
   eza
