@@ -17,6 +17,7 @@ with pkgs; [
   ansible
   bat
   chatgpt-cli
+  codex
   dig
   fzf-zsh
   eza
