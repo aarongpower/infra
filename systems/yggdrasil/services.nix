@@ -6,7 +6,7 @@
   ...
 }: {
   services = {
-    vscode-server.enable = true;
+    # vscode-server.enable = true;
 
     timesyncd = {
       enable = true;

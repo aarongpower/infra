@@ -120,4 +120,15 @@ in {
     "fs.inotify.max_user_watches" = 1048576;
     "fs.inotify.max_queued_events" = 65536;
   };
+
+  # Weekly garbage collection
+  # Delete generations older than 30 days
+  nix.gc = {
+    automatic = true;
+    dates = "weekly";
+    options = "--delete-older-than 30d";
+  };
+
+  # optimise the store periodically
+  nix.optimise.automatic = true;
 }

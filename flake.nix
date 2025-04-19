@@ -8,9 +8,23 @@
 
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
 
+    # on yggdrasil, using this virsion lix will build but final symlink is still stock nix
+    # can't figure out why, so just using latest version
+    # can switch to pinned version later when there is a new release
+    # lix-module = {
+    #   url = "https://git.lix.systems/lix-project/nixos-module/archive/2.92.0-3.tar.gz";
+    #   inputs.nixpkgs.follows = "nixpkgs";
+    # };
+
+    lix = {
+      url = "https://git.lix.systems/lix-project/lix/archive/main.tar.gz";
+      flake = false;
+    };
+
     lix-module = {
-      url = "https://git.lix.systems/lix-project/nixos-module/archive/2.92.0-3.tar.gz";
+      url = "https://git.lix.systems/lix-project/nixos-module/archive/main.tar.gz";
       inputs.nixpkgs.follows = "nixpkgs";
+      # inputs.lix.follows = "lix";
     };
 
     agenix = {
@@ -77,6 +91,7 @@
     # sops-nix,
     ...
   } @ inputs: let
+    system = builtins.currentSystem;
     usefulValues = {
       flakeRoot = ./.;
       timezone = "Asia/Jakarta";
@@ -84,6 +99,7 @@
     # flakeRoot = ./.;
     overlays = [
       fenix.overlays.default
+      # inputs.lix-module.overlays.default
     ];
     sharedModules = [
       ({pkgs, ...}: {nixpkgs.overlays = overlays;})
@@ -92,20 +108,22 @@
     ];
     linuxModules = [
       agenix.nixosModules.default
-      inputs.vscode-server.nixosModules.default
+      # inputs.vscode-server.nixosModules.default
     ];
     darwinModules = [
       # Other Darwin specific modules
     ];
+    # unstablePkgs = import nixpkgs-unstable {inherit system;};
   in {
     nixosConfigurations = {
       yggdrasil = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         modules =
-          sharedModules
-          ++ linuxModules
+          linuxModules
+          ++ sharedModules
           ++ [
             ./systems/yggdrasil/configuration.nix
+            agenix.nixosModules.default
             inputs.proxmox-nixos.nixosModules.proxmox-ve
             ({...}: let
               generatedContainers = self.packages.x86_64-linux.generate-containers {containersDir = ./systems/yggdrasil/containers;};
@@ -123,9 +141,11 @@
               home-manager.users.aaronp = import ./home/yggdrasil.nix;
               home-manager.extraSpecialArgs = {inherit inputs agenix fenix compose2nix usefulValues;};
             }
-            {
-              nixpkgs.overlays = overlays ++ [inputs.proxmox-nixos.overlays.x86_64-linux];
-            }
+            ({lib, ...}: {
+              nixpkgs.overlays = lib.mkAfter [
+                inputs.proxmox-nixos.overlays.x86_64-linux
+              ];
+            })
           ];
         specialArgs = {inherit inputs usefulValues;};
       };
@@ -133,6 +153,7 @@
         system = "x86_64-linux";
         modules =
           linuxModules
+          ++ sharedModules
           ++ [
             nixos-wsl.nixosModules.default
             ./systems/vulcan-nixos/configuration.nix
@@ -174,5 +195,5 @@
       };
   };
 }
-# TAGGED: 2024-09-15T06:48:20.372342378+00:00
+# TAGGED: 2025-04-19T11:07:19.145845519+07:00
 

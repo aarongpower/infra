@@ -2,6 +2,7 @@
   pkgs,
   inputs,
   fenix,
+  # unstablePkgs,
   ...
 }:
 with pkgs; [
@@ -17,6 +18,7 @@ with pkgs; [
   ansible
   bat
   chatgpt-cli
+  # unstablePkgs.codex
   dig
   fzf-zsh
   eza
