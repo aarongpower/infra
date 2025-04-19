@@ -32,7 +32,7 @@
       moonlight-qt
       docker
       colima
-      alt-tab-macosgi
+      # alt-tab-macosgi
       vscode
     ];
   in
