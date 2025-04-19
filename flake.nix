@@ -95,7 +95,6 @@
       inputs.vscode-server.nixosModules.default
     ];
     darwinModules = [
-      ./systems/astra/configuration.nix
       # Other Darwin specific modules
     ];
   in {
@@ -155,6 +154,7 @@
           darwinModules
           ++ sharedModules
           ++ [
+            ./systems/astra/configuration.nix
             home-manager.darwinModules.home-manager
             {
               home-manager.useGlobalPkgs = true;
@@ -163,7 +163,7 @@
               home-manager.extraSpecialArgs = {inherit inputs agenix fenix;};
             }
           ];
-        specialArgs = {inherit self;};
+        specialArgs = {inherit self usefulValues;};
       };
     };
     packages.x86_64-linux.generate-containers = {containersDir}:
