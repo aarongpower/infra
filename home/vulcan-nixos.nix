@@ -6,6 +6,7 @@
   cider220,
   agenix,
   fenix,
+  # unstablePkgs,
   ...
 }: {
   imports = [

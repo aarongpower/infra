@@ -6,6 +6,7 @@
   cider220,
   agenix,
   fenix,
+  unstablePkgs,
   ...
 }: {
   imports = [
@@ -14,7 +15,7 @@
 
   home.stateVersion = "23.11";
   home.packages = let
-    commonCliPackages = import ./common-pkgs-cli.nix {inherit pkgs inputs fenix;};
+    commonCliPackages = import ./common-pkgs-cli.nix {inherit pkgs inputs fenix unstablePkgs;};
     localPackages = with pkgs; [
     ];
   in

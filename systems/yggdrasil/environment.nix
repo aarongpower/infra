@@ -23,7 +23,7 @@
     };
 
     systemPackages = with pkgs; [
-      nixVersions.stable
+      # nixVersions.stable
     ];
   };
 }

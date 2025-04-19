@@ -91,7 +91,6 @@
     # sops-nix,
     ...
   } @ inputs: let
-    system = builtins.currentSystem;
     usefulValues = {
       flakeRoot = ./.;
       timezone = "Asia/Jakarta";
@@ -114,41 +113,43 @@
       ./systems/astra/configuration.nix
       # Other Darwin specific modules
     ];
-    # unstablePkgs = import nixpkgs-unstable {inherit system;};
   in {
     nixosConfigurations = {
-      yggdrasil = nixpkgs.lib.nixosSystem {
+      yggdrasil = let
         system = "x86_64-linux";
-        modules =
-          linuxModules
-          ++ sharedModules
-          ++ [
-            ./systems/yggdrasil/configuration.nix
-            inputs.proxmox-nixos.nixosModules.proxmox-ve
-            ({...}: let
-              generatedContainers = self.packages.x86_64-linux.generate-containers {containersDir = ./systems/yggdrasil/containers;};
-              # Debug statement to print the output path
-              _ = builtins.trace "generatedContainers output path: ${generatedContainers}" null;
-            in {
-              imports = [
-                (import "${generatedContainers}/containers.nix")
-              ];
-            })
-            home-manager.nixosModules.home-manager
-            {
-              home-manager.useGlobalPkgs = true;
-              home-manager.useUserPackages = true;
-              home-manager.users.aaronp = import ./home/yggdrasil.nix;
-              home-manager.extraSpecialArgs = {inherit inputs agenix fenix compose2nix usefulValues;};
-            }
-            ({lib, ...}: {
-              nixpkgs.overlays = lib.mkAfter [
-                inputs.proxmox-nixos.overlays.x86_64-linux
-              ];
-            })
-          ];
-        specialArgs = {inherit inputs usefulValues;};
-      };
+        unstablePkgs = inputs.nixpkgs-unstable.legacyPackages.${system};
+      in
+        nixpkgs.lib.nixosSystem {
+          modules =
+            linuxModules
+            ++ sharedModules
+            ++ [
+              ./systems/yggdrasil/configuration.nix
+              inputs.proxmox-nixos.nixosModules.proxmox-ve
+              ({...}: let
+                generatedContainers = self.packages.x86_64-linux.generate-containers {containersDir = ./systems/yggdrasil/containers;};
+                # Debug statement to print the output path
+                _ = builtins.trace "generatedContainers output path: ${generatedContainers}" null;
+              in {
+                imports = [
+                  (import "${generatedContainers}/containers.nix")
+                ];
+              })
+              home-manager.nixosModules.home-manager
+              {
+                home-manager.useGlobalPkgs = true;
+                home-manager.useUserPackages = true;
+                home-manager.users.aaronp = import ./home/yggdrasil.nix;
+                home-manager.extraSpecialArgs = {inherit inputs agenix fenix compose2nix usefulValues unstablePkgs;};
+              }
+              ({lib, ...}: {
+                nixpkgs.overlays = lib.mkAfter [
+                  inputs.proxmox-nixos.overlays.x86_64-linux
+                ];
+              })
+            ];
+          specialArgs = {inherit inputs usefulValues;};
+        };
       vulcan-nixos = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         modules =
