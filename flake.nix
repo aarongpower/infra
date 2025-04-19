@@ -124,7 +124,6 @@
           ++ sharedModules
           ++ [
             ./systems/yggdrasil/configuration.nix
-            agenix.nixosModules.default
             inputs.proxmox-nixos.nixosModules.proxmox-ve
             ({...}: let
               generatedContainers = self.packages.x86_64-linux.generate-containers {containersDir = ./systems/yggdrasil/containers;};
