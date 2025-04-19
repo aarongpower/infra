@@ -1,4 +1,4 @@
-{ pkgs, self, agenix, ... }: 
+{ pkgs, self, agenix, ... }:
 
 {
   # dedupe nix store
@@ -6,9 +6,9 @@
   #   auto-optimise-store = true
   # '';
 
-  imports = [
-    "${usefulValues.flakeRoot}/ssh/knownHosts.nix"
-  ]
+  # imports = [
+  #   "${usefulValues.flakeRoot}/ssh/knownHosts.nix"
+  # ]
 
   nixpkgs.config.allowUnfree = true;
   # List packages installed in system profile. To search by name, run:
