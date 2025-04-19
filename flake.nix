@@ -77,6 +77,7 @@
     # sops-nix,
     ...
   } @ inputs: let
+    system = builtins.currentSystem;
     usefulValues = {
       flakeRoot = ./.;
       timezone = "Asia/Jakarta";
@@ -92,20 +93,19 @@
     ];
     linuxModules = [
       agenix.nixosModules.default
-      inputs.vscode-server.nixosModules.default
+      # inputs.vscode-server.nixosModules.default
     ];
     darwinModules = [
       ./systems/astra/configuration.nix
       # Other Darwin specific modules
     ];
+    # unstablePkgs = import nixpkgs-unstable {inherit system;};
   in {
     nixosConfigurations = {
       yggdrasil = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         modules =
-          sharedModules
-          ++ linuxModules
-          ++ [
+          [
             ./systems/yggdrasil/configuration.nix
             inputs.proxmox-nixos.nixosModules.proxmox-ve
             ({...}: let
@@ -124,16 +124,20 @@
               home-manager.users.aaronp = import ./home/yggdrasil.nix;
               home-manager.extraSpecialArgs = {inherit inputs agenix fenix compose2nix usefulValues;};
             }
-            {
-              nixpkgs.overlays = overlays ++ [inputs.proxmox-nixos.overlays.x86_64-linux];
-            }
-          ];
+            ({lib, ...}: {
+              nixpkgs.overlays = lib.mkBefore [
+                inputs.proxmox-nixos.overlays.x86_64-linux
+              ];
+            })
+          ]
+          ++ linuxModules ++ sharedModules;
         specialArgs = {inherit inputs usefulValues;};
       };
       vulcan-nixos = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         modules =
           linuxModules
+          ++ sharedModules
           ++ [
             nixos-wsl.nixosModules.default
             ./systems/vulcan-nixos/configuration.nix
