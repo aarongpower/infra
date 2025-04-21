@@ -1,13 +1,14 @@
-{ pkgs, windows-vm, ... }:
-
 {
+  pkgs,
+  windows-vm,
+  ...
+}: {
   users.users.aaronp = {
     isNormalUser = true;
-    shell = "${pkgs.nushell}/bin/nu";
+    shell = "${pkgs.zsh}/bin/zsh";
     description = "Aaron Power";
-    extraGroups = [ ];
+    extraGroups = [];
     packages = with pkgs; [
-
     ];
     openssh = {
       authorizedKeys.keys = [
