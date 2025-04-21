@@ -38,7 +38,7 @@
   xdg.configFile."direnv/direnvrc".source = ./config/direnv/direnvrc;
 
   # Default to nushell
-  home.sessionVariables.SHELL = "${pkgs.nushell}/bin/zsh";
+  home.sessionVariables.SHELL = "${pkgs.zsh}/bin/zsh";
 
   programs.ssh = {
     enable = true;
