@@ -38,7 +38,7 @@
   xdg.configFile."direnv/direnvrc".source = ./config/direnv/direnvrc;
 
   # Default to nushell
-  home.sessionVariables.SHELL = "${pkgs.nushell}/bin/nu";
+  home.sessionVariables.SHELL = "${pkgs.nushell}/bin/zsh";
 
   programs.ssh = {
     enable = true;
@@ -84,14 +84,18 @@
     configFile.source = ./config/nushell/config.nu;
     envFile.source = ./config/nushell/env.nu;
     shellAliases = {
-        bs = "concierge";
-        ll = "ls -al";
-        cat = "bat";
-        cd = "z";
-        # z = "zoxide";
-     };
+      bs = "concierge";
+      ll = "ls -al";
+      cat = "bat";
+      cd = "z";
+      # z = "zoxide";
+    };
     extraEnv = ''
-      $env.EDITOR = "hx";
+      $env.EDITOR = "hx"
+      $env.OPENAI_API_KEY = (
+        open ${config.sops.secrets.openai_api_key.path}
+        | str trim
+      )
     '';
   };
   programs.carapace.enable = true;
@@ -154,10 +158,11 @@
       ll = "eza -l";
       bs = "concierge";
       cat = "bat";
-      dumpconf = "~/.nixcfg/dumpconf.sh";
-      clipme = "wl-clip";
+      # dumpconf = "~/.nixcfg/dumpconf.sh";
+      # clipme = "wl-clip";
       lg = "libgen-cli";
-      work = "moonlight stream -config /mnt/bigboy/vm/work/work.moonlight.cfg";
+      cd = "z";
+      # work = "moonlight stream -config /mnt/bigboy/vm/work/work.moonlight.cfg";
     };
     # autoSuggestions.enable = true;
     syntaxHighlighting.enable = true;
@@ -189,8 +194,8 @@
     enable = true;
     settings = {
       shell = {
-        program = "${pkgs.nushell}/bin/nu";
-        args = [ "-c" "${pkgs.zellij}/bin/zellij attach rusty-rustacean" ];
+        program = "${pkgs.zsh}/bin/zsh";
+        args = ["-c" "${pkgs.zellij}/bin/zellij attach rusty-rustacean"];
       };
       font = {
         size = 10;

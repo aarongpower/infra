@@ -16,7 +16,7 @@
 
   users.users.aaronp = {
     isNormalUser = true;
-    shell = "${pkgs.nushell}/bin/nu";
+    shell = "${pkgs.zsh}/bin/zsh";
     description = "Aaron Power";
     extraGroups = ["networkmanager" "wheel" "input" "libvirtd" "qemu-libvirtd" "vfio" "plugdev" "libvirt" "kvm" "netdev"];
     packages = with pkgs; [
