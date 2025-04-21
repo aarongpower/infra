@@ -166,6 +166,9 @@
               home-manager.useUserPackages = true;
               home-manager.users.aaronp = import ./home/vulcan-nixos.nix;
               home-manager.extraSpecialArgs = {inherit inputs agenix fenix compose2nix usefulValues;};
+              home-manager.sharedModules = [
+                inputs.sops-nix.homeManagerModules.sops
+              ];
             }
           ];
         specialArgs = {inherit inputs usefulValues;};
@@ -185,6 +188,9 @@
               home-manager.useUserPackages = true;
               home-manager.users.aaronpower = import ./home/astra.nix;
               home-manager.extraSpecialArgs = {inherit inputs agenix fenix;};
+              home-manager.sharedModules = [
+                inputs.sops-nix.homeManagerModules.sops
+              ];
             }
           ];
         specialArgs = {inherit self usefulValues;};
