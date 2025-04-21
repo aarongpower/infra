@@ -124,6 +124,7 @@
             ++ [
               ./systems/yggdrasil/configuration.nix
               inputs.proxmox-nixos.nixosModules.proxmox-ve
+              inputs.sops-nix.nixosModules.sops
               ({...}: let
                 generatedContainers = self.packages.x86_64-linux.generate-containers {containersDir = ./systems/yggdrasil/containers;};
                 # Debug statement to print the output path
@@ -139,6 +140,9 @@
                 home-manager.useUserPackages = true;
                 home-manager.users.aaronp = import ./home/yggdrasil.nix;
                 home-manager.extraSpecialArgs = {inherit inputs agenix fenix compose2nix usefulValues;};
+                home-manager.sharedModules = [
+                  inputs.sops-nix.homeManagerModules.sops
+                ];
               }
               ({lib, ...}: {
                 nixpkgs.overlays = lib.mkAfter [

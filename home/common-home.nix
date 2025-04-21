@@ -1,9 +1,23 @@
-{ pkgs, lib, config, agenix, ... }:
-
 {
+  pkgs,
+  lib,
+  config,
+  agenix,
+  usefulValues,
+  ...
+}: {
   imports = [
     agenix.homeManagerModules.default
   ];
+
+  # sops config
+  sops = {
+    age.sshKeyPaths = [
+      "${config.home.homeDirectory}/.ssh/id_ed25519"
+    ];
+    defaultSopsFile = "${usefulValues.flakeRoot}/secrets/admin-aaronp.yaml";
+    secrets.openai_api_key = {};
+  };
 
   age.identityPaths = [
     "${config.home.homeDirectory}/.ssh/id_ed25519"
@@ -13,7 +27,7 @@
 
   home.sessionVariables = {
     EDITOR = "hx";
-    OPENAI_API_KEY = ''$(${pkgs.coreutils}/bin/cat ${config.age.secrets.openai_api_key.path})'';
+    OPENAI_API_KEY = ''$(${pkgs.coreutils}/bin/cat ${config.sops.secrets.openai_api_key.path})'';
   };
 
   # Helix configuration
