@@ -187,7 +187,7 @@
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
               home-manager.users.aaronpower = import ./home/astra.nix;
-              home-manager.extraSpecialArgs = {inherit inputs agenix fenix;};
+              home-manager.extraSpecialArgs = {inherit inputs agenix fenix usefulValues;};
               home-manager.sharedModules = [
                 inputs.sops-nix.homeManagerModules.sops
               ];
