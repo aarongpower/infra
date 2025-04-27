@@ -1,9 +1,8 @@
-{ pkgs, self, agenix, usefulValues, ... }:
-
 {
   pkgs,
   self,
   agenix,
+  usefulValues,
   ...
 }: {
   # dedupe nix store
