@@ -201,6 +201,7 @@
     };
 
     darwinConfigurations = {
+<<<<<<< HEAD
       astra = let
         system = "aarch64-darwin";
         unstable = import inputs.nixpkgs-unstable {
@@ -227,6 +228,27 @@
             ];
           specialArgs = {inherit self usefulValues;};
         };
+=======
+      astra = nix-darwin.lib.darwinSystem {
+        modules =
+          darwinModules
+          ++ sharedModules
+          ++ [
+            ./systems/astra/configuration.nix
+            home-manager.darwinModules.home-manager
+            {
+              home-manager.useGlobalPkgs = true;
+              home-manager.useUserPackages = true;
+              home-manager.users.aaronpower = import ./home/astra.nix;
+              home-manager.extraSpecialArgs = {inherit inputs agenix fenix usefulValues;};
+              home-manager.sharedModules = [
+                inputs.sops-nix.homeManagerModules.sops
+              ];
+            }
+          ];
+        specialArgs = {inherit self usefulValues;};
+      };
+>>>>>>> origin/main
     };
     packages.x86_64-linux.generate-containers = {containersDir}:
       import ./derivations/generate-containers/default.nix {
