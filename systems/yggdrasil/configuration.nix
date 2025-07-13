@@ -7,6 +7,7 @@
   lib,
   usefulValues,
   inputs,
+  unstable,
   ...
 }: let
   importWithExtras = filePath: import filePath {inherit config pkgs lib usefulValues;};
@@ -27,6 +28,10 @@ in {
     # nixos containers
     (importWithInputs ./containers.nix)
     ./nixos-containers/dnsmasq.nix
+    ./nixos-containers/zerotier.nix
+    ./nixos-containers/monitoring.nix
+    ./nixos-containers/gitea.nix
+    # ./nixos-containers/opencloud.nix
 
     # Services
     ./services.nix

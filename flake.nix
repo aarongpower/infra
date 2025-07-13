@@ -6,7 +6,8 @@
 
     nixos-wsl.url = "github:nix-community/NixOS-WSL/main";
 
-    nixpkgs-unstable.url = "github:NixOS/nixpkgs/b024ced1aac25639f8ca8fdfc2f8c4fbd66c48ef";
+    # nixpkgs-unstable.url = "github:NixOS/nixpkgs/b024ced1aac25639f8ca8fdfc2f8c4fbd66c48ef";
+    nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
 
     # on yggdrasil, using this virsion lix will build but final symlink is still stock nix
     # can't figure out why, so just using latest version
@@ -116,22 +117,39 @@
     nixosConfigurations = {
       yggdrasil = let
         system = "x86_64-linux";
+        unstable = import inputs.nixpkgs-unstable {
+          inherit system;
+          config.allowUnfree = true;
+        };
+        pkgs = import inputs.nixpkgs {
+          inherit system;
+          config.allowUnfree = true;
+        };
+        unstableModulesPath = "${inputs.nixpkgs-unstable}/nixos/modules";
       in
         nixpkgs.lib.nixosSystem {
           modules =
             linuxModules
             ++ sharedModules
             ++ [
+              #
               ./systems/yggdrasil/configuration.nix
               inputs.proxmox-nixos.nixosModules.proxmox-ve
               inputs.sops-nix.nixosModules.sops
               ({...}: let
-                generatedContainers = self.packages.x86_64-linux.generate-containers {containersDir = ./systems/yggdrasil/containers;};
-                # Debug statement to print the output path
-                _ = builtins.trace "generatedContainers output path: ${generatedContainers}" null;
+                generatedContainers = self.packages.x86_64-linux.generate-containers {
+                  containersDir = ./systems/yggdrasil/containers;
+                };
+
+                # this prints the real store path and still yields the derivation
+                generatedContainersDbg =
+                  builtins.trace
+                  ("generate-containers → " + toString generatedContainers.outPath)
+                  generatedContainers;
               in {
                 imports = [
-                  (import "${generatedContainers}/containers.nix")
+                  # use the traced value here
+                  (import "${generatedContainersDbg}/containers.nix")
                 ];
               })
               home-manager.nixosModules.home-manager
@@ -150,51 +168,65 @@
                 ];
               })
             ];
+          specialArgs = {inherit inputs usefulValues unstable;};
+        };
+      vulcan-nixos = let
+        system = "x86_64-linux";
+        unstable = import inputs.nixpkgs-unstable {
+          inherit system;
+          config.allowUnfree = true;
+        };
+      in
+        nixpkgs.lib.nixosSystem {
+          system = "x86_64-linux";
+          modules =
+            linuxModules
+            ++ sharedModules
+            ++ [
+              nixos-wsl.nixosModules.default
+              ./systems/vulcan-nixos/configuration.nix
+              home-manager.nixosModules.home-manager
+              {
+                home-manager.useGlobalPkgs = true;
+                home-manager.useUserPackages = true;
+                home-manager.users.aaronp = import ./home/vulcan-nixos.nix;
+                home-manager.extraSpecialArgs = {inherit inputs agenix fenix compose2nix usefulValues;};
+                home-manager.sharedModules = [
+                  inputs.sops-nix.homeManagerModules.sops
+                ];
+              }
+            ];
           specialArgs = {inherit inputs usefulValues;};
         };
-      vulcan-nixos = nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
-        modules =
-          linuxModules
-          ++ sharedModules
-          ++ [
-            nixos-wsl.nixosModules.default
-            ./systems/vulcan-nixos/configuration.nix
-            home-manager.nixosModules.home-manager
-            {
-              home-manager.useGlobalPkgs = true;
-              home-manager.useUserPackages = true;
-              home-manager.users.aaronp = import ./home/vulcan-nixos.nix;
-              home-manager.extraSpecialArgs = {inherit inputs agenix fenix compose2nix usefulValues;};
-              home-manager.sharedModules = [
-                inputs.sops-nix.homeManagerModules.sops
-              ];
-            }
-          ];
-        specialArgs = {inherit inputs usefulValues;};
-      };
     };
 
     darwinConfigurations = {
-      astra = nix-darwin.lib.darwinSystem {
-        modules =
-          darwinModules
-          ++ sharedModules
-          ++ [
-            ./systems/astra/configuration.nix
-            home-manager.darwinModules.home-manager
-            {
-              home-manager.useGlobalPkgs = true;
-              home-manager.useUserPackages = true;
-              home-manager.users.aaronpower = import ./home/astra.nix;
-              home-manager.extraSpecialArgs = {inherit inputs agenix fenix;};
-              home-manager.sharedModules = [
-                inputs.sops-nix.homeManagerModules.sops
-              ];
-            }
-          ];
-        specialArgs = {inherit self usefulValues;};
-      };
+      astra = let
+        system = "aarch64-darwin";
+        unstable = import inputs.nixpkgs-unstable {
+          inherit system;
+          config.allowUnfree = true;
+        };
+      in
+        nix-darwin.lib.darwinSystem {
+          modules =
+            darwinModules
+            ++ sharedModules
+            ++ [
+              ./systems/astra/configuration.nix
+              home-manager.darwinModules.home-manager
+              {
+                home-manager.useGlobalPkgs = true;
+                home-manager.useUserPackages = true;
+                home-manager.users.aaronpower = import ./home/astra.nix;
+                home-manager.extraSpecialArgs = {inherit inputs agenix fenix;};
+                home-manager.sharedModules = [
+                  inputs.sops-nix.homeManagerModules.sops
+                ];
+              }
+            ];
+          specialArgs = {inherit self usefulValues;};
+        };
     };
     packages.x86_64-linux.generate-containers = {containersDir}:
       import ./derivations/generate-containers/default.nix {

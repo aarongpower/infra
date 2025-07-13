@@ -1,6 +1,9 @@
-{ config, pkgs, usefulValues, ... }:
-
 {
+  config,
+  pkgs,
+  usefulValues,
+  ...
+}: {
   services.cloudflared = {
     enable = true;
     tunnels = {
@@ -29,6 +32,8 @@
           "jellyfin.rumahindo.net" = "http://192.168.3.27:8096";
           "yggdrasil.earth.rumahindo.net" = "ssh://192.168.3.20:22";
           "gitea.rumahindo.net" = "http://192.168.3.31:3000";
+          "zabbix.rumahindo.net" = "http://192.168.3.29";
+          "mikrotik.rumahindo.net" = "http://192.168.3.11";
         };
         originRequest.noTLSVerify = true;
         default = "http_status:404";
@@ -36,7 +41,7 @@
     };
   };
 
-    # Allow the cloudflare CA when authenticating
+  # Allow the cloudflare CA when authenticating
   services.openssh.settings.TrustedUserCAKeys = let
     caFile = pkgs.writeTextFile {
       name = "cloudflare-ssh-ca.pub";

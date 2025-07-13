@@ -18,6 +18,7 @@ with pkgs; [
   ansible
   bat
   chatgpt-cli
+  cloudflared
   dig
   fzf-zsh
   eza
