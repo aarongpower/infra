@@ -1,0 +1,16 @@
+services:
+  whisparr:
+    image: ghcr.io/thespad/whisparr:latest
+    container_name: whisparr
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Asia/Jakarta
+    volumes:
+      - /tank/containers/whisparr/config:/config
+      - /tank/downloads/complete:/downloads
+      - /tank/other/naughty:/library
+    ports:
+      - 6969:6969
+    restart: unless-stopped
+# TAGGED: 2025-04-13T13:10:17.547669874+07:00

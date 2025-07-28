@@ -1,0 +1,1 @@
+from deploy.nickel.app import nickel_app

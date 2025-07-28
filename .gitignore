@@ -260,3 +260,5 @@ core.*
 
 .saves-*
 .*.kate-swp
+
+**/.claude/settings.local.json

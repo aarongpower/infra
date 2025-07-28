@@ -1,0 +1,1 @@
+from deploy.nix.app import nix_app
