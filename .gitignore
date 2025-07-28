@@ -4,6 +4,7 @@ systems/nixos/cider/*.AppImage
 systems/nixos/flatpak
 systems/*/containers/priv_*
 result
+.terraform
 
 
 # .gitignore file created for free with Tower (https://www.git-tower.com/)
