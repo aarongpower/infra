@@ -7,6 +7,7 @@ requires-python = ">=3.12"
 dependencies = [
     "colorama>=0.4.6",
     "loguru>=0.7.3",
+    "onepassword-sdk>=0.3.1",
     "returns>=0.25.0",
     "rich>=14.0.0",
     "ruff>=0.12.4",
