@@ -21,30 +21,76 @@ def create_build_command(
         ctx.obj.dbg("Running in user mode")
         ctx.obj.build_command = Some([])
 
-    ctx.obj.build_command = ctx.obj.build_command.map(
-        lambda cmd: cmd
-        + [
-            "nixos-rebuild",
-            build_type,
-            "--flake",
-            f"{ctx.obj.flake_root}#{ctx.obj.hostname}",
-        ]
-    )
+    # Base command
+    cmd_parts = [
+        "nixos-rebuild",
+        build_type,
+        "--flake",
+        f"{ctx.obj.flake_root}#{ctx.obj.hostname}",
+    ]
 
+    # Add options based on context
+    ctx.obj.dbg("Setting options in build command")
     if ctx.obj.show_trace:
-        ctx.obj.build_command = ctx.obj.build_command.map(  # type: ignore
-            lambda cmd: cmd + ["--show-trace"]  # type: ignore
-        )
+        ctx.obj.dbg("Adding --show-trace to build command")
+        cmd_parts.append("--show-trace")
 
-    ctx.obj.dbg(
-        f"Build command set: {' '.join(list(ctx.obj.build_command.unwrap()))}"  # type: ignore
-    )
+    if ctx.obj.force:
+        ctx.obj.dbg("Adding --force to build command")
+        cmd_parts.append("--force")
+
+    # if ctx.obj.update_input != "":
+    #     ctx.obj.dbg("Adding --update_input to build command")
+    #     cmd_parts.append("--update-input")
+    #     cmd_parts.append(ctx.obj.update_input)
+
+    # Update the build command
+    ctx.obj.build_command = ctx.obj.build_command.map(lambda cmd: cmd + cmd_parts)
+
+    ctx.obj.info(f"Constructed build command: {' '.join(cmd_parts)}")
+
+    ctx.obj.dbg(f"Build command set: {' '.join(list(ctx.obj.build_command.unwrap()))}")
 
     return ctx
 
 
 def run_build_command(ctx: typer.Context) -> Result[typer.Context, str]:
     ctx.obj.info(f"Executing build command: {ctx.obj.build_command.unwrap()}")
+
+    def run_if(flag: bool, msg: str, args: list[str]) -> Result[None, str]:
+        if not flag:
+            return Success(None)
+        ctx.obj.info(msg)
+        res: Result[None, str] = ctx.obj.run_command(args)  # assume Result[None, str]
+        if not is_successful(res):
+            ctx.obj.error(f"Flake update failed: {res.failure()}")
+            return Failure(res.failure())
+        return res
+
+    result = Success(None)
+
+    result: Result[None, str] = result.bind( # type: ignore
+        lambda _: run_if(
+            ctx.obj.update,
+            "Updating all flake inputs",
+            ["nix", "flake", "update", "--flake", f"{ctx.obj.flake_root}"],
+        )  
+    )
+
+    result: Result[None, str] = result.bind( # type: ignore
+        lambda _: run_if(
+            bool(ctx.obj.update_input),
+            f"Updating flake inputs: {ctx.obj.update_input}",
+            [
+                "nix",
+                "flake",
+                "update",
+                "--flake",
+                f"{ctx.obj.flake_root}",
+                ctx.obj.update_input,
+            ],
+        )
+    )
 
     command: List[str] = ["direnv", "exec", "."] + ctx.obj.build_command.unwrap()
 

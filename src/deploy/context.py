@@ -11,12 +11,10 @@ import subprocess
 import sys
 import termios
 import time
-from functools import wraps
 from pathlib import Path
 from types import TracebackType
-from typing import Any, Callable, List, Optional, Type
+from typing import List, Optional, Type
 
-import click
 import typer
 from returns.maybe import Maybe, Nothing
 from returns.result import Failure, Result, Success
@@ -66,15 +64,16 @@ class Context:
         )
 
         # ── console handler: INFO by default, DEBUG when --debug
-        console_handler = RichHandler(
+        self.console_handler = RichHandler(
             show_time=False, show_level=False, show_path=False
         )
-        console_handler.setLevel(logging.DEBUG if self.debug else logging.INFO)
+        print("Context debug is set to ", self.debug)
+        
 
         # ── main logger
         self.logger = logging.getLogger("deploy")
         self.logger.setLevel(logging.DEBUG)  # never drop messages here
-        self.logger.addHandler(console_handler)
+        self.logger.addHandler(self.console_handler)
         self.logger.addHandler(file_handler)
 
         # ── helper logger used in run_command (“file‑only”)
@@ -86,6 +85,12 @@ class Context:
         self.console = Console()
 
         self.dbg(f"Context initialized: {self.__dict__}")
+
+    def set_debug(self, debug: bool) -> None:
+        print("Setting context debug to ", debug)
+        self.debug = debug
+        self.console_handler.setLevel(logging.DEBUG if self.debug else logging.INFO)
+
 
     def run_command(self, command: list[str]) -> Result[int, str]:
         ansi_escape = re.compile(r"\x1B\[[0-?]*[ -/]*[@-~]")
@@ -189,35 +194,16 @@ class Context:
         self.logger.debug(text)
 
 
-def common_params(f: Callable[..., Any]) -> Any:
-    @click.option("--force", is_flag=True, default=False)
-    @click.option("--show-trace", is_flag=True, default=False)
-    @click.option("--debug", is_flag=True, default=False)
-    @click.option(
-        "--flake-root",
-        default=get_flake_root(),
-        show_default=True,
-        type=click.Path(exists=True, file_okay=False, dir_okay=True, path_type=Path),
-    )
-    @click.option("--hostname", default=socket.gethostname())
-    @wraps(f)
-    def wrapper(
-        *args: Any,
-        ctx: typer.Context,
-        flake_root: Path = get_flake_root(),
-        force: bool = False,
-        show_trace: bool = False,
-        debug: bool = False,
-        hostname: str = socket.gethostname(),
-        **kwargs: Any,
-    ):
-        ctx.obj.dbg("Setting context parameters")
-        ctx.obj.flake_root = flake_root
-        ctx.obj.force = force
-        ctx.obj.show_trace = show_trace
-        ctx.obj.debug = debug
-        ctx.obj.hostname = hostname
-        ctx.obj.dbg(vars(ctx.obj))
-        return f(*args, ctx=ctx, **kwargs)
-
-    return wrapper
+# Define common parameters for Typer commands
+force_option = typer.Option(False, "--force", help="Force rebuild")
+show_trace_option = typer.Option(False, "--show-trace", help="Show trace for debugging")
+debug_option = typer.Option(False, "--debug", help="Enable debug output")
+flake_root_option = typer.Option(
+    get_flake_root(),
+    "--flake-root",
+    help="Path to flake root",
+    exists=True,
+    file_okay=False,
+    dir_okay=True,
+)
+hostname_option = typer.Option(socket.gethostname(), "--hostname", help="Hostname")

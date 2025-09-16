@@ -16,6 +16,8 @@ pkgs.mkShell {
     jq
     nickel
     nls
+    gh
+    just
   ];
   shellHook = ''
     export UV_VENV_DIR=$PWD/.venv

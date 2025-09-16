@@ -18,6 +18,7 @@
       url = "github:aarongpower/nix-concierge";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    copyparty.url = "github:9001/copyparty";
     fenix = {
       url = "github:nix-community/fenix";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -28,6 +29,10 @@
     home-manager = {
       url = "github:nix-community/home-manager/release-25.05";
       inputs.nixpkgs.follows = "nixpkgs";
+    };
+    linger = {
+      url = "github:mindsbackyard/linger-flake";
+      inputs.flake-utils.follows = "flake-utils";
     };
     lix = {
       url = "https://git.lix.systems/lix-project/lix/archive/main.tar.gz";
@@ -44,9 +49,19 @@
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.05";
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
     nixos-wsl.url = "github:nix-community/NixOS-WSL/main";
+    opnix = {
+      url = "github:mrjones2014/opnix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     organist = {
       url = "github:nickel-lang/organist";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
+    };
+    pihole = {
+      url = "github:mindsbackyard/pihole-flake";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.flake-utils.follows = "flake-utils";
+      inputs.linger.follows = "linger";
     };
     proxmox-nixos = {
       url = "github:SaumonNet/proxmox-nixos";
@@ -75,6 +90,7 @@
     sharedModules = [
       ({pkgs, ...}: {nixpkgs.overlays = overlays;})
       inputs.lix-module.nixosModules.default
+      inputs.opnix.nixosModules.default
     ];
     linuxModules = [
       inputs.agenix.nixosModules.default

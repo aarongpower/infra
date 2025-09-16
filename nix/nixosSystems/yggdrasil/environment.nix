@@ -25,6 +25,8 @@
     systemPackages = with pkgs; [
       # nixVersions.stable
       cdrkit
+      nodejs
+      git
     ];
   };
 }

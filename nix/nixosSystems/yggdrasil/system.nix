@@ -2,6 +2,7 @@
   systemName = builtins.baseNameOf (toString ./.);
   useProxmox = true;
   useContainers = true;
+  useCopyParty = true;
   user = "aaronp";
   system = "x86_64-linux";
 
