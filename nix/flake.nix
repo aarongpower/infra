@@ -105,8 +105,12 @@
         inherit inputs globals self overlays linuxModules sharedModules;
         lib = inputs.nixpkgs.lib;
       };
-      darwinConfigurations = import "${globals.flakeRoot}/systems/astra/darwinConfiguration.nix" {
+      darwinConfigurations."astra" = import "${globals.flakeRoot}/systems/astra/darwinConfiguration.nix" {
         inherit self inputs globals linuxModules sharedModules;
+        agenix = inputs.agenix;
+        compose2nix = inputs.compose2nix;
+        fenix = inputs.fenix;
+        home-manager = inputs.home-manager;
         nixpkgs = inputs.nixpkgs;
         nixpkgs-unstable = inputs.nixpkgs-unstable;
         # add any other required arguments

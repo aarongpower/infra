@@ -35,17 +35,17 @@ in
       ++ [
         #
         configuration
-        inputs.sops-nix.nixosModules.sops
-        home-manager.nixosModules.home-manager
+        inputs.sops-nix.darwinModules.sops
+        home-manager.darwinModules.home-manager
         {
           home-manager.useGlobalPkgs = true;
           home-manager.useUserPackages = true;
-          home-manager.users.aaronp = home;
+          home-manager.users.aaronpower = home;
           home-manager.extraSpecialArgs = {inherit inputs agenix fenix compose2nix globals;};
           home-manager.sharedModules = [
             inputs.sops-nix.homeManagerModules.sops
           ];
         }
       ];
-    specialArgs = {inherit inputs globals unstable;};
+    specialArgs = {inherit inputs globals unstable self;};
   }

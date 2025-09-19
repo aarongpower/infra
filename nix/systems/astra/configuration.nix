@@ -23,7 +23,7 @@
   ];
 
   # Auto upgrade nix package and the daemon service.
-  services.nix-daemon.enable = true;
+  # services.nix-daemon.enable = true;
   # nix.package = pkgs.nix;
 
   # Necessary for using flakes on this system.
@@ -45,19 +45,21 @@
   nixpkgs.hostPlatform = "aarch64-darwin";
 
   # Aaron's configuration starts here
-  security.pam.enableSudoTouchIdAuth = true;
+  security.pam.services.sudo_local.touchIdAuth = true;
 
   users.users.aaronpower.home = "/Users/aaronpower";
 
   # nixpkgs.overlays = [ fenix.overlays.default ];
 
-  system.activationScripts.postUserActivation.text = ''
-    # Following line should allow us to avoid a logout/login cycle
-    /System/Library/PrivateFrameworks/SystemAdministration.framework/Resources/activateSettings -u
-    killall Dock
-    killall SystemUIServer
-    killall cfprefsd
-  '';
+  # system.activationScripts.postUserActivation.text = ''
+  #   # Following line should allow us to avoid a logout/login cycle
+  #   /System/Library/PrivateFrameworks/SystemAdministration.framework/Resources/activateSettings -u
+  #   killall Dock
+  #   killall SystemUIServer
+  #   killall cfprefsd
+  # '';
+
+  system.primaryUser = "aaronpower";
 
   # system settings
   system.defaults = {

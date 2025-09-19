@@ -10,6 +10,7 @@
     inputs.sops-nix.homeManagerModules.sops
   ];
 
+
   # sops config
   sops = {
     age.sshKeyPaths = [

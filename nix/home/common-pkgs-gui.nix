@@ -8,7 +8,8 @@ with pkgs; [
   alacritty
   drawio
   discord
-  nerdfonts
+  # nerdfonts
+  nerd-fonts.caskaydia-cove
   obsidian
   syncthing
 ]
