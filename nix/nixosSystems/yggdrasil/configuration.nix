@@ -33,7 +33,13 @@ in {
     ./nixos-containers/monitoring.nix
     # ./nixos-containers/gitea.nix
     ./nixos-containers/garage.nix
+    ./nixos-containers/n8n.nix
     # ./nixos-containers/opencloud.nix
+    ./nixos-containers/copyparty.nix
+    ./nixos-containers/media.nix
+    ./nixos-containers/ai.nix
+    # ./nixos-containers/pihole.nix
+    ./nixos-containers/matrix.nix
 
     # Services
     ./services.nix
@@ -43,6 +49,7 @@ in {
 
     "${globals.flakeRoot}/ssh/knownHosts.nix"
     ./sops.nix
+    ./misc/terraform_user.nix
   ];
 
   systemd.services.NetworkManager-wait-online.enable = lib.mkForce false;
@@ -77,8 +84,15 @@ in {
         "root"
         "aaronp"
       ];
+      http2 = false;
+      http-connections = 1;
+      connect-timeout = 10;
+      download-attempts = 3;
     };
   };
+
+  # Force curl to use IPv4 and HTTP/1.1 for nix-daemon to avoid issues with some ISPs
+  systemd.services.nix-daemon.environment.NIX_CURL_FLAGS = "-4 --http1.1";
 
   # Set your time zone.
   time.timeZone = "Asia/Jakarta";

@@ -4,13 +4,12 @@ from returns.pipeline import flow, is_successful
 from returns.pointfree import bind
 from returns.result import Result
 
-from deploy.context import BuildType, common_params
+from deploy.context import BuildType
 from deploy.nickel.app import nickel_app
 from deploy.nickel.utils import create_nickel_command, run_nickel_command
 
 
 @nickel_app.command()
-@common_params
 def build(ctx: typer.Context):
     """Generate Terraform files from Nickel files using tf-ncl."""
     ctx.obj.dbg("Initializing Nickel to Terraform conversion")

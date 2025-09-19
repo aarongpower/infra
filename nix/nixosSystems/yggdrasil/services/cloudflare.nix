@@ -22,7 +22,7 @@
           "sonarr.rumahindo.net" = "http://192.168.3.27:8989";
           "radarr.rumahindo.net" = "http://192.168.3.27:7878";
           "sabnzbd.rumahindo.net" = "http://192.168.3.27:8080";
-          "n8n.rumahindo.net" = "http://localhost:5678";
+          # "n8n.rumahindo.net" = "http://localhost:5678";
           "hass.rumahindo.net" = "http://192.168.3.21:8123";
           "plex.rumahindo.net" = "http://192.168.3.27:32400";
           "unifi.rumahindo.net" = "https://192.168.2.2";
@@ -37,7 +37,7 @@
           "syncthing.rumahindo.net" = "http://localhost:8384";
           "whisparr.rumahindo.net" = "http://localhost:6969";
           "vaultwarden.rumahindo.net" = "http://192.168.3.25";
-          "chat.rumahindo.net" = "http://192.168.3.26:8080";
+          # "chat.rumahindo.net" = "http://192.168.3.26:8080";
           "jellyfin.rumahindo.net" = "http://192.168.3.27:8096";
           "yggdrasil.earth.rumahindo.net" = "ssh://192.168.3.20:22";
           "gitea.rumahindo.net" = "http://192.168.3.31:3000";

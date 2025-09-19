@@ -1,12 +1,12 @@
 import typer
 
 # Import the remaining top-level commands
-import deploy.diff  # type: ignore # noqa: F401
-import deploy.show  # type: ignore # noqa: F401
+# import deploy.diff  # type: ignore # noqa: F401
+# import deploy.show  # type: ignore # noqa: F401
 
 # Import subcommands
 import deploy.nix.commands  # type: ignore # noqa: F401
-import deploy.nickel.commands  # type: ignore # noqa: F401
+# import deploy.nickel.commands  # type: ignore # noqa: F401
 from deploy.app import app
 
 # Import all deploy modules to register their commands
@@ -15,9 +15,10 @@ from deploy.app import app
 from deploy.context import Context
 
 
-@app.callback()
-def main(ctx: typer.Context) -> None:
-    ctx.obj = Context()
+# @app.callback()
+# def main(ctx: typer.Context, debug: bool = False) -> None:
+#     ctx.obj = Context()
+#     ctx.obj.debug = bool(debug)
 
 
 if __name__ == "__main__":
