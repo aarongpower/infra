@@ -4,7 +4,7 @@ set unstable := true
 
 hostname := `hostname`
 project_root := justfile_dir()
-nix_root := "justfile_dir()/nix"
+nix_root := project_root + "/nix"
 
 show_hostname:
     echo "Hostname is {{hostname}}"
