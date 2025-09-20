@@ -46,5 +46,10 @@ dyg:
         echo "No changes to commit."
     fi
 
+    echo "Deploying to $hostname..."
+    echo "Using flake at {{nix_root}}/nix"
+    echo "Target host: $username@$hostname"
+    echo "Running nixos-rebuild switch..."
+
     nixos-rebuild switch --flake "{{nix_root}}/nix#${hostname}" --target-host "${username}@${hostname}" --use-remote-sudo
 
