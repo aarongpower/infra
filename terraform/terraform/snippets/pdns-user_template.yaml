@@ -1,0 +1,22 @@
+user: ${ci_user}
+password: ${ci_password}
+chpasswd: { expire: False }
+ssh_pwauth: False
+sudo: ['ALL=(ALL) NOPASSWD:ALL']
+groups: [sudo]
+shell: /bin/bash
+
+ssh_authorized_keys:
+  - ${ci_ssh_key}
+
+package_update: true
+package_upgrade: true
+packages:
+  - pdns-server
+  - pdns-backend-sqlite3
+  - qemu-guest-agent
+runcmd:
+  - systemctl enable qemu-guest-agent
+  - systemctl start qemu-guest-agent
+  - systemctl enable pdns
+  - systemctl start pdns

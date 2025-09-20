@@ -1,0 +1,55 @@
+#cloud-config
+hostname: ${vm_hostname}
+
+users:
+  - name: ${vm_user}
+    gecos: PowerDNS Admin
+    groups: [sudo]
+    shell: /bin/bash
+    sudo: ["ALL=(ALL) NOPASSWD:ALL"]
+    ssh_authorized_keys:
+      - ${ssh_authorized}
+
+package_update: true
+package_upgrade: true
+packages:
+  - qemu-guest-agent
+  - curl
+  - gnupg
+  - sqlite3
+  - apt-transport-https
+
+runcmd:
+  - systemctl enable --now qemu-guest-agent
+
+  # Add upstream PowerDNS repo (Ubuntu codename auto-detected)
+  - bash -lc 'curl -fsSL https://repo.powerdns.com/FD380FBB-pub.asc | gpg --dearmor -o /usr/share/keyrings/powerdns-archive-keyring.gpg'
+  - bash -lc 'echo "deb [signed-by=/usr/share/keyrings/powerdns-archive-keyring.gpg] http://repo.powerdns.com/ubuntu $(. /etc/os-release && echo $UBUNTU_CODENAME) main" > /etc/apt/sources.list.d/pdns.list'
+  - apt-get update
+
+  # Install PowerDNS authoritative with SQLite backend
+  - DEBIAN_FRONTEND=noninteractive apt-get install -y pdns-server pdns-backend-sqlite3
+
+  # Create SQLite DB and schema
+  - install -d -m 0750 -o pdns -g pdns /var/lib/powerdns
+  - bash -lc 'sqlite3 /var/lib/powerdns/pdns.sqlite3 < /usr/share/pdns-backend-sqlite3/schema/schema.sqlite3.sql'
+  - chown pdns:pdns /var/lib/powerdns/pdns.sqlite3
+
+  # Configure pdns
+  - |
+    cat >/etc/powerdns/pdns.conf <<'EOF'
+    launch=gsqlite3
+    gsqlite3-database=/var/lib/powerdns/pdns.sqlite3
+    api=yes
+    api-key=${pdns_api_key}
+    webserver=yes
+    webserver-address=0.0.0.0
+    webserver-port=8081
+    webserver-allow-from=0.0.0.0/0
+    local-address=0.0.0.0
+    disable-axfr=no
+    setuid=pdns
+    setgid=pdns
+    EOF
+
+  - systemctl enable --now pdns

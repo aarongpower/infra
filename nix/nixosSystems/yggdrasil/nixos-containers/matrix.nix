@@ -18,6 +18,13 @@
     else inputs.nixpkgs;
   pkgs = import nixpkgs {system = "x86_64-linux";};
 in {
+  # Allow olm-3.2.16 which is a dependency of mautrix-meta but is considered insecure
+  # may be able to be removed in future when mautrix-meta updates its dependencies
+  # see https://matrix.org/blog/2024/08/libolm-deprecation/
+  nixpkgs.config.permittedInsecurePackages = lib.mkAfter [
+    "olm-3.2.16"
+  ];
+
   services.cloudflared.tunnels."4dfe26fb-27ae-40c7-a941-11f50f3ed8c3".ingress = lib.mkAfter {
     "matrix.rumahindo.net" = "http://${ipaddress}:8001";
     "chat.rumahindo.net" = "http://${ipaddress}:8080";
@@ -212,81 +219,81 @@ in {
       };
 
       # --- Messenger bridge (mautrix-meta, megabridge) ---
-      services.mautrix-meta.instances.messenger = {
-        enable = true;
-        dataDir = "/var/lib/mautrix-meta/messenger";
-        registerToSynapse = true;
+      # services.mautrix-meta.instances.messenger = {
+      #   enable = true;
+      #   dataDir = "/var/lib/mautrix-meta/messenger";
+      #   registerToSynapse = true;
 
-        settings = {
-          # REQUIRED in megabridge: pick the service
-          network = {
-            mode = "messenger"; # other valid: "facebook", "facebook-tor", "instagram"
-          };
+      #   settings = {
+      #     # REQUIRED in megabridge: pick the service
+      #     network = {
+      #       mode = "messenger"; # other valid: "facebook", "facebook-tor", "instagram"
+      #     };
 
-          homeserver = {
-            software = "standard";
-            # Bridge talks to Synapse via the local listener
-            address = "http://127.0.0.1:8000";
-            domain = "matrix.rumahindo.net";
-          };
+      #     homeserver = {
+      #       software = "standard";
+      #       # Bridge talks to Synapse via the local listener
+      #       address = "http://127.0.0.1:8000";
+      #       domain = "matrix.rumahindo.net";
+      #     };
 
-          appservice = {
-            # REQUIRED id for registration
-            id = "mautrix-meta-messenger";
-            # Where Synapse pushes transactions (also written to registration url)
-            address = "http://127.0.0.1:29323";
-            hostname = "127.0.0.1";
-            port = 29323;
+      #     appservice = {
+      #       # REQUIRED id for registration
+      #       id = "mautrix-meta-messenger";
+      #       # Where Synapse pushes transactions (also written to registration url)
+      #       address = "http://127.0.0.1:29323";
+      #       hostname = "127.0.0.1";
+      #       port = 29323;
 
-            # Bridge state DB (Postgres)
-            database = {
-              type = "postgres";
-              uri = "postgresql:///mautrix_meta?host=/run/postgresql";
-            };
+      #       # Bridge state DB (Postgres)
+      #       database = {
+      #         type = "postgres";
+      #         uri = "postgresql:///mautrix_meta?host=/run/postgresql";
+      #       };
 
-            bot = {
-              username = "messengerbot";
-              displayname = "Messenger Bridge";
-            };
-          };
+      #       bot = {
+      #         username = "messengerbot";
+      #         displayname = "Messenger Bridge";
+      #       };
+      #     };
 
-          # Permissions are required
-          bridge = {
-            permissions = {
-              "@aaron:matrix.rumahindo.net" = "admin"; # change if your MXID is different
-              "*" = "user";
-            };
+      #     # Permissions are required
+      #     bridge = {
+      #       permissions = {
+      #         "@aaron:matrix.rumahindo.net" = "admin"; # change if your MXID is different
+      #         "*" = "user";
+      #       };
 
-            # E2EE defaults
-            encryption = {
-              allow = true;
-              default = true;
-              require = true;
-            };
-          };
+      #       # E2EE defaults
+      #       encryption = {
+      #         allow = true;
+      #         default = true;
+      #         require = true;
+      #       };
+      #     };
 
-          # New megabridge double-puppet config (top-level key)
-          double_puppet = {
-            # Map your homeserver domain to the DP token we put in the extra appservice
-            secrets = {"matrix.rumahindo.net" = "as_token:CHANGEME_DP_AS_TOKEN";};
-          };
-        };
-      };
+      #     # New megabridge double-puppet config (top-level key)
+      #     double_puppet = {
+      #       # Map your homeserver domain to the DP token we put in the extra appservice
+      #       secrets = {"matrix.rumahindo.net" = "as_token:CHANGEME_DP_AS_TOKEN";};
+      #     };
+      #   };
+      # };
 
       # Extra appservice registration for automatic double-puppeting (null URL).
       # Only Synapse needs to read this file.
-      environment.etc."matrix-appservices/doublepuppet.yaml".text = ''
-        id: doublepuppet
-        url:
-        as_token: CHANGEME_DP_AS_TOKEN
-        hs_token: unused-but-random-please-change
-        sender_localpart: unused-but-random-please-change
-        rate_limited: false
-        namespaces:
-          users:
-            - regex: '@.*:matrix\.rumahindo\.net'
-              exclusive: false
-      '';
+      # environment.etc."matrix-appservices/doublepuppet.yaml".text = ''
+      #   id: doublepuppet
+      #   url:
+      #   as_token: CHANGEME_DP_AS_TOKEN
+      #   hs_token: unused-but-random-please-change
+      #   sender_localpart: unused-but-random-please-change
+      #   rate_limited: false
+      #   namespaces:
+      #     users:
+      #       - regex: '@.*:matrix\.rumahindo\.net'
+      #         exclusive: false
+      # '';
 
       networking.firewall = {
         enable = true;
