@@ -1,7 +1,10 @@
 set dotenv-load
+set shell := ["bash", "-eu", "-o", "pipefail", "-c"]
+set unstable := true
 
 hostname := `hostname`
 project_root := justfile_dir()
+nix_root := "{{project_root}}/nix"
 
 show_hostname:
     echo "Hostname is {{hostname}}"
@@ -25,3 +28,23 @@ deploy:
     sudo nixos-rebuild switch --flake {{project_root}}/nix#{{hostname}}
     git commit -m "Deploy to {{hostname}} on `date +'%Y-%m-%d %H:%M:%S'`"
     git push
+
+[script]
+dyg: 
+    # dyg = deploy yggdrasil
+    hostname="yggdrasil"
+    username="aaronp"
+
+    git pull
+    git add -A
+
+    # Commit only if there are staged changes
+    if ! git diff --cached --quiet; then
+        git commit -m "Deploy to $hostname on $(date +'%Y-%m-%d %H:%M:%S')"
+        git push
+    else
+        echo "No changes to commit."
+    fi
+
+    nixos-rebuild switch --flake "{{nix_root}}/nix#${hostname}" --target-host "${username}@${hostname}" --use-remote-sudo
+
