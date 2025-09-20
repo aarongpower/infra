@@ -1,56 +1,77 @@
 terraform {
   required_providers {
-    azurerm = {
-      source  = "hashicorp/azurerm"
-      version = "=4.1.0"
+    routeros = {
+      source  = "terraform-routeros/routeros" # REST or classic API
+      version = "~> 1.76"
+    }
+    unifi = {
+      source  = "paultyng/unifi"
+      version = "0.41.0"
+    }
+    proxmox = {
+      source  = "bpg/proxmox"
+      version = "0.82.1"
+    }
+    onepassword = {
+      source  = "1Password/onepassword"
+      version = "2.1.2"
     }
   }
 }
 
-provider "azurerm" {
-  resource_provider_registrations = "none" # This is only required when the User, Service Principal, or Identity running Terraform lacks the permissions to register Azure Resource Providers.
-  features {}
+provider "routeros" {
+  hosturl  = "http://192.168.88.1"
+  username = "terraform"
+  password = var.mikrotik_password
+  insecure = true # skip TLS verify while you test
 }
 
-data "azurerm_client_config" "current" {}
+provider "unifi" {
+  username = "terraform"
+  password = var.unifi_password # optionally use UNIFI_PASSWORD env var
+  api_url  = "https://192.168.2.2"
 
-resource "azurerm_resource_group" "rg_garage" {
-  name     = "rg-garage"
-  location = "indonesiacentral"
+  # you may need to allow insecure TLS communications unless you have configured
+  # certificates for your controller
+  allow_insecure = var.insecure # optionally use UNIFI_INSECURE env var
+
+  # if you are not configuring the default site, you can change the site
+  # site = "foo" or optionally use UNIFI_SITE env var
 }
 
-resource "azurerm_key_vault" "kv_garage" {
-  name                        = "kv-garage"
-  location                    = azurerm_resource_group.rg_garage.location
-  resource_group_name         = azurerm_resource_group.rg_garage.name
-  enabled_for_disk_encryption = true
-  tenant_id                   = data.azurerm_client_config.current.tenant_id
-  soft_delete_retention_days  = 7
-  purge_protection_enabled    = false
+data "onepassword_item" "aaron_ssh_key" {
+  vault = data.onepassword_vault.sol.uuid
+  title = "Aaron SSH Key"
+}
 
-  sku_name = "standard"
+data "onepassword_item" "aaron_password" {
+  vault = data.onepassword_vault.sol.uuid
+  title = "Yggdrasil Aaron"
+}
 
-  access_policy {
-    tenant_id = data.azurerm_client_config.current.tenant_id
-    object_id = data.azurerm_client_config.current.object_id
+data "onepassword_item" "pve_terraform_token" {
+  vault = data.onepassword_vault.sol.uuid
+  title = "pve_terraform_token"
+}
 
-    key_permissions = [
-      "Create",
-      "Get",
-    ]
+provider "proxmox" {
+  endpoint  = "https://192.168.3.20:8006/api2/json/"
+  api_token = "${data.onepassword_item.pve_terraform_token.username}=${data.onepassword_item.pve_terraform_token.credential}"
+  insecure  = true # for self-signed certs, change as appropriate
 
-    secret_permissions = [
-      "Set",
-      "Get",
-      "Delete",
-      "Purge",
-      "Recover"
-    ]
+  ssh {
+    agent       = false
+    username    = "terraform"
+    private_key = file("~/.ssh/id_ed25519") # or use PVE_SSH_PRIVATE_KEY env var
+
+    node {
+      name    = var.pve_node_name
+      address = "192.168.3.20"
+    }
   }
 }
 
-resource "azurerm_key_vault_secret" "example" {
-  name         = "secret-sauce"
-  value        = "szechuan"
-  key_vault_id = azurerm_key_vault.kv_garage.id
+provider "onepassword" {
+  service_account_token = var.op_service_account_token
 }
+

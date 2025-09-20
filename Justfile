@@ -23,7 +23,7 @@ fix_pve_stuck:
     echo "Clearing Nix caches..."
     sudo rm -rf /root/.cache/nix/eval-cache-v5 /root/.cache/nix/git 2>/dev/null || true
 
-deploy:
+deploynix:
     git add .
     sudo nixos-rebuild switch --flake {{project_root}}/nix#{{hostname}}
     git commit -m "Deploy to {{hostname}} on `date +'%Y-%m-%d %H:%M:%S'`"
@@ -56,3 +56,10 @@ dyg:
 test:
     echo "{{project_root}}"
     echo "{{nix_root}}"
+
+dter:
+    #!/usr/bin/env bash
+    # dter = deploy ter
+    cd {{project_root}}/terraform
+    terraform apply
+    

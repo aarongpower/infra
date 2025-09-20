@@ -18,13 +18,6 @@
     else inputs.nixpkgs;
   pkgs = import nixpkgs {system = "x86_64-linux";};
 in {
-  # Allow olm-3.2.16 which is a dependency of mautrix-meta but is considered insecure
-  # may be able to be removed in future when mautrix-meta updates its dependencies
-  # see https://matrix.org/blog/2024/08/libolm-deprecation/
-  nixpkgs.config.permittedInsecurePackages = lib.mkAfter [
-    "olm-3.2.16"
-  ];
-
   services.cloudflared.tunnels."4dfe26fb-27ae-40c7-a941-11f50f3ed8c3".ingress = lib.mkAfter {
     "matrix.rumahindo.net" = "http://${ipaddress}:8001";
     "chat.rumahindo.net" = "http://${ipaddress}:8080";
@@ -54,6 +47,13 @@ in {
     };
 
     config = {pkgs, ...}: {
+      # Allow olm-3.2.16 which is a dependency of mautrix-meta but is considered insecure
+      # may be able to be removed in future when mautrix-meta updates its dependencies
+      # see https://matrix.org/blog/2024/08/libolm-deprecation/
+      # nixpkgs.config.permittedInsecurePackages = [
+      #   "olm-3.2.16"
+      # ];
+
       environment.systemPackages = with pkgs; [synadm];
 
       services.postgresql = {
