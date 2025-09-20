@@ -51,5 +51,8 @@ dyg:
     echo "Target host: $username@$hostname"
     echo "Running nixos-rebuild switch..."
 
-    nixos-rebuild switch --flake "{{nix_root}}/nix#${hostname}" --target-host "${username}@${hostname}" --use-remote-sudo
+    nixos-rebuild switch --flake "{{nix_root}}#${hostname}" --target-host "${username}@${hostname}" --use-remote-sudo
 
+test:
+    echo "{{project_root}}"
+    echo "{{nix_root}}"
