@@ -47,11 +47,11 @@ dyg:
     fi
 
     echo "Deploying to $hostname..."
-    echo "Using flake at {{nix_root}}/nix"
+    echo "Using flake at {{nix_root}}"
     echo "Target host: $username@$hostname"
     echo "Running nixos-rebuild switch..."
 
-    nixos-rebuild switch --flake "{{nix_root}}#${hostname}" --target-host "${username}@${hostname}" --use-remote-sudo
+    nixos-rebuild switch --flake "{{nix_root}}#${hostname}" --target-host "${username}@${hostname}" --use-remote-sudo --build-host "${hostname}.rumahindo.lan"
 
 test:
     echo "{{project_root}}"
