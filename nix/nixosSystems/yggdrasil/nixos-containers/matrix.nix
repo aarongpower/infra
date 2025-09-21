@@ -127,7 +127,7 @@ in {
           ];
 
           # Append the double-puppet appservice registration we create below
-          app_service_config_files = lib.mkAfter ["/etc/matrix-appservices/doublepuppet.yaml"];
+          # app_service_config_files = lib.mkAfter ["/etc/matrix-appservices/doublepuppet.yaml"];
         };
       };
 
