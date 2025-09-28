@@ -25,7 +25,7 @@ fix_pve_stuck:
 
 deploynix:
     git add .
-    sops updatekeys -y ./nix/secrets/*.yaml
+    cd ./nix/secrets; sops updatekeys -y *.yaml
     sudo nixos-rebuild switch --flake {{project_root}}/nix#{{hostname}}
     git commit -m "Deploy to {{hostname}} on `date +'%Y-%m-%d %H:%M:%S'`"
     git push

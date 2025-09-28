@@ -45,7 +45,14 @@ in
             # Import the home configuration for the specific user on this system
             home-manager.users.aaronp = import "${root}/home/${host}.nix";
             home-manager.extraSpecialArgs = {inherit inputs globals;};
-            home-manager.backupFileExtension = "backup";
+            # Use the flake's last modified date as a deterministic timestamp for backups.
+            # Produces e.g. backup-20250928T084456
+            home-manager.backupFileExtension = let
+              raw = self.lastModifiedDate or "";
+              ts = if builtins.stringLength raw >= 14 then
+                "${builtins.substring 0 8 raw}T${builtins.substring 8 6 raw}"
+              else raw;
+            in "backup-${ts}";
           }
         ]
         ++ lib.optional systemParams.useProxmox inputs.proxmox-nixos.nixosModules.proxmox-ve
