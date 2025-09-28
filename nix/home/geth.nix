@@ -61,4 +61,6 @@
   #      uris = ["qemu:///system"];
   #    };
   #  };
+
+  programs.waybar.enable = true;
 }

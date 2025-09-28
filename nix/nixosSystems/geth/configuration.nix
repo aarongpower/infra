@@ -67,7 +67,7 @@ in {
   users.users.aaronp = {
     isNormalUser = true;
     description = "Aaron Power";
-    extraGroups = [ "networkmanager" "wheel" "plugdev" ];
+    extraGroups = [ "networkmanager" "wheel" "plugdev" "input" ];
     packages = with pkgs; [
       # _1password-gui
     ];

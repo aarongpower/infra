@@ -86,6 +86,5 @@
     gnome-online-accounts-gtk
     libsecret
     seahorse
-    waybar
   ];
 }
