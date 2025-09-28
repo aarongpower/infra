@@ -25,6 +25,7 @@ fix_pve_stuck:
 
 deploynix:
     git add .
+    sops updatekeys -y ./nix/secrets/*.yaml
     sudo nixos-rebuild switch --flake {{project_root}}/nix#{{hostname}}
     git commit -m "Deploy to {{hostname}} on `date +'%Y-%m-%d %H:%M:%S'`"
     git push
@@ -57,9 +58,8 @@ test:
     echo "{{project_root}}"
     echo "{{nix_root}}"
 
-dter:
+terd:
     #!/usr/bin/env bash
     # dter = deploy ter
     cd {{project_root}}/terraform
     terraform apply
-    
