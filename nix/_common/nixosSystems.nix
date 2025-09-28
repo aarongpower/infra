@@ -45,6 +45,7 @@ in
             # Import the home configuration for the specific user on this system
             home-manager.users.aaronp = import "${root}/home/${host}.nix";
             home-manager.extraSpecialArgs = {inherit inputs globals;};
+            home-manager.backupFileExtension = "backup";
           }
         ]
         ++ lib.optional systemParams.useProxmox inputs.proxmox-nixos.nixosModules.proxmox-ve
