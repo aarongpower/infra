@@ -81,10 +81,21 @@
     };
   };
   outputs = {self, ...} @ inputs: let
-    globals = {
+    # Provide a deterministic timestamp from flake metadata for reuse.
+    # Prefer self.lastModifiedDate (YYYYMMDDHHMMSS), fall back to formatting epoch seconds.
+    globals = let
+      raw = self.lastModifiedDate or "";
+      ts = if builtins.stringLength raw >= 14 then
+        "${builtins.substring 0 8 raw}T${builtins.substring 8 6 raw}"
+      else if self ? lastModified then
+        inputs.nixpkgs.lib.formatTime "%Y%m%dT%H%M%S" self.lastModified
+      else
+        "";
+    in {
       flakeRoot = ./.;
       repoRoot = ./..;
       timezone = "Asia/Jakarta";
+      buildTimestamp = ts; # e.g., 20250928T084456
     };
     overlays = [inputs.fenix.overlays.default];
     sharedModules = [

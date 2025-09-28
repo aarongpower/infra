@@ -5,7 +5,6 @@
   ...
 }:
 with pkgs; [
-  alacritty
   drawio
   discord
   # nerdfonts

@@ -21,7 +21,6 @@
     localPackages = with pkgs; [
       kdePackages.kate
       vscode
-      alacritty
       microsoft-edge
       direnv
       vlc
