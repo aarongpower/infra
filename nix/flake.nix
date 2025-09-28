@@ -35,7 +35,7 @@
       inputs.flake-utils.follows = "flake-utils";
     };
     lix = {
-      url = "https://git.lix.systems/lix-project/lix/archive/main.tar.gz";
+      url = "git+https://git.lix.systems/lix-project/lix?ref=main";
       flake = false;
     };
     lix-module = {

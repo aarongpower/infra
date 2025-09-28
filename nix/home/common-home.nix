@@ -112,7 +112,7 @@
     format = "$all";
     shlvl = {
       disabled = false;
-      symbol = "↕️ ";
+      symbol = "🞊 ";
       style = "bright-red bold";
     };
     shell = {
@@ -196,7 +196,7 @@
     settings = {
       shell = {
         program = "${pkgs.zsh}/bin/zsh";
-        args = ["-c" "${pkgs.zellij}/bin/zellij attach rusty-rustacean"];
+        args = ["-c" "${pkgs.zellij}/bin/zellij"];
       };
       font = {
         size = 10;
