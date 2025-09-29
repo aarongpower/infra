@@ -1,17 +1,8 @@
-{
-  pkgs,
-  inputs,
-  lib,
-  config,
-  cider220,
-  agenix,
-  fenix,
-  globals,
-  ...
-}: let
+{ pkgs, inputs, lib, config, cider220, agenix, fenix, globals, ... }:
+let
   edgeWrapped = pkgs.stdenv.mkDerivation {
     name = "microsoft-edge-wrapped";
-    buildInputs = [pkgs.microsoft-edge pkgs.makeWrapper];
+    buildInputs = [ pkgs.microsoft-edge pkgs.makeWrapper ];
     dontUnpack = true;
     dontBuild = true;
     installPhase = ''
@@ -21,7 +12,9 @@
     '';
   };
 
-  wallpaperImage = builtins.path {path = "${globals.flakeRoot}/systems/nixos/images/fluid.png";};
+  wallpaperImage = builtins.path {
+    path = "${globals.flakeRoot}/systems/nixos/images/fluid.png";
+  };
 
   hyprpaperConfig = pkgs.writeTextFile {
     name = "hyprpaper.conf";
@@ -32,13 +25,11 @@
     '';
   };
 in {
-  imports = [
-    ./common-home.nix
-  ];
+  imports = [ ./common-home.nix ];
 
   home.stateVersion = "23.11";
   home.packages = let
-    commonPackages = import ./common-pkgs.nix {inherit pkgs inputs fenix;};
+    commonPackages = import ./common-pkgs.nix { inherit pkgs inputs fenix; };
     localPackages = with pkgs; [
       # Development Tools
       cider220
@@ -128,12 +119,12 @@ in {
       element-desktop
       hyprshot
     ];
-  in
-    localPackages ++ commonPackages;
+  in localPackages ++ commonPackages;
 
   wayland.windowManager.hyprland = {
     enable = true;
-    extraConfig = builtins.readFile "${globals.flakeRoot}/systems/nixos/hypr/hyprland.conf";
+    extraConfig =
+      builtins.readFile "${globals.flakeRoot}/systems/nixos/hypr/hyprland.conf";
   };
 
   services.mako = {
@@ -201,15 +192,17 @@ in {
   xdg.configFile."hypr/hyprpaper.conf".source = hyprpaperConfig;
 
   # Waybar config
-  xdg.configFile."waybar/style.css".source = "${globals.flakeRoot}/systems/nixos/waybar/style.css";
-  xdg.configFile."waybar/config".source = "${globals.flakeRoot}/systems/nixos/waybar/waybar.conf";
+  xdg.configFile."waybar/style.css".source =
+    "${globals.flakeRoot}/systems/nixos/waybar/style.css";
+  xdg.configFile."waybar/config".source =
+    "${globals.flakeRoot}/systems/nixos/waybar/waybar.conf";
 
   # Required to get virtualisation working
   # As per https://nixos.wiki/wiki/Virt-manager
   dconf.settings = {
     "org/virt-manager/virt-manager/connections" = {
-      autoconnect = ["qemu:///system"];
-      uris = ["qemu:///system"];
+      autoconnect = [ "qemu:///system" ];
+      uris = [ "qemu:///system" ];
     };
   };
 }

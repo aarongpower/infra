@@ -1,10 +1,10 @@
 { pkgs, inputs, config, globals, ... }:
-let
-  unstable = inputs.nixpkgs-unstable.legacyPackages.${pkgs.system};
+let unstable = inputs.nixpkgs-unstable.legacyPackages.${pkgs.system};
 in {
   imports = [
     inputs.agenix.homeManagerModules.default
     inputs.sops-nix.homeManagerModules.sops
+
   ];
 
   # sops config

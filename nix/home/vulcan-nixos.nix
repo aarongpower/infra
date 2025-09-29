@@ -1,24 +1,10 @@
-{
-  pkgs,
-  inputs,
-  lib,
-  config,
-  cider220,
-  agenix,
-  fenix,
-  ...
-}: {
-  imports = [
-    ./common-home.nix
-    ./common-cli.nix
-  ];
+{ pkgs, inputs, lib, config, cider220, agenix, fenix, ... }: {
+  imports = [ ./common-home.nix ./common-cli.nix ];
 
   # nixpkgs.config.allowUnfree = true;
 
   home.stateVersion = "23.11";
-  home.packages = with pkgs; [
-    ];
-
+  home.packages = with pkgs; [ ];
 
   # programs.ssh.matchBlocks = [
   #   {
