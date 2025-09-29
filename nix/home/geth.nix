@@ -1,23 +1,11 @@
-{
-  pkgs,
-  inputs,
-  lib,
-  config,
-  cider220,
-  agenix,
-  fenix,
-  ...
-}: {
-  imports = [
-    ./common-home.nix
-    ./common-cli.nix
-    ./common-gui.nix
-  ];
+{ pkgs, inputs, lib, config, cider220, agenix, fenix, ... }: {
+  imports = [ ./common-home.nix ./common-cli.nix ./common-gui.nix ];
 
   # nixpkgs.config.allowUnfree = true;
 
   home.stateVersion = "23.11";
-  home.packages = with pkgs; lib.mkBefore [
+  home.packages = with pkgs;
+    lib.mkBefore [
       kdePackages.kate
       microsoft-edge
       direnv
@@ -60,4 +48,37 @@
 
   programs.waybar.enable = true;
   xdg.configFile."niri/config.kdl".source = ./config/niri/config.kdl;
+
+  services.mako = {
+    enable = true;
+    settings = {
+      layer = "overlay";
+      sort = "-time";
+      backgroundColor = "#2e3440";
+      width = 500;
+      height = 200;
+      defaultTimeout = 5000;
+      borderSize = 2;
+      borderColor = "#88c0d0";
+      borderRadius = 10;
+      margin = "5";
+      font = "'Caskaydia Cove' 12";
+      output = "HDMI-A-1";
+    };
+    # extraConfig = ''
+    #   [urgency=low]
+    #   border-color=#cccccc
+
+    #   [urgency=normal]
+    #   border-color=#d08770
+
+    #   [urgency=high]
+    #   border-color=#bf616a
+    #   default-timeout=0
+
+    #   [category=mpd]
+    #   default-timeout=2000
+    #   group-by=category
+    # '';
+  };
 }
