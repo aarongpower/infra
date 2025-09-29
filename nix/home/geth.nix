@@ -1,4 +1,10 @@
-{ pkgs, inputs, lib, config, cider220, agenix, fenix, ... }: {
+{ pkgs, inputs, lib, config, cider220, agenix, fenix, ... }:
+let
+  unstable = import inputs.nixpkgs-unstable {
+    system = pkgs.system;
+    config.allowUnfree = true;
+  };
+in {
   imports = [ ./common-home.nix ./common-cli.nix ./common-gui.nix ];
 
   # nixpkgs.config.allowUnfree = true;
@@ -48,6 +54,10 @@
 
   programs.waybar.enable = true;
   xdg.configFile."niri/config.kdl".source = ./config/niri/config.kdl;
+  programs.vscode = {
+    enable = true;
+    package = unstable.vscode;
+  };
 
   services.mako = {
     enable = true;
