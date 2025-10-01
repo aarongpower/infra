@@ -27,7 +27,7 @@ in {
       gimp
       libreoffice
       nixfmt-classic
-      unstable.whatsapp-electron
+      unstable.whatsapp-for-linux
     ];
 
   # programs.ssh.matchBlocks = [
