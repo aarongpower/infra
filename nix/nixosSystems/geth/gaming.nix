@@ -2,6 +2,7 @@
 
 {
     environment.systemPackages = with pkgs; lib.mkAfter [
-      steam
     ];
+
+    programs.steam.enable = true;
 }
