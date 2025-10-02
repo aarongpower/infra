@@ -1,10 +1,6 @@
-{ pkgs, inputs, lib, config, cider220, agenix, fenix, ... }:
-let
-  unstable = import inputs.nixpkgs-unstable {
-    system = pkgs.system;
-    config.allowUnfree = true;
-  };
-in {
+{ pkgs, inputs, lib, config, cider220, agenix, fenix, unstable, ... }:
+
+{
   imports = [ ./common-home.nix ./common-cli.nix ./common-gui.nix ];
 
   # nixpkgs.config.allowUnfree = true;
@@ -28,6 +24,9 @@ in {
       libreoffice
       nixfmt-classic
       unstable.whatsapp-for-linux
+      unstable.caprine
+      unstable.signal-desktop
+      nerd-fonts.caskaydia-cove 
     ];
 
   # programs.ssh.matchBlocks = [

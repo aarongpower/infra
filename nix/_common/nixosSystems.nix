@@ -28,6 +28,10 @@ in
       system = systemParams.system;
       config = {allowUnfree = true;};
     };
+      unstable = import inputs.nixpkgs-unstable {
+    system = pkgs.system;
+    config.allowUnfree = true;
+  };
   in
     nixpkgs.lib.nixosSystem {
       specialArgs = {inherit inputs globals nixpkgs;};
@@ -44,7 +48,7 @@ in
             home-manager.useUserPackages = true;
             # Import the home configuration for the specific user on this system
             home-manager.users.aaronp = import "${root}/home/${host}.nix";
-            home-manager.extraSpecialArgs = {inherit inputs globals;};
+            home-manager.extraSpecialArgs = {inherit inputs globals unstable;};
             # Use a deterministic timestamp for backups, derived from flake metadata.
             # Produces e.g. backup-20250928T084456
             home-manager.backupFileExtension = "backup-${globals.buildTimestamp}";
