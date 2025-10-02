@@ -183,7 +183,7 @@ in {
     enable = true;
     package = unstable.alacritty;
     settings = {
-      shell = {
+      terminal.shell = {
         program = "${pkgs.zsh}/bin/zsh";
         args = [ "-c" "${pkgs.zellij}/bin/zellij" ];
       };
