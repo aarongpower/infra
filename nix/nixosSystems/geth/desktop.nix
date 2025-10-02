@@ -18,6 +18,7 @@
     withUWSM = true;
   };
   programs.niri.enable = true;
+  programs.xwayland.enable = true;
 
   security.polkit.enable = true;
 
@@ -89,5 +90,8 @@
     gnome-online-accounts-gtk
     libsecret
     seahorse
+    xwayland
+    wl-clipboard
+    xorg.xeyes
   ];
 }
