@@ -10,11 +10,11 @@
 
     programs.steam = {
       enable = true;
-      # remotePlay.openFirewall = true;
-      # dedicatedServer.openFirewall = true;
+      remotePlay.openFirewall = true;
+      dedicatedServer.openFirewall = true;
       
-      # # Enable XWayland support for Steam
-      # gamescopeSession.enable = true;
+      # Enable XWayland support for Steam
+      gamescopeSession.enable = true;
     };
 
     # Make sure XWayland is enabled
