@@ -8,7 +8,11 @@
     enable = true;
     qemu = {
       package = pkgs.qemu_full;   # <-- switch from qemu_kvm to qemu_full
-      ovmf.enable = true;
+      ovmf = {
+        enable = true;
+        # Provide the SecureBoot-capable OVMF set (works for Win11)
+        packages = [ pkgs.OVMFFull.fd ];
+      };
       swtpm.enable = true;
       runAsRoot = false;
     };
