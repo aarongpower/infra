@@ -26,7 +26,8 @@
       unstable.whatsapp-for-linux
       unstable.caprine
       unstable.signal-desktop
-      nerd-fonts.caskaydia-cove 
+      nerd-fonts.caskaydia-cove
+      evince
     ];
 
   # programs.ssh.matchBlocks = [
