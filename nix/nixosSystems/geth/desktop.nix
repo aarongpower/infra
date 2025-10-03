@@ -11,7 +11,7 @@
   services.xserver.desktopManager.gnome.enable = true;
 
   # Set default login to use GNOME
-  services.xserver.displayManager.defaultSession = "gnome";
+  services.displayManager.defaultSession = "gnome";
   programs.hyprland = {
     enable = true;
     xwayland.enable = true;
