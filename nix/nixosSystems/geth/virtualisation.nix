@@ -10,6 +10,8 @@
       package = pkgs.qemu_kvm;
       ovmf.enable = true;
       swtpm.enable = true;
+      runAsRoot = false; # recommended for desktop usage
+      vhostUserPackages = [pkgs.virglrenderer pkgs.spice-gtk];
     };
   };
   programs.virt-manager.enable = true;
@@ -20,6 +22,8 @@
       virt-manager
       spice-gtk
       usbredir
+      virglrenderer
+      mesa
     ];
   virtualisation.spiceUSBRedirection.enable = true;
 }
