@@ -10,8 +10,8 @@
   services.xserver.displayManager.gdm.enable = true;
   services.xserver.desktopManager.gnome.enable = true;
 
-  # Set default login to use Niri
-  services.xserver.displayManager.defaultSession = "niri";
+  # Set default login to use GNOME
+  services.xserver.displayManager.defaultSession = "gnome";
   programs.hyprland = {
     enable = true;
     xwayland.enable = true;

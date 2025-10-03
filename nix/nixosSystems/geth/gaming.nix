@@ -1,22 +1,26 @@
-{ pkgs, config, lib, ... }:
-
 {
-    environment.systemPackages = with pkgs; lib.mkAfter [
+  pkgs,
+  config,
+  lib,
+  ...
+}: {
+  environment.systemPackages = with pkgs;
+    lib.mkAfter [
     ];
 
-    # Enable 32-bit support (required for Steam)
-    # hardware.opengl.driSupport32Bit = true;
-    # hardware.pulseaudio.support32Bit = true; # If using PulseAudio
+  # Enable 32-bit support (required for Steam)
+  # hardware.opengl.driSupport32Bit = true;
+  # hardware.pulseaudio.support32Bit = true; # If using PulseAudio
 
-    programs.steam = {
+  hardware = {
+    graphics = {
       enable = true;
-      remotePlay.openFirewall = true;
-      dedicatedServer.openFirewall = true;
-      
-      # Enable XWayland support for Steam
-      gamescopeSession.enable = true;
+      enable32Bit = true;
     };
 
-    # Make sure XWayland is enabled
-    programs.xwayland.enable = true;
+    amdgpu.amdvlk = {
+      enable = true;
+      support32Bit.enable = true;
+    };
+  };
 }

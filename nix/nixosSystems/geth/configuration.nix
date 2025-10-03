@@ -16,6 +16,7 @@ in {
     ./desktop.nix
     ./wine.nix
     ./gaming.nix
+    # ./appimage.nix
   ];
 
   # Bootloader.
