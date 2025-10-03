@@ -91,7 +91,6 @@
     libsecret
     seahorse
     xwayland
-    wl-clipboard
     xorg.xeyes
   ];
 }
