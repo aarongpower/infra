@@ -1,6 +1,9 @@
-{ pkgs, config, lib, ...}:
-
 {
+  pkgs,
+  config,
+  lib,
+  ...
+}: {
   virtualisation.libvirtd = {
     enable = true;
     qemu = {
@@ -10,11 +13,13 @@
     };
   };
   programs.virt-manager.enable = true;
-  users.users.aaronp.extraGroups = lib.mkAfter [ "libvirtd" "kvm" ];
-  environment.systemPackages = with pkgs; lib.mkAfter [ 
-    virtio-win
-    virt-manager
-    spice-gtk
-    usbredir
-  ];
+  users.users.aaronp.extraGroups = lib.mkAfter ["libvirtd" "kvm"];
+  environment.systemPackages = with pkgs;
+    lib.mkAfter [
+      virtio-win
+      virt-manager
+      spice-gtk
+      usbredir
+    ];
+  virtualisation.spiceUSBRedirection.enable = true;
 }
