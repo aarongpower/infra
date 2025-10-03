@@ -11,5 +11,10 @@
   };
   programs.virt-manager.enable = true;
   users.users.aaronp.extraGroups = lib.mkAfter [ "libvirtd" "kvm" ];
-  environment.systemPackages = with pkgs; lib.mkAfter [ virtio-win ];
+  environment.systemPackages = with pkgs; lib.mkAfter [ 
+    virtio-win
+    virt-manager
+    spice-gtk
+    usbredir
+  ];
 }
