@@ -1,16 +1,21 @@
 # Edit this configuration file to define what should be installed on
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
-
-{ config, pkgs, lib, inputs, ... }:
-
-let gv = lib.gvariant; # NixOS' gvariant helpers
+{
+  config,
+  pkgs,
+  lib,
+  inputs,
+  ...
+}: let
+  gv = lib.gvariant; # NixOS' gvariant helpers
   unstable = import inputs.nixpkgs-unstable {
     system = pkgs.system;
     config.allowUnfree = true;
   };
 in {
-  imports = [ # Include the results of the hardware scan.
+  imports = [
+    # Include the results of the hardware scan.
     ./hardware-configuration.nix
     ./virtualisation.nix
     ./desktop.nix
@@ -78,7 +83,8 @@ in {
   users.users.aaronp = {
     isNormalUser = true;
     description = "Aaron Power";
-    extraGroups = [ "networkmanager" "wheel" "plugdev" "input" ];
+    extraGroups = ["networkmanager" "wheel" "plugdev" "input"];
+    shell = pkgs.fish;
     packages = with pkgs; [
       # _1password-gui
     ];
@@ -86,6 +92,7 @@ in {
 
   # Install firefox.
   programs.firefox.enable = true;
+  programs.fish.enable = true;
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
@@ -106,8 +113,7 @@ in {
 
   # services.gnome.gnome-keyring.enable = true;
   services.pcscd.enable = true;
-  services.udev.packages =
-    [ pkgs.yubikey-personalization pkgs.libu2f-host pkgs.libfido2 ];
+  services.udev.packages = [pkgs.yubikey-personalization pkgs.libu2f-host pkgs.libfido2];
 
   programs.gnupg.agent = {
     enable = true;
