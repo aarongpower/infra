@@ -189,7 +189,7 @@ in {
     package = unstable.alacritty;
     settings = {
       terminal.shell = {
-        program = "${pkgs.zsh}/bin/fish";
+        program = "${pkgs.fish}/bin/fish";
         args = ["-c" "${pkgs.zellij}/bin/zellij"];
       };
       font = {
