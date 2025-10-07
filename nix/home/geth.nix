@@ -1,7 +1,15 @@
-{ pkgs, inputs, lib, config, cider220, agenix, fenix, unstable, ... }:
-
 {
-  imports = [ ./common-home.nix ./common-cli.nix ./common-gui.nix ];
+  pkgs,
+  inputs,
+  lib,
+  config,
+  cider220,
+  agenix,
+  fenix,
+  unstable,
+  ...
+}: {
+  imports = [./common-home.nix ./common-cli.nix ./common-gui.nix];
 
   # nixpkgs.config.allowUnfree = true;
 
@@ -28,6 +36,7 @@
       unstable.signal-desktop
       nerd-fonts.caskaydia-cove
       evince
+      wofi
     ];
 
   # programs.ssh.matchBlocks = [
