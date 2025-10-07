@@ -64,7 +64,8 @@
 
   programs.waybar.enable = true;
   xdg.configFile."niri/config.kdl".source = ./config/niri/config.kdl;
-  xdg.configFile."hypr/hyprland.conf".source = ./config/hypr/hyprland.conf;
+  xdg.configFile."hypr".source = ./config/hypr;
+  # xdg.configFile."hypr/hyprlock.conf".source = ./config/hypr/hyprlock.conf;
   programs.vscode = {
     enable = true;
     package = unstable.vscode;
