@@ -102,4 +102,6 @@
     #   group-by=category
     # '';
   };
+
+  programs.hyprlock.enable = true;
 }
