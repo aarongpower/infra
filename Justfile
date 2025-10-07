@@ -12,7 +12,7 @@ show_hostname:
 show_project_root:
     echo "Project root is {{project_root}}"
 
-fix_pve_stuck: 
+fix_pve_stuck:
     echo "Fixing PVE stuck issue..."
     echo "Killing git index-pack processes..."
     # sudo pkill -f 'git.*index-pack' || true
@@ -23,15 +23,15 @@ fix_pve_stuck:
     echo "Clearing Nix caches..."
     sudo rm -rf /root/.cache/nix/eval-cache-v5 /root/.cache/nix/git 2>/dev/null || true
 
-deploynix:
+deploynix *args:
     git add .
     cd ./nix/secrets; sops updatekeys -y *.yaml
-    sudo nixos-rebuild switch --flake {{project_root}}/nix#{{hostname}}
+    sudo nixos-rebuild switch --flake {{project_root}}/nix#{{hostname}} {{args}}
     git commit -m "Deploy to {{hostname}} on `date +'%Y-%m-%d %H:%M:%S'`"
     git push
 
 [script]
-dyg: 
+dyg:
     # dyg = deploy yggdrasil
     hostname="yggdrasil"
     username="aaronp"
