@@ -37,6 +37,7 @@
       nerd-fonts.caskaydia-cove
       evince
       wofi
+      reaper
     ];
 
   # programs.ssh.matchBlocks = [
