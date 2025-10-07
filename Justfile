@@ -30,6 +30,12 @@ deploynix *args:
     git commit -m "Deploy to {{hostname}} on `date +'%Y-%m-%d %H:%M:%S'`"
     git push
 
+update:
+    nix flake update
+    git add flake.lock
+    git commit -m "Update flake.lock on `date +'%Y-%m-%d %H:%M:%S'`"
+    git push
+
 [script]
 dyg:
     # dyg = deploy yggdrasil

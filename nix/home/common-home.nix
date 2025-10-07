@@ -1,17 +1,22 @@
-{ pkgs, inputs, config, globals, ... }:
-let unstable = inputs.nixpkgs-unstable.legacyPackages.${pkgs.system};
+{
+  pkgs,
+  inputs,
+  config,
+  globals,
+  ...
+}: let
+  unstable = inputs.nixpkgs-unstable.legacyPackages.${pkgs.system};
 in {
   imports = [
     inputs.agenix.homeManagerModules.default
     inputs.sops-nix.homeManagerModules.sops
-
   ];
 
   # sops config
   sops = {
-    age.sshKeyPaths = [ "${config.home.homeDirectory}/.ssh/id_ed25519" ];
+    age.sshKeyPaths = ["${config.home.homeDirectory}/.ssh/id_ed25519"];
     defaultSopsFile = "${globals.flakeRoot}/secrets/admin-aaronp.yaml";
-    secrets.openai_api_key = { };
+    secrets.openai_api_key = {};
   };
 
   # age.identityPaths = [
@@ -137,7 +142,7 @@ in {
     enable = true;
     userName = "Aaron Power";
     userEmail = "aarongpower@gmail.com";
-    extraConfig = { init = { defaultBranch = "main"; }; };
+    extraConfig = {init = {defaultBranch = "main";};};
   };
 
   programs.fzf.enable = true;
@@ -167,7 +172,7 @@ in {
     # And now it works. So there you go.
     oh-my-zsh = {
       enable = true;
-      plugins = [ "git" ];
+      plugins = ["git"];
     };
   };
 
@@ -184,8 +189,8 @@ in {
     package = unstable.alacritty;
     settings = {
       terminal.shell = {
-        program = "${pkgs.zsh}/bin/zsh";
-        args = [ "-c" "${pkgs.zellij}/bin/zellij" ];
+        program = "${pkgs.zsh}/bin/fish";
+        args = ["-c" "${pkgs.zellij}/bin/zellij"];
       };
       font = {
         size = 10;
